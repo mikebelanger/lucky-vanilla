@@ -1,3 +1,7 @@
+# PoC - very WIP
+
+This is just a PoC to show how The [Lucky](https://luckyframework.org) could be used in conjunction with custom elements and server-side rendering. I'm just using "plain" typescript files to write custom element definitions, and those custom elements in turn can call the backend to populate them with their HTML.  Very WIP, expect things to break.
+
 # vanilla_app
 
 This is a project written using [Lucky](https://luckyframework.org). Enjoy!
