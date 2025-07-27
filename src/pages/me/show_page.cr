@@ -1,9 +1,10 @@
 class Me::ShowPage < MainLayout
   def content
-    js_link asset("SomeComponent.js"), defer: "true"
+    js_link asset("SomeComponent.js"), defer: "false"
     h1 "This is your profile"
     h3 "Email:  #{@current_user.email}"
     helpful_tips
+    tag("some-component")
   end
 
   private def helpful_tips
