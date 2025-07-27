@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "outDir": "../../public/", // Output directory
+    "target": "ESNext", // Modern JS syntax
+    "module": "ESNext", // Modern JS modules
+    "lib": ["DOM", "ESNext"], // Include DOM and latest JS APIs
+    "strict": true, // Strict type checking
+    "moduleResolution": "Node"
+  },
+  "include": ["components/**/*.ts"] // Compile all TS files in src/
+}
