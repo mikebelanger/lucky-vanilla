@@ -9,7 +9,17 @@ class LinkTo extends HTMLAnchorElement {
     this.dataMethod = this.getAttribute("dataMethod") || "";
   }
   async makeRequest() {
-    fetch(this.href, { method: this.dataMethod });
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+    const headers = {
+      "X-CSRF-Token": csrfToken || ""
+    };
+    const response = await fetch(this.href, {
+      method: this.dataMethod,
+      headers
+    });
+    if (response.redirected) {
+      window.location.href = response.url;
+    }
   }
   connectedCallback() {
     this.addEventListener("click", async (event) => {

@@ -6,7 +6,6 @@ class Me::ShowPage < MainLayout
     tag("some-component")
   end
 
-
   private def helpful_tips
     h3 "Next, you may want to:"
     ul do
