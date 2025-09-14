@@ -1,0 +1,4 @@
+[build]
+entryPoints = ["./components"]
+outdir = "../../public"
+watch = true

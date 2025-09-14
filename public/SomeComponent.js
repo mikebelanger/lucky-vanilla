@@ -1,17 +1,26 @@
-"use strict";
+// components/SomeComponent.ts
 class SomeClass extends HTMLElement {
   constructor() {
     super();
-    console.log("Hello from SomeClass");
+  }
+  loadPage() {
+    fetch("/some_page").then((r) => {
+      return r.text();
+    }).then((text) => {
+      this.innerHTML = text;
+    });
+  }
+  addButton() {
+    const button = document.createElement("button");
+    button.textContent = "Load Page";
+    button.addEventListener("click", (evt) => {
+      this.loadPage();
+    });
+    this.appendChild(button);
   }
   connectedCallback() {
-    fetch("/some_page")
-      .then((r) => {
-        return r.text();
-      })
-      .then((text) => {
-        this.innerHTML = text;
-      });
+    console.log("test with update2");
+    this.addButton();
   }
 }
 customElements.define("some-component", SomeClass);

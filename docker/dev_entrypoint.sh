@@ -40,10 +40,10 @@ if ! psql -d "$DATABASE_URL" -c '\d migrations' > /dev/null ; then
   lucky db.migrate
 fi
 
-cd src/ts
-npm install
-npx tsc
-cd ../..
+# cd src/ts
+# npm install
+# npm run dev
+# cd ../..
 
 echo 'Starting lucky dev server...'
 exec lucky dev

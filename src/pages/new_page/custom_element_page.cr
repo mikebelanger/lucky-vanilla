@@ -1,7 +1,9 @@
-class NewPage::SomePage < MainLayout
+class NewPage::SomePage
+  include Lucky::HTMLPage
+
   ROWS = 20
   COLUMNS = 10
-  def content
+  def render
     main class: "some-class" do
       text "this is server-side rendered"
       table do

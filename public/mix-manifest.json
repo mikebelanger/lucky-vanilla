@@ -1,0 +1,5 @@
+{
+  "main.css": "./main.css",
+  "SomeComponent.js": "./SomeComponent.js",
+  "LinkTo.js": "./LinkTo.js"
+}

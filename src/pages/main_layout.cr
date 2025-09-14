@@ -30,7 +30,7 @@ abstract class MainLayout
       mount Shared::LayoutHead, page_title: page_title
 
       body do
-        mount Shared::FlashMessages, context.flash
+        # mount Shared::FlashMessages, context.flash
         render_signed_in_user
         content
       end
@@ -38,8 +38,15 @@ abstract class MainLayout
   end
 
   private def render_signed_in_user
-    text current_user.email
-    text " - "
-    link "Sign out", to: SignIns::Delete, flow_id: "sign-out-button"
+    js_link asset("LinkTo.js"), defer: "false"
+    section class: "content" do
+      div(id: "sign_out_section") do
+        text "Currently logged in as: #{current_user.email}"
+        # link "Sign out", to: SignIns::Delete, flow_id: "sign-out-button"
+        tag("a", is: "link-to", href: "/sign_out", dataMethod: "DELETE") do
+          text "Sign out"
+        end
+      end
+    end
   end
 end

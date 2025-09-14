@@ -1,11 +1,11 @@
 class Me::ShowPage < MainLayout
   def content
     js_link asset("SomeComponent.js"), defer: "false"
-    h1 "This is your profile"
     h3 "Email:  #{@current_user.email}"
     helpful_tips
     tag("some-component")
   end
+
 
   private def helpful_tips
     h3 "Next, you may want to:"
@@ -17,7 +17,8 @@ class Me::ShowPage < MainLayout
   end
 
   private def link_to_authentication_guides
-    a "Check out the authentication guides",
-      href: "https://luckyframework.org/guides/authentication"
+    a(href: "https://luckyframework.org/guides/authentication") do
+      text "Check out the authentication guides"
+    end
   end
 end
