@@ -1,20 +1,11 @@
-body {
-    margin: 0;
-    color: black;
-    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-    background: white;
-}
-
 .content {
-    color: white;
     display: flex;
-    min-height: 3em;
-    line-height: 1.1;
     text-align: center;
     flex-direction: column;
     justify-content: center;
-    background-image: linear-gradient(-180deg, #3de69f, #22c37f);
-    padding: 0.5em;
+    background-color: var(--pico-color-jade-750);
+    padding-left: var(--pico-nav-element-spacing-vertical);
+    padding-right: var(--pico-nav-element-spacing-vertical);
 }
 
 .content h1 {
@@ -28,9 +19,23 @@ body {
     opacity: 0.5;
 }
 
-.content > #sign_out_section {
+li#sign_out_section {
     display: flex;
     flex-direction: column;
-    margin-left: auto;
     align-items: flex-end;
+}
+
+li#sign_out_section::before {
+    content: unset;
+}
+
+section.card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section.card > div {
+    border-radius: 10%;
 }
