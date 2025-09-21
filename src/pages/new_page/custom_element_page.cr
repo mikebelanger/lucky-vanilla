@@ -5,15 +5,13 @@ class NewPage::SomePage
   COLUMNS = 10
 
   def render
-    main class: "some-class" do
-      text "this is server-side rendered"
-      table do
-        tbody do
-          (0..ROWS).each do |row|
-            tr do
-              (1..COLUMNS).each do |cel|
-                td "  #{(row * COLUMNS) + cel}"
-              end
+    text "this is server-side rendered"
+    table class: "striped" do
+      tbody do
+        (0..ROWS).each do |row|
+          tr do
+            (1..COLUMNS).each do |cel|
+              td "  #{(row * COLUMNS) + cel}"
             end
           end
         end

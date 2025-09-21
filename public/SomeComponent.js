@@ -8,6 +8,8 @@ class SomeClass extends HTMLElement {
       return r.text();
     }).then((text) => {
       this.innerHTML = text;
+    }).then(() => {
+      window.location.href += "#table";
     });
   }
   addButton() {
