@@ -12,7 +12,7 @@ class Purchases::IndexPage < MainLayout
     ul do
       purchases.each do |purchase|
         li do
-          link purchase.dollars, to: Purchases::Show.with(purchase)
+          link purchase.dollars.to_s, to: Purchases::Show.with(purchase)
         end
       end
     end

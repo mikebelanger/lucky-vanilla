@@ -25,19 +25,17 @@ abstract class MainLayout
 
   def render
     html_doctype
-
     html lang: "en" do
+      css_link asset("main.css")
+      css_link asset("pico.min.css")
+      css_link asset("pico.colors.min.css")
+      js_link asset("LinkTo.js"), defer: false
       mount Shared::LayoutHead, page_title: page_title, current_user: current_user
 
       body do
         # mount Shared::FlashMessages, context.flash
-        render_signed_in_user
         content
       end
     end
-  end
-
-  def render_signed_in_user
-    js_link asset("LinkTo.js"), defer: "false"
   end
 end

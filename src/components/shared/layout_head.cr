@@ -18,9 +18,6 @@ class Shared::LayoutHead < BaseComponent
     head do
       utf8_charset
       title "My App - #{@page_title}"
-      css_link asset("main.css")
-      css_link asset("pico.min.css")
-      css_link asset("pico.colors.min.css")
       csrf_meta_tags
       responsive_meta_tag
 

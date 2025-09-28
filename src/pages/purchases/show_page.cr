@@ -1,6 +1,6 @@
 class Purchases::ShowPage < MainLayout
   needs purchase : Purchase
-  quick_def page_title, "Purchase with id: #{purchase.id}"
+  # quick_def page_title, "Purchase with id: #{purchase.id}"
 
   def content
     link "Back to all Purchases", to: Purchases::Index
