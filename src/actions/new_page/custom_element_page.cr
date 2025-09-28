@@ -1,5 +1,5 @@
 class NewPage < BrowserAction
   get "/some_page" do
-    html NewPage::SomePage
+    html CustomPage::Table
   end
 end

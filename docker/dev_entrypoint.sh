@@ -44,6 +44,6 @@ fi
 # npm install
 # npm run dev
 # cd ../..
-
 echo 'Starting lucky dev server...'
-exec lucky dev
+lucky dev
+# exec lucky dev --error-trace

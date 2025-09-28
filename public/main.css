@@ -39,3 +39,8 @@ section.card {
 section.card > div {
     border-radius: 10%;
 }
+
+fieldset[role="group"] {
+    padding: 1em;
+    border: grey solid 1px;
+}

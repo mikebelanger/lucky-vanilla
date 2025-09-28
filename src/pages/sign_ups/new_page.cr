@@ -18,7 +18,8 @@ class SignUps::NewPage < AuthLayout
 
   private def sign_up_fields(op)
     fieldset do
-      mount Shared::Field, attribute: op.email, &.email_input(autofocus: "true")
+      mount Shared::Field, attribute: op.name, required: true
+      mount Shared::Field, attribute: op.email, &.email_input
       mount Shared::Field, attribute: op.password, &.password_input
       mount Shared::Field, attribute: op.password_confirmation, &.password_input
     end
