@@ -29,7 +29,7 @@ abstract class MainLayout
       css_link asset("main.css")
       css_link asset("pico.min.css")
       css_link asset("pico.colors.min.css")
-      js_link asset("LinkTo.js"), defer: false
+      js_link asset("LinkTo.js")
       mount Shared::LayoutHead, page_title: page_title, current_user: current_user
 
       body do

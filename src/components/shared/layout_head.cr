@@ -30,7 +30,7 @@ class Shared::LayoutHead < BaseComponent
         ul do
           li do
             strong
-              text "Expense Tracker"
+            text "Expense Tracker"
           end
         end
         ul do

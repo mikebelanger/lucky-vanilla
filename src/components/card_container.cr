@@ -1,5 +1,5 @@
 class CardContainer < BaseComponent
-  def render
+  def render(&)
     section class: "card" do
       div do
         yield
