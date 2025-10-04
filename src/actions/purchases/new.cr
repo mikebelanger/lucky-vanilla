@@ -1,5 +1,5 @@
 class Purchases::New < BrowserAction
   get "/purchases/new" do
-    html NewPage, operation: SavePurchase.new(current_user: current_user)
+    html NewPage, operation: SavePurchase.new(current_user: current_user), partial: true
   end
 end

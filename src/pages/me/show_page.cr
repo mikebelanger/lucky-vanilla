@@ -1,9 +1,16 @@
-class Me::ShowPage
-  include Lucky::HTMLPage
+class Me::ShowPage < MainLayout
 
-  def render
-    js_link asset("NewPurchase.js")
+  def portal(href : String)
+    tag("ssr-portal", href: href)
+  end
+
+  def content
+    js_link asset("SSRPortal.js")
     js_link asset("LinkTo.js")
-    tag("new-purchase")
+
+    main(class: "grid") do
+      portal(href: "/purchases/new")
+      portal(href: "/purchases")
+    end
   end
 end

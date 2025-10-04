@@ -3,8 +3,10 @@ class Purchases::NewPage < MainLayout
   quick_def page_title, "New Purchase"
 
   def content
-    h1 "New Purchase"
-    render_purchase_form(operation)
+    fieldset(class: "container") do
+      legend "New Purchase"
+      render_purchase_form(operation)
+    end
   end
 
   def render_purchase_form(op)
