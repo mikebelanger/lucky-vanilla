@@ -1,8 +1,8 @@
 {
-  "main.css": "./main.css",
-  "pico.min.css": "./pico.min.css",
-  "pico.colors.min.css": "./pico.colors.min.css",
-  "SomeComponent.js": "./SomeComponent.js",
-  "LinkTo.js": "./LinkTo.js",
-  "NewPurchase.js": "./NewPurchase.js"
+  "main.css": "/main.css",
+  "pico.min.css": "/pico.min.css",
+  "pico.colors.min.css": "/pico.colors.min.css",
+  "SomeComponent.js": "/SomeComponent.js",
+  "LinkTo.js": "/LinkTo.js",
+  "NewPurchase.js": "/NewPurchase.js"
 }

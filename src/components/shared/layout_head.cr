@@ -20,17 +20,11 @@ class Shared::LayoutHead < BaseComponent
       title "My App - #{@page_title}"
       csrf_meta_tags
       responsive_meta_tag
-      tag("link", rel: "stylesheet", type: "text/css", href: "/main.css")
-      tag("link", rel: "stylesheet", type: "text/css", href: "/pico.min.css")
-      tag("link", rel: "stylesheet", type: "text/css", href: "/pico.colors.min.css")
-      script(src: "/LinkTo.js", type: "text/javascript")
-      # css_link dynamic_asset("pico.min.css")
-      # css_link dynamic_asset("pico.colors.min.css")
-      # js_link dynamic_asset("LinkTo.js")
-      # script(src: "LinkTo.js", type: "text/javascript")
-      # tag("link", href: "main.css", type: "text/css", rel: "stylesheet")
-      # Development helper used with the `lucky watch` command.
-      # Reloads the browser when files are updated.
+      css_link asset("main.css")
+      css_link asset("pico.min.css")
+      css_link asset("pico.colors.min.css")
+      js_link asset("LinkTo.js")
+
       live_reload_connect_tag if LuckyEnv.development?
     end
     section class: "content" do
