@@ -1,11 +1,11 @@
 class LinkTo extends HTMLAnchorElement {
   static observedAttributes = ['href', 'dataMethod'];
-  href: string;
-  dataMethod: string;
+  href: string = '';
+  dataMethod: string = '';
+  reloadId: string = '';
+  resourceId: string = '';
   constructor() {
     super();
-    this.href = this.getAttribute('href') || '';
-    this.dataMethod = this.getAttribute('dataMethod') || '';
   }
 
   async makeRequest() {
@@ -19,14 +19,49 @@ class LinkTo extends HTMLAnchorElement {
       headers: headers,
     });
 
-    // Manually follow the redirect if the server indicated one.
-    if (response.redirected) {
-      window.location.href = response.url;
+    switch (this.dataMethod) {
+      case 'POST':
+        if (response.ok) {
+          window.location.href = response.url;
+        }
+        break;
+      case 'PUT':
+        if (response.ok) {
+          window.location.href = response.url;
+        }
+        break;
+      case 'DELETE':
+        // Manually follow the redirect if the server indicated one.
+        if (response.redirected) {
+          window.location.href = response.url;
+        }
+        break;
+      case 'GET':
+        if (response.ok) {
+          const reloadElement = document.querySelector(`#${this.reloadId}`);
+          if (reloadElement) {
+            reloadElement.innerHTML = await response.text();
+            // window.location.hash = `#${this.resourceId}`;
+            history.pushState({ id: this.resourceId }, "", `/purchases/${this.resourceId}`);
+          }
+        }
+        break;
+      default:
+        if (response.ok) {
+          window.location.href = response.url;
+        }
+        break;
     }
   }
 
   connectedCallback() {
     this.addEventListener('click', async (event) => {
+      this.dataMethod = this.getAttribute('dataMethod') || '';
+      this.dataMethod = this.getAttribute('dataMethod') || '';
+      this.reloadId = this.getAttribute('reloadId') || '';
+      this.href = this.getAttribute('href') || '';
+      this.resourceId = this.getAttribute('resourceId') || '';
+
       event.preventDefault();
       await this.makeRequest();
     });

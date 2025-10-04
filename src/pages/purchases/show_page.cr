@@ -1,15 +1,6 @@
 class Purchases::ShowPage < MainLayout
   needs purchase : Purchase
-
   # quick_def page_title, "Purchase with id: #{purchase.id}"
-
-  def content
-    link "Back to all Purchases", to: Purchases::Index
-    h1 "Purchase with id: #{purchase.id}"
-    render_actions
-    render_purchase_fields
-  end
-
   def render_actions
     section do
       link "Edit", to: Purchases::Edit.with(purchase.id)
@@ -39,5 +30,12 @@ class Purchases::ShowPage < MainLayout
         strong purchase.description.to_s
       end
     end
+  end
+
+  def content
+    link "Back to all Purchases", to: Purchases::Index
+    h1 "Purchase with id: #{purchase.id}"
+    render_actions
+    render_purchase_fields
   end
 end

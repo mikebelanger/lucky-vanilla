@@ -4,6 +4,7 @@ abstract class MainLayout
   # 'needs current_user : User' makes it so that the current_user
   # is always required for pages using MainLayout
   needs current_user : User
+  needs partial : Bool?
 
   abstract def content
   abstract def page_title
@@ -24,17 +25,17 @@ abstract class MainLayout
   end
 
   def render
-    html_doctype
-    html lang: "en" do
-      css_link asset("main.css")
-      css_link asset("pico.min.css")
-      css_link asset("pico.colors.min.css")
-      js_link asset("LinkTo.js")
-      mount Shared::LayoutHead, page_title: page_title, current_user: current_user
+    if partial
+      content
+    else
+      html_doctype
+      html lang: "en" do
+        mount Shared::LayoutHead, page_title: page_title, current_user: current_user
 
-      body do
-        # mount Shared::FlashMessages, context.flash
-        content
+        body do
+          # mount Shared::FlashMessages, context.flash
+          content
+        end
       end
     end
   end
