@@ -13,7 +13,7 @@ class Purchases::IndexPage < MainLayout
         .group_by { |purchase| {year: purchase.date.year, month: purchase.date.month} }
         .each do |date, purchases|
           h4 do
-            text "#{date[:month].month_name}, #{date[:year]}"
+            text "#{date[:month].month_name} #{date[:year]}"
           end
           purchases.each do |purchase|
             details(class: "purchase-item") do
@@ -22,7 +22,7 @@ class Purchases::IndexPage < MainLayout
                   strong do
                     text "$#{purchase.dollars}"
                   end
-                  text " on #{purchase.date}"
+                  text " on #{purchase.date.date_without_time}"
                 end
               end
               if description = purchase.description

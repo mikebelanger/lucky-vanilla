@@ -30,3 +30,9 @@ struct Int32
     end
   end
 end
+
+struct Time
+  def date_without_time
+    "#{self.day_of_week}, #{self.month.month_name} #{self.day}"
+  end
+end
