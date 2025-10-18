@@ -1,9 +1,11 @@
 class LinkTo extends HTMLAnchorElement {
-  static observedAttributes = ['href', 'dataMethod'];
+  static observedAttributes = ['href', 'data-method', 'data-confirm-message'];
   href: string = '';
   dataMethod: string = '';
   reloadId: string = '';
   resourceId: string = '';
+  confirm: string = '';
+  dataConfirmMessage: string = '';
   constructor() {
     super();
   }
@@ -56,14 +58,21 @@ class LinkTo extends HTMLAnchorElement {
 
   connectedCallback() {
     this.addEventListener('click', async (event) => {
-      this.dataMethod = this.getAttribute('dataMethod') || '';
-      this.dataMethod = this.getAttribute('dataMethod') || '';
-      this.reloadId = this.getAttribute('reloadId') || '';
+      this.dataMethod = this.getAttribute('data-method') || '';
+      this.reloadId = this.getAttribute('reload-id') || '';
       this.href = this.getAttribute('href') || '';
-      this.resourceId = this.getAttribute('resourceId') || '';
+      this.resourceId = this.getAttribute('resource-id') || '';
+      this.dataConfirmMessage = this.getAttribute('data-confirm-message') || '';
 
       event.preventDefault();
-      await this.makeRequest();
+      if (this.dataConfirmMessage.length > 0) {
+        const confirmed = confirm(this.dataConfirmMessage);
+        if (confirmed) {
+          await this.makeRequest();
+        }
+      } else {
+        await this.makeRequest();
+      }
     });
   }
 }

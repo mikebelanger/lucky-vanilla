@@ -8,7 +8,7 @@ class Shared::LayoutHead < BaseComponent
         text "Currently logged in as: #{user.name}"
         strong("( #{user.email} )")
       end
-      tag("a", is: "link-to", href: "/sign_out", dataMethod: "DELETE", flow_id: "sign-out-button") do
+      tag("a", is: "link-to", href: "/sign_out", data_method: "DELETE", flow_id: "sign-out-button") do
         text "Sign out"
       end
     end
