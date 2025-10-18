@@ -1,32 +1,33 @@
 class Purchases::IndexPage < MainLayout
   needs purchases : PurchaseQuery
-  quick_def page_title, "All Purchases"
+  quick_def page_title, "My Purchases"
 
   def content
-    h1 "All Purchases"
-    link "New Purchase", to: Purchases::New
-    render_purchases
-  end
-
-  def partial_link(
-      text : String,
-      to : Lucky::RouteHelper,
-      resource_id : Int64,
-      reload_element_id : String,
-      attrs : Array(Symbol) = [] of Symbol,
-      **html_options
-    ) : Nil
-
-    tag("a", is: "link-to", href: "/purchases/#{resource_id}/?partial=true", dataMethod: "GET", resourceId: resource_id, reloadId: "purchases-island") do
-      text text
+    section(class: "container") do
+      h2 "My Recent Purchases"
+      render_purchases
+    end
+    footer(class: "new-purchase-footer") do
+      link "New Purchase", to: Purchases::New
     end
   end
 
   def render_purchases
-    ul(id: "purchases-island") do
+    ul do
       purchases.each do |purchase|
-        li do
-          partial_link purchase.dollars.to_s, to: Purchases::Show.with(purchase), resource_id: purchase.id, reload_element_id: "purchases"
+        details(class: "purchase-item") do
+          summary(class: "outline", role: "button") do
+            span do
+              strong do
+                text "$#{purchase.dollars}"
+              end
+              text " on #{purchase.date}"
+            end
+          end
+          if description = purchase.description
+            span description
+          end
+          link "Edit Purchase", to: Purchases::Show.with(purchase), resource_id: purchase.id, reload_element_id: "purchases"
         end
       end
     end

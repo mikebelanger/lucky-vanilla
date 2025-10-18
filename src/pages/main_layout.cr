@@ -25,17 +25,13 @@ abstract class MainLayout
   end
 
   def render
-    if partial
-      content
-    else
-      html_doctype
-      html lang: "en" do
-        mount Shared::LayoutHead, page_title: page_title, current_user: current_user
+    html_doctype
+    html lang: "en" do
+      mount Shared::LayoutHead, page_title: page_title, current_user: current_user
 
-        body do
-          # mount Shared::FlashMessages, context.flash
-          content
-        end
+      body do
+        # mount Shared::FlashMessages, context.flash
+        content
       end
     end
   end

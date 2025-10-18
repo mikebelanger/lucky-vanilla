@@ -8,7 +8,7 @@ main {
     text-align: center;
     flex-direction: column;
     justify-content: center;
-    background-color: var(--pico-color-jade-750);
+    background-color: var(--pico-color-azure-750);
     padding-left: var(--pico-nav-element-spacing-vertical);
     padding-right: var(--pico-nav-element-spacing-vertical);
 }
@@ -48,4 +48,27 @@ section.card > div {
 fieldset[role="group"] {
     padding: 1em;
     border: grey solid 1px;
+}
+
+details.purchase-item > span {
+    display: flex;
+    flex-direction: column;
+}
+
+footer.new-purchase-footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    background-color: var(--pico-color-azure-750);
+    padding: 1em;
+    height: max-content;
+    display: flex;
+    align-items: center;
+}
+
+footer.new-purchase-footer > a {
+    background-color: var(--pico-color-jade-200);
+    padding: 1em;
+    border-radius: 1em;
+    color: white;
 }
