@@ -1,24 +1,20 @@
 main {
-    padding-top: 0 !important;
-    margin: 1em;
+    padding-left: var(--pico-block-spacing-horizontal);
+    padding-right: var(--pico-block-spacing-horizontal);
 }
 
-.content {
-    display: flex;
-    text-align: center;
-    flex-direction: column;
-    justify-content: center;
+.top-navbar {
     background-color: var(--pico-color-azure-750);
     padding-left: var(--pico-nav-element-spacing-vertical);
     padding-right: var(--pico-nav-element-spacing-vertical);
 }
 
-.content h1 {
+.top-navbar h1 {
     font-size: 3.6rem;
     font-weight: 700;
 }
 
-.content p {
+.top-navbar p {
     font-size: 1.2rem;
     font-weight: 400;
     opacity: 0.5;
@@ -55,20 +51,9 @@ details.purchase-item > span {
     flex-direction: column;
 }
 
-footer.new-purchase-footer {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    background-color: var(--pico-color-azure-750);
+li.new-purchase > a {
+    background-color: var(--pico-color-jade-500);
     padding: 1em;
-    height: max-content;
-    display: flex;
-    align-items: center;
-}
-
-footer.new-purchase-footer > a {
-    background-color: var(--pico-color-jade-200);
-    padding: 1em;
-    border-radius: 1em;
+    border-radius: 1.5em;
     color: white;
 }

@@ -3,13 +3,8 @@ class Purchases::IndexPage < MainLayout
   quick_def page_title, "My Purchases"
 
   def content
-    section(class: "container") do
-      h2 "My Recent Purchases"
-      render_purchases
-    end
-    footer(class: "new-purchase-footer") do
-      link "New Purchase", to: Purchases::New
-    end
+    h2 "My Recent Purchases"
+    render_purchases
   end
 
   def render_purchases
@@ -27,7 +22,7 @@ class Purchases::IndexPage < MainLayout
           if description = purchase.description
             span description
           end
-          link "Edit Purchase", to: Purchases::Show.with(purchase), resource_id: purchase.id, reload_element_id: "purchases"
+          link "Edit Purchase", to: Purchases::Edit.with(purchase), resource_id: purchase.id, reload_element_id: "purchases"
         end
       end
     end

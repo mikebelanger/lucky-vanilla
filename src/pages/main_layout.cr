@@ -31,7 +31,9 @@ abstract class MainLayout
 
       body do
         # mount Shared::FlashMessages, context.flash
-        content
+        main do
+          content
+        end
       end
     end
   end

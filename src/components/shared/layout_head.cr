@@ -27,18 +27,15 @@ class Shared::LayoutHead < BaseComponent
 
       live_reload_connect_tag if LuckyEnv.development?
     end
-    section class: "content" do
-      nav do
-        ul do
-          li do
-            strong
-            text "Expense Tracker"
-          end
+    nav class: "top-navbar" do
+      ul do
+        li(class: "new-purchase") do
+          link "Add Purchase Entry", to: Purchases::New
         end
-        ul do
-          li id: "sign_out_section" do
-            login_status current_user
-          end
+      end
+      ul do
+        li id: "sign_out_section" do
+          login_status current_user
         end
       end
     end
