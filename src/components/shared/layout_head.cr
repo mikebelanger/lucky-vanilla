@@ -30,7 +30,13 @@ class Shared::LayoutHead < BaseComponent
     nav class: "top-navbar" do
       ul do
         li(class: "new-purchase") do
-          link "Add Purchase Entry", to: Purchases::New
+          if current_user
+            if current_page?(Purchases::Index)
+              link "Add Purchase Entry", to: Purchases::New
+            else
+              link "Look at my purchases", to: Purchases::Index
+            end
+          end
         end
       end
       ul do
