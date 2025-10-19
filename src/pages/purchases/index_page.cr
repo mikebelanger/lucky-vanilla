@@ -15,6 +15,7 @@ class Purchases::IndexPage < MainLayout
           h4 do
             text "#{date[:month].month_name} #{date[:year]}"
           end
+          hr
           purchases.each do |purchase|
             details(class: "purchase-item") do
               summary(class: "outline", role: "button") do

@@ -3,6 +3,20 @@ main {
     padding-right: var(--pico-block-spacing-horizontal);
 }
 
+main > h2 {
+    text-decoration: underline;
+}
+
+ul > h4 {
+    margin-bottom: 0;
+}
+
+ul > hr {
+    margin-top: 0em;
+    border-width: 0.1em;
+    border-color: var(--pico-color-azure-750);
+}
+
 .top-navbar {
     background-color: var(--pico-color-azure-750);
     padding-left: var(--pico-nav-element-spacing-vertical);
@@ -46,9 +60,11 @@ fieldset[role="group"] {
     border: grey solid 1px;
 }
 
-details.purchase-item > span {
+details.purchase-item > span,
+details.purchase-item > a {
     display: flex;
     flex-direction: column;
+    margin-left: 1em;
 }
 
 li.new-purchase > a {
