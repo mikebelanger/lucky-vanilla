@@ -36,6 +36,14 @@ services:
       # servers. Connect to a running postgres container with:
       # postgres://lucky:password@localhost:6543/lucky
       - 6543:5432
+  scheduler:
+    build:
+      context: .
+      dockerfile: docker/scheduler.dockerfile
+    environment:
+      HOST_URL: "localhost"
+    ports:
+      - 6789:6789
 volumes:
   postgres_data:
   node_modules:
