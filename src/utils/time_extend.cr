@@ -1,38 +1,24 @@
-struct Int32
-  def month_name : String
-    case self
-    when 1
-      "January"
-    when 2
-      "February"
-    when 3
-      "March"
-    when 4
-      "April"
-    when 5
-      "May"
-    when 6
-      "June"
-    when 7
-      "July"
-    when 8
-      "August"
-    when 9
-      "September"
-    when 10
-      "October"
-    when 11
-      "November"
-    when 12
-      "December"
-    else
-      raise "Invalid month number: #{self}. Must be between 1 and 12."
-    end
+enum Month
+  January
+  February
+  March
+  April
+  May
+  June
+  July
+  August
+  September
+  October
+  November
+  December
+
+  def name
+    (self - 1).to_s
   end
 end
 
 struct Time
   def date_without_time
-    "#{self.day_of_week}, #{self.month.month_name} #{self.day}"
+    "#{self.day_of_week}, #{Month.new(self.month).name} #{self.day}"
   end
 end

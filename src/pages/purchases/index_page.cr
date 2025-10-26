@@ -13,7 +13,7 @@ class Purchases::IndexPage < MainLayout
         .group_by { |purchase| {year: purchase.date.year, month: purchase.date.month} }
         .each do |date, purchases|
           h4 do
-            text "#{date[:month].month_name} #{date[:year]}"
+            text "#{Month.new(date[:month]).name} #{date[:year]}"
           end
           hr
           purchases.each do |purchase|
