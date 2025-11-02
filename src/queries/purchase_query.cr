@@ -23,7 +23,7 @@ class PurchaseQuery < Purchase::BaseQuery
       elsif first_total < second_total
         outcome = "#{first_user.email} owes #{second_user.email}: #{average - first_total}"
       else
-        Log.info { "both users spent the same amount" }
+        outcome = "both users spent the same amount"
       end
     end
     {outcome: outcome}
