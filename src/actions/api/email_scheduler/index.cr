@@ -25,7 +25,10 @@ class Api::SendEmail < ApiAction
         start_day: from,
         end_day: to,
         total_amount: total.to_i32,
-        paid: false
+        paid: false,
+        first_user_amount: first_total.to_i32,
+        second_user_amount: second_total.to_i32,
+        bill_sent_amount: 0,
       ) do |operation, split|
         if split
           # Split created successfully
@@ -44,7 +47,7 @@ class Api::SendEmail < ApiAction
         recipient: first_user,
         month: Month.new(now.month),
         outcome: outcome)
-      .deliver
+        .deliver
 
       json({outcome: outcome, total: total, first_total: first_total, second_total: second_total})
     end

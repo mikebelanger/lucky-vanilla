@@ -18,7 +18,7 @@ class BillEmail < BaseEmail
 
   private def email_subject : String
     {%
-    raise <<-MESSAGE
+      raise <<-MESSAGE
     Your bill for #{@month}.
     MESSAGE
     %}

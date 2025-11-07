@@ -3,7 +3,7 @@ class SaveSplit < Split::SaveOperation
   # https://luckyframework.org/guides/database/sawving-records#perma-permitting-columns
   #
   # permit_columns total_amount, paid, paid_on, first_user, second_user
-  permit_columns start_day, end_day, total_amount, paid, paid_on, first_user_id, second_user_id
+  permit_columns start_day, end_day, total_amount, paid, paid_on, first_user_id, second_user_id, first_user_amount, second_user_amount
 
   # def split_for_month(first_email : String, second_email : String, from : Time, to : Time)
   #   first_user = UserQuery.new.email(first_email).first
