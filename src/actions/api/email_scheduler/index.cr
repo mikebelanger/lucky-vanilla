@@ -11,12 +11,14 @@ class Api::SendEmail < ApiAction
     if first_user.nil? || second_user.nil?
       json({error: "Users not found"})
     else
-      # First, check to ensure there isn't a split already for this month
+      # First, check to ensure there isn't already an unpaid split for this month
+      # and if so, just send out a reminder e-mail
       existing_split = SplitQuery.new
         .first_user_id(first_user.id)
         .second_user_id(second_user.id)
         .start_day(from)
         .end_day(to)
+        .paid_on.is_nil
         .first
 
       if existing_split
