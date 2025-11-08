@@ -19,7 +19,7 @@ class Api::SendEmail < ApiAction
 
       total = first_total + second_total
 
-      split = SaveSplit.create(
+      SaveSplit.create(
         first_user_id: first_user.id,
         second_user_id: second_user.id,
         start_day: from,
@@ -32,24 +32,17 @@ class Api::SendEmail < ApiAction
       ) do |operation, split|
         if split
           # Split created successfully
+          bill = BillEmail.new(
+            recipient: first_user,
+            split: split
+          )
+
+          bill.deliver
+          json({message: "Email sent: #{split.outcome}"})
+        else
+          json({message: "Message not sent successfully"})
         end
       end
-
-      average = total / 2
-      if first_total > second_total
-        outcome = "#{second_user.email} owes #{first_user.email}: #{average - second_total}"
-      elsif first_total < second_total
-        outcome = "#{first_user.email} owes #{second_user.email}: #{average - first_total}"
-      else
-        outcome = "both users spent the same amount"
-      end
-      BillEmail.new(
-        recipient: first_user,
-        month: Month.new(now.month),
-        outcome: outcome)
-        .deliver
-
-      json({outcome: outcome, total: total, first_total: first_total, second_total: second_total})
     end
   end
 end
