@@ -1,6 +1,6 @@
 class Splits::Index < BrowserAction
   get "/splits" do
-    splits = SplitQuery.new.first_user_id(current_user.id).to_a
+    splits = SplitQuery.new.current_user_splits(user: current_user)
     html Splits::IndexPage, splits: splits
   end
 end
