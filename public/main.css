@@ -73,3 +73,7 @@ li.new-purchase > a {
     border-radius: 1.5em;
     color: white;
 }
+
+.paid-bg > td {
+    background-color: var(--pico-color-jade-600);
+}
