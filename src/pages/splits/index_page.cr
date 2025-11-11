@@ -7,7 +7,8 @@ class Splits::IndexPage < MainLayout
       thead do
         tr do
           th "Total"
-          th "My share"
+          th "My contribution"
+          th "I owe"
           th "Number of bills sent"
           th "Paid on"
           th "Start"
@@ -29,11 +30,10 @@ class Splits::IndexPage < MainLayout
               text "$#{split.total_amount}"
             end
             td do
-              if current_user.id == split.first_user_id
-                text "$#{split.first_user_amount}"
-              else
-                text "$#{split.second_user_amount}"
-              end
+              text "$#{split.monthly_contribution(current_user)}"
+            end
+            td do
+              text "$#{split.owe(current_user)}"
             end
             td do
               text split.bill_sent_amount

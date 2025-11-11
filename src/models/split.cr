@@ -12,13 +12,53 @@ class Split < BaseModel
     belongs_to second_user : User
   end
 
+  def half
+    total_amount / 2
+  end
+
+  def monthly_contribution(u : User) : Int32?
+    this_user = UserQuery.new.find(u.id)
+
+    if this_user
+      user_amount = if first_user_id == this_user.id
+                      first_user_amount
+                    elsif second_user_id == this_user.id
+                      second_user_amount
+                    else
+                      0
+                    end
+      user_amount
+    else
+      nil
+    end
+  end
+
+  def owe(u : User) : Int32?
+    this_user = UserQuery.new.find(u.id)
+
+    if first_user_id && second_user_id && this_user
+      if user_amount = self.monthly_contribution(this_user)
+        user_owes = half - user_amount
+
+        # If the halfway amount is greater than the user's monthly contribution
+        if user_owes.positive?
+          user_owes.to_i32
+        else
+          0
+        end
+      end
+    else
+      nil
+    end
+  end
+
   def outcome
     outcome = "some outcome"
     first_user = UserQuery.new.find(first_user_id)
     second_user = UserQuery.new.find(second_user_id)
 
     if first_user && second_user
-      average = first_user_amount / 2
+      average = total_amount / 2
       if first_user_amount > second_user_amount
         outcome = "#{second_user.email} owes #{first_user.email}: #{average - second_user_amount}"
       elsif first_user_amount < second_user_amount

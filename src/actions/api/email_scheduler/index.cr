@@ -19,17 +19,16 @@ class Api::SendEmail < ApiAction
         .start_day(from)
         .end_day(to)
         .paid_on.is_nil
-        .first
 
-      if existing_split
+      if existing_split.size > 0
         bill = BillEmail.new(
           recipient: first_user,
-          split: existing_split
+          split: existing_split.first
         )
 
         bill.deliver
 
-        json({message: "Email sent (again): #{existing_split.outcome}"})
+        json({message: "Email sent (again): #{existing_split.first.outcome}"})
       else
         first_user_purchases = PurchaseQuery.new.users_purchases_for_month(user: first_user, from: from, to: to)
         second_user_purchases = PurchaseQuery.new.users_purchases_for_month(user: second_user, from: from, to: to)
