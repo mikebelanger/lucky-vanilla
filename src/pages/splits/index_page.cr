@@ -13,7 +13,9 @@ class Splits::IndexPage < MainLayout
           th "Paid on"
           th "Start"
           th "End"
-          th "Actions"
+          if current_user.admin?
+            th "Actions"
+          end
         end
       end
       tbody do
@@ -51,12 +53,14 @@ class Splits::IndexPage < MainLayout
             td do
               text "#{split.end_day.date_without_time}, #{split.end_day.year}"
             end
-            td do
-              a href: "/splits/#{split.id}/edit", class: "btn btn-primary" do
-                text "Edit"
-              end
-              a href: "/splits/#{split.id}", class: "btn btn-danger" do
-                text "Delete"
+            if current_user.admin?
+              td do
+                a href: "/splits/#{split.id}/edit", class: "btn btn-primary" do
+                  text "Edit"
+                end
+                a href: "/splits/#{split.id}", class: "btn btn-danger" do
+                  text "Delete"
+                end
               end
             end
           end
