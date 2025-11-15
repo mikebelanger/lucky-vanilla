@@ -58,7 +58,7 @@ class Splits::IndexPage < MainLayout
                 a href: "/splits/#{split.id}/edit", class: "btn btn-primary" do
                   text "Edit"
                 end
-                a href: "/splits/#{split.id}", class: "btn btn-danger" do
+                a method: "delete", href: "/splits/#{split.id}", is: "link-to", data_method: "DELETE", data_confirm_message: "Are you sure?" do
                   text "Delete"
                 end
               end
