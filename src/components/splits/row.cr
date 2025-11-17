@@ -54,8 +54,17 @@ class Splits::Row < BaseComponent
       end
       if current_user.admin?
         td do
-          a href: "/splits/#{split.id}/edit", class: "btn btn-primary", is: "link-to", reload_id: html_id, data_method: "GET" do
-            text "Edit"
+          if editing?
+            a href: "/splits/#{split.id}", is: "link-to", reload_id: html_id, data_method: "PUT" do
+              text "Save"
+            end
+            a href: "/splits/#{split.id}", is: "link-to", reload_id: html_id, data_method: "GET" do
+              text "Cancel"
+            end
+          else
+            a href: "/splits/#{split.id}/edit", is: "link-to", reload_id: html_id, data_method: "GET" do
+              text "Edit"
+            end
           end
           a method: "delete", href: "/splits/#{split.id}", is: "link-to", data_method: "DELETE", data_confirm_message: "Are you sure?" do
             text "Delete"
