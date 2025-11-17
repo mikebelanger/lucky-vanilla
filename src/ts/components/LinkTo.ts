@@ -44,7 +44,7 @@ class LinkTo extends HTMLAnchorElement {
           if (reloadElement) {
             reloadElement.innerHTML = await response.text();
             // window.location.hash = `#${this.resourceId}`;
-            history.pushState({ id: this.resourceId }, "", `/purchases/${this.resourceId}`);
+            // history.pushState({ id: this.resourceId }, "", `/purchases/${this.resourceId}`);
           }
         }
         break;

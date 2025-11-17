@@ -40,7 +40,6 @@ class LinkTo extends HTMLAnchorElement {
           const reloadElement = document.querySelector(`#${this.reloadId}`);
           if (reloadElement) {
             reloadElement.innerHTML = await response.text();
-            history.pushState({ id: this.resourceId }, "", `/purchases/${this.resourceId}`);
           }
         }
         break;
