@@ -11,25 +11,27 @@ class Api::SendEmail < ApiAction
     if first_user.nil? || second_user.nil?
       json({error: "Users not found"})
     else
-      # First, check to ensure there isn't already an unpaid split for this month
-      # and if so, just send out a reminder e-mail
-      existing_splits = SplitQuery.new
+      # Query all splits for the current month
+      this_months_splits = SplitQuery.new
         .first_user_id(first_user.id)
         .second_user_id(second_user.id)
         .start_day(from)
         .end_day(to)
-        .paid_on.is_nil
 
-      existing_splits.each do |split|
-        bill = BillEmail.new(
-          recipient: first_user,
-          split: split
-        )
-        bill.deliver
-        json({message: "Email sent (again): #{split.outcome}"})
+      # Loop all the splits, and email out a bill for any unpaid split
+      this_months_splits.each do |split|
+        if split.paid_on.nil?
+          bill = BillEmail.new(
+            recipient: first_user,
+            split: split
+          )
+          bill.deliver
+          json({message: "Email sent (again): #{split.outcome}"})
+        end
       end
 
-      if existing_splits.size == 0
+      # If there wasn't any splits for this month yet, derive one from this month's purchases
+      if this_months_splits.size == 0
         first_user_purchases = PurchaseQuery.new.users_purchases_for_month(user: first_user, from: from, to: to)
         second_user_purchases = PurchaseQuery.new.users_purchases_for_month(user: second_user, from: from, to: to)
 
