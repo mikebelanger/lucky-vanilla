@@ -3,5 +3,6 @@
   "pico.min.css": "/pico.min.css",
   "pico.colors.min.css": "/pico.colors.min.css",
   "LinkTo.js": "/LinkTo.js",
-  "SSRPortal.js": "/SSRPortal.js"
+  "SSRPortal.js": "/SSRPortal.js",
+  "FormPlus.js": "/FormPlus.js"
 }

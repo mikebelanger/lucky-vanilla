@@ -3,12 +3,13 @@ class Splits::Row < BaseComponent
   needs split : Split
   needs current_user : User
 
-  def render_input_date
+  def render_input_date(split_id : String)
     if editing?
+      input(type: "hidden", name: "split", form: split_id, value: split_id)
       if paid_on = split.paid_on
-        input(type: "date", value: paid_on.try(&.date_without_time) || "")
+        input(name: "paid_on", form: split_id, type: "date", value: paid_on.try(&.date_without_time) || "")
       else
-        input(type: "date", value: "")
+        input(name: "paid_on", form: split_id, type: "date", value: "")
       end
     else
       if paid_on = split.paid_on
@@ -29,7 +30,7 @@ class Splits::Row < BaseComponent
                      else
                        ""
                      end
-
+    form(id: split.id.to_s, action: "/splits/#{split.id}", method: "put", is: "form-plus")
     tr(class: row_class_name, id: html_id) do
       td do
         text "$#{split.total_amount}"
@@ -44,7 +45,7 @@ class Splits::Row < BaseComponent
         text split.bill_sent_amount
       end
       td do
-        render_input_date
+        render_input_date(split.id.to_s)
       end
       td do
         text "#{split.start_day.date_without_time}, #{split.start_day.year}"
@@ -55,7 +56,7 @@ class Splits::Row < BaseComponent
       if current_user.admin?
         td do
           if editing?
-            a href: "/splits/#{split.id}", is: "link-to", reload_id: html_id, data_method: "PUT" do
+            button type: "submit", form: split.id.to_s, reload_id: html_id do
               text "Save"
             end
             a href: "/splits/#{split.id}", is: "link-to", reload_id: html_id, data_method: "GET" do
