@@ -13,23 +13,23 @@ class Api::SendEmail < ApiAction
     else
       # First, check to ensure there isn't already an unpaid split for this month
       # and if so, just send out a reminder e-mail
-      existing_split = SplitQuery.new
+      existing_splits = SplitQuery.new
         .first_user_id(first_user.id)
         .second_user_id(second_user.id)
         .start_day(from)
         .end_day(to)
         .paid_on.is_nil
 
-      if existing_split.size > 0
+      existing_splits.each do |split|
         bill = BillEmail.new(
           recipient: first_user,
-          split: existing_split.first
+          split: split
         )
-
         bill.deliver
+        json({message: "Email sent (again): #{split.outcome}"})
+      end
 
-        json({message: "Email sent (again): #{existing_split.first.outcome}"})
-      else
+      if existing_splits.size == 0
         first_user_purchases = PurchaseQuery.new.users_purchases_for_month(user: first_user, from: from, to: to)
         second_user_purchases = PurchaseQuery.new.users_purchases_for_month(user: second_user, from: from, to: to)
 
@@ -63,6 +63,7 @@ class Api::SendEmail < ApiAction
           end
         end
       end
+      json({message: "Mail sending finished"})
     end
   end
 end
