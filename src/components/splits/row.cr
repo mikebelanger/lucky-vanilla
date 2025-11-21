@@ -67,7 +67,7 @@ class Splits::Row < BaseComponent
               text "Edit"
             end
           end
-          a method: "delete", href: "/splits/#{split.id}", is: "link-to", data_method: "DELETE", data_confirm_message: "Are you sure?" do
+          a method: "delete", reload_id: html_id, href: "/splits/#{split.id}", is: "link-to", data_method: "DELETE", data_confirm_message: "Are you sure?" do
             text "Delete"
           end
         end

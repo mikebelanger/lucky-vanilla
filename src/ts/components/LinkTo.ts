@@ -36,6 +36,13 @@ class LinkTo extends HTMLAnchorElement {
         // Manually follow the redirect if the server indicated one.
         if (response.redirected) {
           window.location.href = response.url;
+        } else {
+          if (this.reloadId) {
+            const toRemove = document.getElementById(this.reloadId);
+            if (toRemove) {
+              toRemove.innerHTML = '';
+            }
+          }
         }
         break;
       case 'GET':

@@ -33,6 +33,13 @@ class LinkTo extends HTMLAnchorElement {
       case "DELETE":
         if (response.redirected) {
           window.location.href = response.url;
+        } else {
+          if (this.reloadId) {
+            const toRemove = document.getElementById(this.reloadId);
+            if (toRemove) {
+              toRemove.innerHTML = "";
+            }
+          }
         }
         break;
       case "GET":
