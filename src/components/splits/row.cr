@@ -7,7 +7,7 @@ class Splits::Row < BaseComponent
     if editing?
       input(type: "hidden", name: "split", form: split_id, value: split_id)
       if paid_on = split.paid_on
-        input(name: "paid_on", form: split_id, type: "date", value: paid_on.try(&.date_without_time) || "")
+        input(name: "paid_on", form: split_id, type: "date", value: paid_on.try(&.to_s("%Y-%m-%d")))
       else
         input(name: "paid_on", form: split_id, type: "date", value: "")
       end
