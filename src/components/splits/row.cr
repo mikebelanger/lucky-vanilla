@@ -30,7 +30,7 @@ class Splits::Row < BaseComponent
                      else
                        ""
                      end
-    form(id: split.id.to_s, action: "/splits/#{split.id}", method: "put", is: "form-plus")
+    form(id: split.id.to_s, action: "/splits/#{split.id}", method: "put", is: "form-plus", replace_id: html_id)
     tr(class: row_class_name, id: html_id) do
       td do
         text "$#{split.total_amount}"

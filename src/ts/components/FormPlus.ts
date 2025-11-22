@@ -1,10 +1,13 @@
 class FormPlus extends HTMLFormElement {
+  static observedAttributes = ['replace-id'];
   constructor() {
     super();
+    this.replaceId = this.getAttribute('replace-id');
   }
 
   connectedCallback() {
     this.addEventListener('submit', this.handleSubmit);
+    this.replaceId = this.getAttribute('replace-id');
   }
 
   handleSubmit(event: Event) {
@@ -34,8 +37,16 @@ class FormPlus extends HTMLFormElement {
         body,
         headers
       })
-        .then(response => response.json())
-        .then(data => console.log(data))
+        .then(response => {
+          const html = response.text();
+          return html;
+        })
+        .then(html => {
+          const replaceTarget = document.getElementById(this.replaceId);
+          if (replaceTarget) {
+            replaceTarget.innerHTML = html;
+          }
+        })
         .catch(error => console.error(error));
     }
   }

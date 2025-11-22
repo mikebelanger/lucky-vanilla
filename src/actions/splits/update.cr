@@ -4,7 +4,7 @@ class Splits::Update < BrowserAction
 
     if split
       SaveSplit.update(split, params) do |operation, updated_split|
-        html Splits::EditPage, editing: !operation.saved?, split: split
+        html Splits::EditPage, editing: false, split: updated_split
       end
     else
       raise Lucky::RouteNotFoundError.new(context)

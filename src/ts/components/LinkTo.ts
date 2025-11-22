@@ -30,6 +30,13 @@ class LinkTo extends HTMLAnchorElement {
       case 'PUT':
         if (response.ok) {
           window.location.href = response.url;
+
+          if (this.reloadId) {
+            const toReplace = document.getElementById(this.reloadId);
+            if (toReplace) {
+              // toReplace.innerHTML = response.body
+            }
+          }
         }
         break;
       case 'DELETE':
