@@ -24,7 +24,7 @@ class Shared::LayoutHead < BaseComponent
       css_link asset("pico.min.css")
       css_link asset("pico.colors.min.css")
       js_link asset("LinkTo.js")
-      js_link asset("FormPlus.js")
+      js_link asset("SplitRowForm.js")
 
       live_reload_connect_tag if LuckyEnv.development?
     end

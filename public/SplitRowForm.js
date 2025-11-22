@@ -1,5 +1,5 @@
-// components/FormPlus.ts
-class FormPlus extends HTMLFormElement {
+// components/SplitRowForm.ts
+class SplitRowForm extends HTMLFormElement {
   static observedAttributes = ["replace-id"];
   constructor() {
     super();
@@ -43,4 +43,4 @@ class FormPlus extends HTMLFormElement {
     }
   }
 }
-customElements.define("form-plus", FormPlus, { extends: "form" });
+customElements.define("split-row-form", SplitRowForm, { extends: "form" });
