@@ -67,11 +67,12 @@ details.purchase-item > a {
     margin-left: 1em;
 }
 
+li.new-purchase {
+    display: flex;
+}
+
 li.new-purchase > a {
-    background-color: var(--pico-color-jade-500);
-    padding: 1em;
-    border-radius: 1.5em;
-    color: white;
+    margin-right: 1em;
 }
 
 .paid-bg > td {

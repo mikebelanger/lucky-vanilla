@@ -35,8 +35,9 @@ class Shared::LayoutHead < BaseComponent
             if current_page?(Purchases::Index)
               link "Add Purchase Entry", to: Purchases::New
             else
-              link "Look at my purchases", to: Purchases::Index
+              link "My purchases", to: Purchases::Index
             end
+            link "My splits", to: Splits::Index
           end
         end
       end
