@@ -33,13 +33,14 @@ if ! shards check ; then
 fi
 
 echo 'Waiting for postgres to be available...'
-./docker/wait-for-it.sh -q postgres:5432
+./docker/wait-for-it.sh -q vanilla_postgres:5432
 
+echo "Finished wait for it"
 if ! psql -d "$DATABASE_URL" -c '\d migrations' > /dev/null ; then
   echo 'Finishing database setup...'
   lucky db.migrate
 fi
-
+echo "no migrations needed"
 # cd src/ts
 # npm install
 # npm run dev

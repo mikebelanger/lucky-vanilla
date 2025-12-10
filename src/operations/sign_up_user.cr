@@ -4,10 +4,12 @@ class SignUpUser < User::SaveOperation
   include PasswordValidations
 
   permit_columns email, name
+
   attribute password : String
   attribute password_confirmation : String
 
   before_save do
+    admin.value = true
     validate_uniqueness_of email
     Authentic.copy_and_encrypt(password, to: encrypted_password) if password.valid?
   end
