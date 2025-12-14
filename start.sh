@@ -1,4 +1,4 @@
-podman network create vanilla_net
+podman network create vanilla_net 2>$null
 
 podman run --replace \
 --name=vanilla_postgres \
@@ -13,7 +13,7 @@ postgres:14-alpine
 
 podman run --replace \
 --name=vanilla_app \
---requires vanilla_postgres \
+--requires=vanilla_postgres \
 -v /home/mike/.local/share/containers/storage/volumes/vanilla-app_postgres_data/_data \
 -v .:/app \
 -v node_modules:/app/node_modules \
@@ -27,3 +27,12 @@ podman run --replace \
 -e DEV_HOST="0.0.0.0" \
 --network=vanilla_net \
 localhost/vanilla-app_lucky:latest
+
+podman run --replace \
+-d \
+--name=scheduler \
+--requires=vanilla_app \
+--network=vanilla_net \
+-e HOST_URL=vanilla_app \
+-p 6789:6789 \
+localhost/scheduler:latest

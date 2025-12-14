@@ -1,7 +1,7 @@
 require "http/client"
 
 def email_query
-  response = HTTP::Client.get "http://lucky:3000/api/send_email"
+  response = HTTP::Client.get "http://0.0.0.0:3000/api/send_email"
   if response.status_code == 200
     puts "Response successful"
     puts response.body

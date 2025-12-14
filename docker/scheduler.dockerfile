@@ -4,7 +4,7 @@ RUN apt-get update
 
 RUN mkdir /app
 
-COPY ./src/scheduler.cr /app/.
+COPY scheduler.cr /app/.
 
 WORKDIR /app
 
