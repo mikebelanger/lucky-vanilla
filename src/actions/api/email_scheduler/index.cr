@@ -29,18 +29,14 @@ class Api::SendEmail < ApiAction
         second_user_amount: second_total.to_i32,
         total_amount: total.to_i32
       ) do |operation, split|
-        if operation.created?
-          puts "This one is new"
-        else
-          puts "This one is an update"
-        end
-
-        if split
+        if split && (operation.created? || operation.updated?)
           bill = BillEmail.new(
             recipient: first_user,
             split: split
           )
           bill.deliver
+        else
+          Log.info { "Failed to create split: #{operation.inspect} \n split: #{split.inspect}" }
         end
       end
       json({message: "Mail sending finished"})
