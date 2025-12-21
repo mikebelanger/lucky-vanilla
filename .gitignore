@@ -7,9 +7,7 @@ start_server
 *.dwarf
 *.local.cr
 .env
-/tmp/public/js
+/tmp/*
 /public/css
 /node_modules
 yarn-error.log
-tmp/test.log
-app
