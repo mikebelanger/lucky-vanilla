@@ -16,7 +16,6 @@ class Api::SendEmail < ApiAction
 
       first_total = first_user_purchases.sum(&.dollars)
       second_total = second_user_purchases.sum(&.dollars)
-
       total = first_total + second_total
 
       SaveSplit.upsert(

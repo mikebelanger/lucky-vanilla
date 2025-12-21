@@ -33,7 +33,7 @@ if ! shards check ; then
 fi
 
 echo 'Waiting for postgres to be available...'
-./docker/wait-for-it.sh -q vanilla_postgres:5432
+./docker/wait-for-it.sh -q vanilla_postgres_dev:5432
 
 echo "Finished wait for it"
 if ! psql -d "$DATABASE_URL" -c '\d migrations' > /dev/null ; then
