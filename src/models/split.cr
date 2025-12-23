@@ -8,18 +8,24 @@ class Split < BaseModel
     column first_user_amount : Int32
     column second_user_amount : Int32
     column bill_sent_amount : Int16
-    belongs_to first_user : User
-    belongs_to second_user : User
+    belongs_to monthly_split_schedule : MonthlySplitSchedule?
   end
 
   def half
     total_amount / 2
   end
 
+  def user_ids : Tuple(Int64?, Int64?)
+    first_user_id = monthly_split_schedule.try(&.first_user_id)
+    second_user_id = monthly_split_schedule.try(&.second_user_id)
+    {first_user_id, second_user_id}
+  end
+
   def monthly_contribution(u : User) : Int32?
     this_user = UserQuery.new.find(u.id)
+    first_user_id, second_user_id = user_ids
 
-    if this_user
+    if this_user && first_user_id && second_user_id
       user_amount = if first_user_id == this_user.id
                       first_user_amount
                     elsif second_user_id == this_user.id
@@ -35,6 +41,7 @@ class Split < BaseModel
 
   def owe(u : User) : Int32?
     this_user = UserQuery.new.find(u.id)
+    first_user_id, second_user_id = user_ids
 
     if first_user_id && second_user_id && this_user
       if user_amount = self.monthly_contribution(this_user)
@@ -53,21 +60,24 @@ class Split < BaseModel
   end
 
   def outcome
-    outcome = "some outcome"
-    first_user = UserQuery.new.find(first_user_id)
-    second_user = UserQuery.new.find(second_user_id)
+    outcome = "Users not all found"
+    first_user_id, second_user_id = user_ids
+    if first_user_id && second_user_id
+      first_user = UserQuery.new.find(first_user_id)
+      second_user = UserQuery.new.find(second_user_id)
 
-    if first_user && second_user
-      average = total_amount / 2
-      if first_user_amount > second_user_amount
-        outcome = "#{second_user.email} owes #{first_user.email}: #{average - second_user_amount}"
-      elsif first_user_amount < second_user_amount
-        outcome = "#{first_user.email} owes #{second_user.email}: #{average - first_user_amount}"
+      if first_user && second_user
+        average = total_amount / 2
+        if first_user_amount > second_user_amount
+          outcome = "#{second_user.email} owes #{first_user.email}: #{average - second_user_amount}"
+        elsif first_user_amount < second_user_amount
+          outcome = "#{first_user.email} owes #{second_user.email}: #{average - first_user_amount}"
+        else
+          outcome = "both users spent the same amount"
+        end
       else
-        outcome = "both users spent the same amount"
+        outcome = "users not found"
       end
-    else
-      outcome = "users not found"
     end
     outcome
   end
