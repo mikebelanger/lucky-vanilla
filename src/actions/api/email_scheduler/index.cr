@@ -7,6 +7,12 @@ class Api::SendEmail < ApiAction
     to = from + 1.month
     json({message: "/api/send_email hit"})
   end
+  # Query all Monthly Split Schedules
+  MonthlySplitScheduleQuery.new.each_with_index do |split_schedule, index|
+    puts split_schedule.inspect
+    puts "index: #{index}"
+  end
+
   #   first_user = UserQuery.new.email("mike@mike.com").first
   #   second_user = UserQuery.new.email("alex@someplace.com").first
 
