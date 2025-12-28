@@ -3,4 +3,6 @@ class SaveMonthlySplitSchedule < MonthlySplitSchedule::SaveOperation
   # https://luckyframework.org/guides/database/saving-records#perma-permitting-columns
   #
   permit_columns first_user_id, second_user_id
+
+  # upsert_lookup_columns :first_user_id, :second_user_id
 end

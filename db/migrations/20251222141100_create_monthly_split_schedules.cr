@@ -4,8 +4,8 @@ class CreateMonthlySplitSchedules::V20251222141100 < Avram::Migrator::Migration:
     create table_for(MonthlySplitSchedule) do
       primary_key id : Int64
       add_timestamps
-      add first_user_id : Int16
-      add second_user_id : Int16
+      add first_user_id : Int64
+      add second_user_id : Int64
     end
   end
 
