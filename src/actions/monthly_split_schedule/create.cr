@@ -1,6 +1,6 @@
 class MonthlySplitSchedule::Create < BrowserAction
   post "/monthly_split_schedules" do
-    SaveMonthlySplitSchedule.create(params) do |operation, schedule|
+    SaveMonthlySplitSchedule.upsert(params) do |operation, schedule|
       if schedule
         puts "operation successful"
       else
