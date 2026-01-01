@@ -32,8 +32,7 @@ class Api::SendEmail < ApiAction
           end_day: to,
           first_user_amount: first_total.to_i32,
           second_user_amount: second_total.to_i32,
-          total_amount: total.to_i32,
-          bill_sent_amount: 0.to_i16,
+          total_amount: total.to_i32
         ) do |operation, split|
           if split && (operation.created? || operation.updated?)
             [first_user, second_user].each do |recipient|
