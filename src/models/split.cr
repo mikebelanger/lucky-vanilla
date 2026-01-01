@@ -16,19 +16,23 @@ class Split < BaseModel
   end
 
   def user_ids : Tuple(Int64?, Int64?)
-    first_user_id = _preloaded_monthly_split_schedule.try(&.first_user_id)
-    second_user_id = _preloaded_monthly_split_schedule.try(&.second_user_id)
-    {first_user_id, second_user_id}
+    if monthly_split_schedule_id
+      monthly_split_schedule = MonthlySplitScheduleQuery.new.id.nilable_eq(monthly_split_schedule_id).first
+      first_user_id = monthly_split_schedule.try(&.first_user_id)
+      second_user_id = monthly_split_schedule.try(&.second_user_id)
+      {first_user_id, second_user_id}
+    else
+      {nil, nil}
+    end
   end
 
   def monthly_contribution(u : User) : Int32?
-    this_user = UserQuery.new.find(u.id)
     first_user_id, second_user_id = user_ids
 
-    if this_user && first_user_id && second_user_id
-      user_amount = if first_user_id == this_user.id
+    if first_user_id && second_user_id
+      user_amount = if first_user_id == u.id
                       first_user_amount
-                    elsif second_user_id == this_user.id
+                    elsif second_user_id == u.id
                       second_user_amount
                     else
                       0

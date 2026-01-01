@@ -36,7 +36,7 @@ class Splits::Row < BaseComponent
         text "$#{split.total_amount}"
       end
       td do
-        text "$#{split.monthly_contribution(current_user)}"
+        text "$#{split.monthly_contribution(current_user) || "nothing"}"
       end
       td do
         text "$#{split.owe(current_user)}"
