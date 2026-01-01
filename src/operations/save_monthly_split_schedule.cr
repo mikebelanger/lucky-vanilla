@@ -22,7 +22,7 @@ class SaveMonthlySplitSchedule < MonthlySplitSchedule::SaveOperation
         .second_user_id(second_id)
         .or(&.first_user_id(second_id).second_user_id(first_id))
 
-      if already_existing_arrangements_between_these_users.any?
+      unless already_existing_arrangements_between_these_users.empty?
         first_user_id.add_error("Users are already split")
       end
     end
@@ -31,7 +31,6 @@ class SaveMonthlySplitSchedule < MonthlySplitSchedule::SaveOperation
   def check_doubles
     first_id = first_user_id.value
     second_id = second_user_id.value
-    split_query = MonthlySplitScheduleQuery.new
 
     if first_id && second_id && first_id === second_id
       first_user_id.add_error("First user is the same as the second user")
