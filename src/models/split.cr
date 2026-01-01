@@ -16,8 +16,8 @@ class Split < BaseModel
   end
 
   def user_ids : Tuple(Int64?, Int64?)
-    first_user_id = monthly_split_schedule.try(&.first_user_id)
-    second_user_id = monthly_split_schedule.try(&.second_user_id)
+    first_user_id = _preloaded_monthly_split_schedule.try(&.first_user_id)
+    second_user_id = _preloaded_monthly_split_schedule.try(&.second_user_id)
     {first_user_id, second_user_id}
   end
 

@@ -1,12 +1,13 @@
 class MonthlySplitSchedule::Create < BrowserAction
   post "/monthly_split_schedules" do
     SaveMonthlySplitSchedule.upsert(params) do |operation, schedule|
-      if schedule
-        puts "operation successful"
+      if operation.saved?
+        flash.success
+        redirect "/monthly_split_schedule"
       else
-        puts "operation failed: #{operation.inspect}"
+        flash.failure
+        html NewPage, operation: operation
       end
     end
-    redirect "/monthly_split_schedule"
   end
 end
