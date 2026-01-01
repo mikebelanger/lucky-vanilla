@@ -4,7 +4,7 @@ class Api::SendEmail < ApiAction
   get "/api/send_email" do
     now = Time.utc
     from = Time.utc(now.year, now.month, 1)
-    to = from + 1.month
+    to = (from + 1.month) - 1.day
 
     # Query all Monthly Split Schedules
     MonthlySplitScheduleQuery

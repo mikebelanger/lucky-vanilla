@@ -7,7 +7,7 @@ class Split < BaseModel
     column paid_on : Time?
     column first_user_amount : Int32
     column second_user_amount : Int32
-    column bill_sent_amount : Int16
+    column bill_sent_amount : Int16 = 0
     belongs_to monthly_split_schedule : MonthlySplitSchedule?
   end
 
