@@ -7,7 +7,7 @@ class User < BaseModel
     column encrypted_password : String
     column name : String
     has_many purchases : Purchase
-    column admin : Bool?
+    column admin : Bool? = false
   end
 
   def emailable : Carbon::Address
