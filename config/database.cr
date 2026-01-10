@@ -1,7 +1,7 @@
 database_name = "vanilla_app_#{LuckyEnv.environment}"
 
 AppDatabase.configure do |settings|
-  if LuckyEnv.production?
+  if ENV["LUCKY_ENV"] == "production"
     settings.credentials = Avram::Credentials.parse(ENV["DATABASE_URL"])
   else
     settings.credentials = Avram::Credentials.parse?(ENV["DATABASE_URL"]?) || Avram::Credentials.new(

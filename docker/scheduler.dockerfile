@@ -1,4 +1,4 @@
-FROM crystallang/crystal:1.17.1
+FROM crystallang/crystal:latest
 
 RUN apt-get update
 

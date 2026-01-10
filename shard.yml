@@ -5,7 +5,7 @@ targets:
   vanilla_app:
     main: src/vanilla_app.cr
   scheduler:
-    main: src/scheduler.cr
+    main: docker/scheduler.cr
 crystal: ">= 1.16.3"
 dependencies:
   lucky:

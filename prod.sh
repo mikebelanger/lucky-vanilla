@@ -1,39 +1,64 @@
+declare -r SUFFIX="prod"
+declare -r PORT=9000
+declare -r RELOAD_PORT=9001
+declare -r POD="vanilla_app_${SUFFIX}"
+declare -r DATABASE_CONTAINER_NAME="vanilla_postgres_${SUFFIX}"
+declare -r APP_NAME="vanilla_api_${SUFFIX}"
+declare -r HOST="127.0.0.1"
+declare -r APP_DOMAIN="http://localhost:${PORT}"
+declare -r POSTGRES_DB="vanilla_db"
+declare -r POSTGRES_PORT=5432
+declare -r POSTGRES_USER="lucky"
+declare -r POSTGRES_PASSWORD="password"
+
+# Create pod to group entire app
 podman pod create \
 --replace \
--p 8888:8888 \
---name vanilla_app_prod
+-p $PORT:$PORT \
+--name $POD
 
+# Build database part
 podman create \
 --replace \
---name vanilla_postgres \
+--name $DATABASE_CONTAINER_NAME \
 -v postgres_data:/var/lib/postgresql/data \
 -e POSTGRES_USER=lucky \
 -e POSTGRES_PASSWORD=password \
--e POSTGRES_DB=lucky \
---pod vanilla_app_prod \
+-e POSTGRES_DB=$POSTGRES_DB \
+-e POSTGRES_PORT=$POSTGRES_PORT \
+--pod $POD \
 postgres:14-alpine
 
+# Build api (lucky) image
+podman build -f docker/production.dockerfile --no-cache -t "vanilla_api_${SUFFIX}_base" .
+
+# Spin it up
 podman create \
 --replace \
---name vanilla_api \
---requires=vanilla_postgres \
--v /home/mike/.local/share/containers/storage/volumes/vanilla-app_postgres_data/_data \
+--name $APP_NAME \
+--requires=$DATABASE_CONTAINER_NAME \
 -v .:/app \
--v node_modules:/app/node_modules \
--v shards_lib:/app/lib \
--v app_bin:/app/bin \
--v build_cache:/root/.cache \
---entrypoint=docker/dev_entrypoint.sh \
--e DATABASE_URL=postgres://lucky:password@vanilla_postgres:5432/lucky \
--e DEV_HOST="0.0.0.0" \
---pod vanilla_app_prod \
-localhost/vanilla-app_lucky:latest
+-e SEND_GRID_KEY=unused \
+-e DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POD}:${POSTGRES_PORT}/${POSTGRES_DB}" \
+-e DATABASE_NAME=${DATABASE_CONTAINER_NAME} \
+-e LUCKY_ENV=production \
+-e APP_DOMAIN=$APP_DOMAIN \
+-e SECRET_KEY_BASE=$(lucky gen.secret_key) \
+-e PORT=$PORT \
+-e HOST=$HOST \
+-e POSTGRES_PORT=$POSTGRES_PORT \
+--entrypoint=docker/prod_entrypoint.sh \
+--pod $POD \
+vanilla_api_base
 
-podman build -f docker/scheduler.dockerfile --no-cache -t scheduler
+# Create periodic scheduler designed to 'ping' the lucky app at a given interval
+podman build -f docker/scheduler.dockerfile --no-cache -t "vanilla_scheduler_${SUFFIX}_base"
+
 podman create \
---pod vanilla_app_prod \
---requires=vanilla_api \
--e HOST_URL=vanilla_app_prod \
-scheduler
+--name "vanilla_scheduler_${SUFFIX}" \
+--pod $POD \
+--requires=$APP_NAME \
+-e HOST_URL="${POD}:${PORT}" \
+"vanilla_scheduler_${SUFFIX}_base"
 
-podman pod start vanilla_app_prod
+podman pod start $POD

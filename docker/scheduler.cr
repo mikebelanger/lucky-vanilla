@@ -16,5 +16,5 @@ loop do
   rescue e
     puts "Error: #{e.message}"
   end
-  sleep 1.day
+  sleep 2.minutes
 end

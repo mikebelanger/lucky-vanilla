@@ -14,3 +14,6 @@ Signal::INT.trap do
 end
 
 app_server.listen
+
+puts "app server listening"
+puts "#{app_server.inspect}"
