@@ -2,7 +2,7 @@ declare -r SUFFIX="prod"
 declare -r PORT=9000
 declare -r RELOAD_PORT=9001
 declare -r POD="vanilla_app_${SUFFIX}"
-declare -r DATABASE_CONTAINER_NAME="vanilla_postgres_${SUFFIX}"
+declare -r DATABASE_CONTAINER_NAME="vanilla_db_${SUFFIX}"
 declare -r APP_NAME="vanilla_api_${SUFFIX}"
 declare -r HOST="0.0.0.0"
 declare -r APP_DOMAIN="http://localhost:${PORT}"
@@ -30,7 +30,6 @@ fi
 podman create \
 --replace \
 --name ${DATABASE_CONTAINER_NAME} \
--v postgres_data:/var/lib/postgresql/data \
 -e POSTGRES_USER=${POSTGRES_USER} \
 -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
 -e POSTGRES_DB=${POSTGRES_DB} \

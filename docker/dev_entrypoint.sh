@@ -9,7 +9,6 @@ set -euo pipefail
 #  - Start the dev server.
 # It also accepts any commands to be run instead.
 
-
 warnfail () {
   echo "$@" >&2
   exit 1
@@ -32,11 +31,11 @@ if ! shards check ; then
   shards install
 fi
 
-echo 'Waiting for postgres to be available...'
-./docker/wait-for-it.sh -q vanilla_postgres_dev:5432
+echo "Waiting for postgres to be available on ${POD}:${POSTGRES_PORT}"
+./docker/wait-for-it.sh $POD:$POSTGRES_PORT
 
+lucky db.create
 lucky db.migrate
-
 # cd src/ts
 # npm install
 # npm run dev
