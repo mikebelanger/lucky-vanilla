@@ -3,7 +3,7 @@ AppDatabase.configure do |settings|
     settings.credentials = Avram::Credentials.parse(ENV["DATABASE_URL"])
   else
     settings.credentials = Avram::Credentials.parse?(ENV["DATABASE_URL"]?) || Avram::Credentials.new(
-      database: "vanilla_app_#{LuckyEnv.environment}",
+      database: ENV["POSTGRES_DB"]? || "lucky",
       hostname: ENV["DB_HOST"]? || "localhost",
       port: ENV["DB_PORT"]?.try(&.to_i) || 5432,
       # Some common usernames are "postgres", "root", or your system username (run 'whoami')

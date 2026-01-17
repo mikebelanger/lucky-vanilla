@@ -6,16 +6,25 @@ declare -r DATABASE_CONTAINER_NAME="vanilla_postgres_${SUFFIX}"
 declare -r APP_NAME="vanilla_api_${SUFFIX}"
 declare -r HOST="0.0.0.0"
 declare -r APP_DOMAIN="http://localhost:${PORT}"
-declare -r POSTGRES_DB="lucky"
+declare -r POSTGRES_DB="lucky_prod"
 declare -r POSTGRES_PORT=5432
 declare -r POSTGRES_USER="lucky"
 declare -r POSTGRES_PASSWORD="password"
+declare -r POSTGRES_DATA_DIR="./pg_data_${SUFFIX}"
 
 # Create pod to group entire app
 podman pod create \
 --replace \
 -p $PORT:$PORT \
 --name $POD
+
+# make an empty data directory to volume-mount to the postgres container
+# Most environment variables will not take effect in the postgres container unless
+# you volume-mount an empty data directory:
+# https://hub.docker.com/_/postgres#environment-variables
+if [ ! -d $POSTGRES_DATA_DIR ]; then
+    mkdir $POSTGRES_DATA_DIR
+fi
 
 # Build database part
 podman create \
@@ -26,6 +35,7 @@ podman create \
 -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
 -e POSTGRES_DB=${POSTGRES_DB} \
 -e POSTGRES_PORT=${POSTGRES_PORT} \
+-v "${POSTGRES_DATA_DIR}:/var/lib/postgresql/data" \
 --pod ${POD} \
 postgres:14-alpine
 

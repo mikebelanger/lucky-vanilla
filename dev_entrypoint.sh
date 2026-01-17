@@ -34,8 +34,7 @@ fi
 echo 'Waiting for postgres to be available...'
 ./docker/wait-for-it.sh -q vanilla_postgres_dev:5432
 
-lucky db.migrate
-
+lucky db.setup
 # cd src/ts
 # npm install
 # npm run dev
