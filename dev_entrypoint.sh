@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-echo "Is this thing on???\n"
-
 # This is the entrypoint script used for development docker workflows.
 # By default it will:
 #  - Install dependencies.

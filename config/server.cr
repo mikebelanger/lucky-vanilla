@@ -17,8 +17,8 @@ Lucky::Server.configure do |settings|
     settings.secret_key_base = "m/09rjLPFEjNG8FuUrsLhsDIuMxwXi6zpUUV5eCTyZA="
     # Change host/port in config/watch.yml
     # Alternatively, you can set the DEV_PORT env to set the port for local development
-    settings.host = Lucky::ServerSettings.host
-    settings.port = Lucky::ServerSettings.port
+    settings.host = ENV["HOST"]
+    settings.port = ENV["PORT"].to_i
   end
 
   # By default Lucky will serve static assets in development and production.

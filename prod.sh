@@ -65,3 +65,4 @@ podman create \
 "vanilla_scheduler_${SUFFIX}_base"
 
 podman pod start $POD
+podman pod logs --color -n -f $POD
