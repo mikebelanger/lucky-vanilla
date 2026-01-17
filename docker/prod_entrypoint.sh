@@ -50,4 +50,5 @@ echo 'Starting vanilla...'
 
 # cd bin
 # bin/start_server
-bin/vanilla_app
+chmod ug+x ./bin/start_server
+./bin/start_server

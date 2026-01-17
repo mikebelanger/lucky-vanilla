@@ -1,6 +1,5 @@
 require "./app"
 
-Log.info { "start_server is being executed" }
 Habitat.raise_if_missing_settings!
 
 if LuckyEnv.development?
