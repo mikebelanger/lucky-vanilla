@@ -1,5 +1,6 @@
 require "./app"
 
+Log.info { "start_server is being executed" }
 Habitat.raise_if_missing_settings!
 
 if LuckyEnv.development?
@@ -14,6 +15,3 @@ Signal::INT.trap do
 end
 
 app_server.listen
-
-puts "app server listening"
-puts "#{app_server.inspect}"

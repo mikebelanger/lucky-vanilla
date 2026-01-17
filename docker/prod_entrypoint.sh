@@ -33,10 +33,14 @@ if ! shards check ; then
 fi
 
 echo 'Waiting for postgres to be available...'
-# lucky db.create
-crystal run tasks.cr -- db.migrate
-./docker/wait-for-it.sh "${HOST}:${POSTGRES_PORT}"
 
+./docker/wait-for-it.sh $POD:$POSTGRES_PORT
+
+crystal build --release src/start_server.cr
+crystal build --release tasks.cr -o bin/cli
+
+crystal run tasks.cr -- db.migrate
+SECRET_KEY_BASE=$(lucky gen.secret_key) shards build vanilla_app
 # cd src/ts
 # npm install
 # npm run dev
@@ -44,6 +48,6 @@ crystal run tasks.cr -- db.migrate
 echo 'Starting vanilla...'
 # exec lucky dev --error-trace
 
-
-bin/start_server
-echo 'start server started'
+# cd bin
+# bin/start_server
+bin/vanilla_app

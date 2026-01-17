@@ -49,7 +49,7 @@ podman create \
 -e POSTGRES_PORT=$POSTGRES_PORT \
 --entrypoint=docker/dev_entrypoint.sh \
 --pod $POD \
-vanilla_api_base
+"vanilla_api_${SUFFIX}_base"
 
 # Create periodic scheduler designed to 'ping' the lucky app at a given interval
 podman build -f docker/scheduler.dockerfile --no-cache -t "vanilla_scheduler_${SUFFIX}_base"

@@ -5,7 +5,7 @@
 Lucky::Server.configure do |settings|
   if LuckyEnv.production?
     settings.secret_key_base = secret_key_from_env
-    settings.host = "127.0.0.1"
+    settings.host = ENV["HOST"]
     settings.port = ENV["PORT"].to_i
     settings.gzip_enabled = true
     # By default certain content types will be gzipped.

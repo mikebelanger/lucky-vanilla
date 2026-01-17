@@ -19,10 +19,5 @@ RUN git clone https://github.com/luckyframework/lucky_cli . && \
 WORKDIR /app
 RUN shards install
 
-RUN crystal build --release src/start_server.cr && \
-    shards build vanilla_app && \
-    crystal build --release tasks.cr -o bin/cli && \
-    bin/cli db.migrate
-
 EXPOSE 9000
 EXPOSE 9001
