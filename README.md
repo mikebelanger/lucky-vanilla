@@ -6,7 +6,7 @@ Very WIP, expect things to break.  I'm also using [Podman](https://podman.io), a
 
 ### Setting up the project
 
-Ensure you have a recent version of [Podman](podman.io). Once you do, assuming you're on Linux/OS X:
+Ensure you have a recent version of [Podman](https://podman.io). Once you do, assuming you're on Linux/OS X:
 1. Clone this repo
 2. cd into it
 3. For development, do `sh dev.sh`
