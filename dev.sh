@@ -1,16 +1,16 @@
-declare -r SUFFIX="dev"
-declare -r PORT=8888
-declare -r RELOAD_PORT=8889
-declare -r POD="vanilla_app_${SUFFIX}"
-declare -r DATABASE_CONTAINER_NAME="vanilla_db_${SUFFIX}"
-declare -r APP_NAME="vanilla_api_${SUFFIX}"
-declare -r HOST="0.0.0.0"
-declare -r APP_DOMAIN="http://localhost:${PORT}"
-declare -r POSTGRES_DB="lucky_dev"
-declare -r POSTGRES_PORT=5432
-declare -r POSTGRES_USER="lucky"
-declare -r POSTGRES_PASSWORD="password"
-declare -r POSTGRES_DATA_DIR="./pg_data_${SUFFIX}"
+SUFFIX="dev"
+PORT=8888
+RELOAD_PORT=8889
+POD="vanilla_app_${SUFFIX}"
+DATABASE_CONTAINER_NAME="vanilla_db_${SUFFIX}"
+APP_NAME="vanilla_api_${SUFFIX}"
+HOST="0.0.0.0"
+APP_DOMAIN="http://localhost:${PORT}"
+POSTGRES_DB="lucky_dev"
+POSTGRES_PORT=5432
+POSTGRES_USER="lucky"
+POSTGRES_PASSWORD="password"
+POSTGRES_DATA_DIR="./pg_data_${SUFFIX}"
 
 # Create pod to group entire app
 podman pod create \
