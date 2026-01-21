@@ -40,7 +40,7 @@ postgres:14-alpine
 
 # Build api (lucky) image
 podman build \
---build-arg SECRET_KEY_BASE=$(lucky gen.secret_key) \
+--build-arg SECRET_KEY_BASE=$(openssl rand -base64 32) \
 -f docker/production.dockerfile --no-cache -t "vanilla_api_${SUFFIX}_base" .
 
 # Spin it up
@@ -54,7 +54,7 @@ podman create \
 -e DATABASE_NAME=${DATABASE_CONTAINER_NAME} \
 -e LUCKY_ENV=production \
 -e APP_DOMAIN=${APP_DOMAIN} \
--e SECRET_KEY_BASE=$(lucky gen.secret_key) \
+-e SECRET_KEY_BASE=$(openssl rand -base64 32) \
 -e PORT=${PORT} \
 -e HOST=${POD} \
 -e POD=${POD} \
