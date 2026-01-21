@@ -40,7 +40,7 @@ crystal build --release src/start_server.cr
 crystal build --release tasks.cr -o bin/cli
 
 crystal run tasks.cr -- db.migrate
-SECRET_KEY_BASE=$(lucky gen.secret_key) shards build vanilla_app
+SECRET_KEY_BASE=$(openssl rand -base64 32) shards build vanilla_app
 # cd src/ts
 # npm install
 # npm run dev
