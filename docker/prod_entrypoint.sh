@@ -50,5 +50,6 @@ echo 'Starting vanilla...'
 
 # cd bin
 # bin/start_server
+crystal build src/start_server.cr -o ./bin/start_server
 chmod ug+x ./bin/start_server
 ./bin/start_server

@@ -11,11 +11,13 @@ POSTGRES_PORT=5432
 POSTGRES_USER="lucky"
 POSTGRES_PASSWORD="password"
 POSTGRES_DATA_DIR="./pg_data_${SUFFIX}"
+TLD_DOMAIN="vanillasplit.com"
+CADDY_DATA_DIR="./caddy_data"
 
 # Create pod to group entire app
 podman pod create \
 --replace \
--p $PORT:$PORT \
+-p ${PORT}:${PORT} \
 --name $POD
 
 # make an empty data directory to volume-mount to the postgres container
@@ -25,6 +27,13 @@ podman pod create \
 if [ ! -d $POSTGRES_DATA_DIR ]; then
     mkdir $POSTGRES_DATA_DIR
 fi
+
+# Same with caddy's data directory
+if [ ! -d $CADDY_DATA_DIR ]; then
+    mkdir $CADDY_DATA_DIR
+    sudo chmod 777 $CADDY_DATA_DIR
+fi
+
 
 # Build database part
 podman create \
@@ -73,5 +82,17 @@ podman create \
 -e HOST_URL="${POD}:${PORT}" \
 "vanilla_scheduler_${SUFFIX}_base"
 
-podman pod start $POD
-podman pod logs --color -n -f $POD
+podman pod start ${POD}
+
+# Reverse proxy
+podman run --d \
+-p 443:443 \
+-p 80:80 \
+--name vanilla_reverse_proxy \
+--cap-add=NET_ADMIN \
+-v caddy_data:/data \
+caddy caddy reverse-proxy \
+--from "${TLD_DOMAIN}" \
+--to "localhost:${PORT}"
+
+podman pod logs --color -n -f ${POD}
