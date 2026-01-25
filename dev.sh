@@ -43,12 +43,12 @@ podman build \
 --build-arg SECRET_KEY_BASE=$(lucky gen.secret_key) \
 -f docker/development.dockerfile --no-cache -t "vanilla_api_${SUFFIX}_base" .
 
-# Spin it up
+# Create the API image
 podman create \
 --replace \
 --name ${APP_NAME} \
 --requires=${DATABASE_CONTAINER_NAME} \
--v .:/app \
+-v .:/app:z \
 -e SEND_GRID_KEY=unused \
 -e DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POD}:${POSTGRES_PORT}/${POSTGRES_DB}" \
 -e DATABASE_NAME=${DATABASE_CONTAINER_NAME} \
@@ -62,6 +62,16 @@ podman create \
 --entrypoint=docker/dev_entrypoint.sh \
 --pod ${POD} \
 "vanilla_api_${SUFFIX}_base"
+
+# Create the TS (frontend) asset page
+podman create \
+--replace \
+--name vanilla_frontend_dev \
+-v ./src/ts:/app \
+-v ./public:/public \
+-w /app \
+--pod vanilla_app_dev \
+oven/bun:latest dev
 
 # Create periodic scheduler designed to 'ping' the lucky app at a given interval
 podman build -f docker/scheduler.dockerfile --no-cache -t "vanilla_scheduler_${SUFFIX}_base"
