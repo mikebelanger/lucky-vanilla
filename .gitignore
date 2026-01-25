@@ -11,3 +11,4 @@ start_server
 /public/css
 /node_modules
 yarn-error.log
+/src/ts/node_modules
