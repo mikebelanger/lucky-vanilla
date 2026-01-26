@@ -33,7 +33,7 @@ class SplitRowForm extends HTMLFormElement {
 
     if (url && method) {
       fetch(url, {
-        method: method,
+        method,
         body,
         headers
       })
