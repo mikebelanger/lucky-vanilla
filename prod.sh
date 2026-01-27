@@ -17,7 +17,8 @@ CADDY_DATA_DIR="./caddy_data"
 # Create pod to group entire app
 podman pod create \
 --replace \
--p ${PORT}:${PORT} \
+-p 443:443 \
+-p 80:80 \
 --name $POD
 
 # make an empty data directory to volume-mount to the postgres container
@@ -82,17 +83,14 @@ podman create \
 -e HOST_URL="${POD}:${PORT}" \
 "vanilla_scheduler_${SUFFIX}_base"
 
-podman pod start ${POD}
-
 # Reverse proxy
-podman run --d \
--p 443:443 \
--p 80:80 \
+podman create \
 --name vanilla_reverse_proxy \
+--pod ${POD} \
 --cap-add=NET_ADMIN \
--v caddy_data:/data \
-caddy caddy reverse-proxy \
---from "${TLD_DOMAIN}" \
---to "localhost:${PORT}"
+--requires=${APP_NAME} \
+-v "${CADDY_DATA_DIR}:/data" \
+caddy caddy reverse-proxy --from "${TLD_DOMAIN}" --to "${POD}:${PORT}"
 
+podman pod start ${POD}
 podman pod logs --color -n -f ${POD}
