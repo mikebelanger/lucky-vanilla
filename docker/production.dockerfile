@@ -1,4 +1,4 @@
-FROM crystallang/crystal:1.18
+FROM crystallang/crystal:1.19
 
 RUN apt-get update && \
     apt-get install -y postgresql-client && \
@@ -18,6 +18,3 @@ RUN git clone https://github.com/luckyframework/lucky_cli . && \
 
 WORKDIR /app
 RUN shards install
-
-EXPOSE 9000
-EXPOSE 9001
