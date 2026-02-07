@@ -23,8 +23,8 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     # Create pod to group entire app
     podman pod create \
     --replace \
-    -p 4430:443 \
-    -p 8080:80 \
+    -p 443:443 \
+    -p 80:80 \
     --name $POD
 
     # make an empty data directory to volume-mount to the postgres container
@@ -50,7 +50,7 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
     -e POSTGRES_DB=${POSTGRES_DB} \
     -e POSTGRES_PORT=${POSTGRES_PORT} \
-    -v "${POSTGRES_DATA_DIR}:/var/lib/postgresql/data" \
+    -v "${POSTGRES_DATA_DIR}:/var/lib/postgresql/data:Z" \
     --pod ${POD} \
     postgres:14-alpine
 
@@ -64,7 +64,7 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     --replace \
     --name ${APP_NAME} \
     --requires=${DATABASE_CONTAINER_NAME} \
-    -v .:/app \
+    -v .:/app:Z \
     -e SEND_GRID_KEY=unused \
     -e DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POD}:${POSTGRES_PORT}/${POSTGRES_DB}" \
     -e DATABASE_NAME=${DATABASE_CONTAINER_NAME} \
@@ -95,7 +95,7 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     --pod ${POD} \
     --cap-add=NET_ADMIN \
     --requires=${APP_NAME} \
-    -v "${CADDY_DATA_DIR}:/data" \
+    -v "${CADDY_DATA_DIR}:/data:Z" \
     caddy caddy reverse-proxy --from "${TLD_DOMAIN}" --to "${POD}:${PORT}"
 fi
 
