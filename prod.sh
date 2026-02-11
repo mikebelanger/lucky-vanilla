@@ -25,6 +25,7 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     --replace \
     -p 443:443 \
     -p 80:80 \
+    -p 25:25 \
     --name $POD
 
     # make an empty data directory to volume-mount to the postgres container
@@ -72,7 +73,6 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     -e APP_DOMAIN=${APP_DOMAIN} \
     -e SECRET_KEY_BASE=$(openssl rand -base64 32) \
     -e PORT=${PORT} \
-    -e PORT=25 \ # For email
     -e HOST=${POD} \
     -e POD=${POD} \
     -e POSTGRES_PORT=${POSTGRES_PORT} \
