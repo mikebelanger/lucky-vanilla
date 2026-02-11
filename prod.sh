@@ -72,6 +72,7 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     -e APP_DOMAIN=${APP_DOMAIN} \
     -e SECRET_KEY_BASE=$(openssl rand -base64 32) \
     -e PORT=${PORT} \
+    -e PORT=25 \ # For email
     -e HOST=${POD} \
     -e POD=${POD} \
     -e POSTGRES_PORT=${POSTGRES_PORT} \
