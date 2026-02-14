@@ -7,14 +7,21 @@ class BillEmail < BaseEmail
   # recipient = UserQuery.first
   # BillEmail.new(recipient).deliver
   # ```
+  Habitat.create { setting stubbed_token : String? }
+  delegate stubbed_token, to: :settings
 
   def initialize(@recipient : Carbon::Emailable, @split : Split)
+
   end
 
   to @recipient
-  from "myapp@support.com" # or set a default in src/emails/base_email.cr
+  from "bill@vanillasplit.com" # or set a default in src/emails/base_email.cr
   subject "your bill for #{@split.start_day} to #{@split.end_day}"
   templates html
+
+  def template_id
+    ENV["BILL_TEMPLATE_ID"]
+  end
 
   private def email_subject : String
     {%
