@@ -14,19 +14,19 @@ shards:
 
   bindata:
     git: https://github.com/spider-gazelle/bindata.git
-    version: 2.1.0
+    version: 2.1.1
 
   cadmium_transliterator:
     git: https://github.com/cadmiumcr/transliterator.git
-    version: 0.1.0+git.commit.46c4c14594057dbcfaf27e7e7c8c164d3f0ce3f1
+    version: 0.1.0+git.commit.0dcedb98cbac7dd5827f204a0714b62f25c6515a
 
   carbon:
     git: https://github.com/luckyframework/carbon.git
     version: 0.6.1
 
-  carbon_mailgun_adapter:
-    git: https://github.com/atnos/carbon_mailgun_adapter.git
-    version: 0.2.0
+  carbon_mailersend_adapter:
+    git: https://github.com/mikebelanger/carbon_mailersend_adapter.git
+    version: 0.1.0+git.commit.bdc89be3d37c6aba04cf416746343dad0081e6cd
 
   cry:
     git: https://github.com/luckyframework/cry.git
@@ -58,7 +58,7 @@ shards:
 
   html5:
     git: https://github.com/naqvis/crystal-html5.git
-    version: 0.5.0
+    version: 0.5.1
 
   jwt:
     git: https://github.com/crystal-community/jwt.git
@@ -82,7 +82,7 @@ shards:
 
   lucky_router:
     git: https://github.com/luckyframework/lucky_router.git
-    version: 0.6.0
+    version: 0.6.1
 
   lucky_task:
     git: https://github.com/luckyframework/lucky_task.git
@@ -94,7 +94,7 @@ shards:
 
   openssl_ext:
     git: https://github.com/spider-gazelle/openssl_ext.git
-    version: 2.4.4
+    version: 2.8.4
 
   pg:
     git: https://github.com/will/crystal-pg.git
