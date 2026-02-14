@@ -77,9 +77,9 @@ class Split < BaseModel
       if first_user && second_user
         average = total_amount / 2
         if first_user_amount > second_user_amount
-          outcome = "#{second_user.email} owes #{first_user.email}: #{average - second_user_amount}"
+          outcome = "#{second_user.name} owes #{first_user.name} <strong>#{average - second_user_amount}</strong> dollars"
         elsif first_user_amount < second_user_amount
-          outcome = "#{first_user.email} owes #{second_user.email}: #{average - first_user_amount}"
+          outcome = "#{first_user.name} owes #{second_user.name}: <strong>#{average - first_user_amount}</strong> dollars"
         else
           outcome = "both users spent the same amount"
         end
