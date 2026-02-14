@@ -11,16 +11,22 @@ class BillEmail < BaseEmail
   delegate stubbed_token, to: :settings
 
   def initialize(@recipient : Carbon::Emailable, @split : Split)
-
   end
 
   to @recipient
   from "bill@vanillasplit.com" # or set a default in src/emails/base_email.cr
   subject "your bill for #{@split.start_day} to #{@split.end_day}"
-  templates html
+  templates bill_email
 
   def template_id
     ENV["BILL_TEMPLATE_ID"]
+  end
+
+  def variables
+    {
+      "var": "Vanilla Split",
+      "outcome": @split.outcome
+    }
   end
 
   private def email_subject : String
