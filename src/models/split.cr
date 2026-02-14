@@ -27,7 +27,7 @@ class Split < BaseModel
   end
 
   def month_and_year
-    "#{start_day.month}, #{start_day.year}"
+    "#{Month.new(start_day.month).name}, #{start_day.year}"
   end
 
   def monthly_contribution(u : User) : Int32?
