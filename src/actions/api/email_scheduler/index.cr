@@ -37,7 +37,7 @@ class Api::SendEmail < ApiAction
           if split && (operation.created? || operation.updated?)
             [first_user, second_user].each do |recipient|
               bill = BillEmail.new(
-                recipient: Carbon::Address.new(recipient.email),
+                to: Carbon::Address.new(recipient.email),
                 split: split
               )
               bill.deliver

@@ -26,6 +26,10 @@ class Split < BaseModel
     end
   end
 
+  def month_and_year
+    "#{start_day.month}, #{start_day.year}"
+  end
+
   def monthly_contribution(u : User) : Int32?
     first_user_id, second_user_id = user_ids
 

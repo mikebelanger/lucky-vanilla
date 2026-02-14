@@ -26,7 +26,7 @@ shards:
 
   carbon_mailersend_adapter:
     git: https://github.com/mikebelanger/carbon_mailersend_adapter.git
-    version: 0.1.0+git.commit.bdc89be3d37c6aba04cf416746343dad0081e6cd
+    version: 0.1.0+git.commit.996e797dfba7289ca27ed3ecdbd7068855e59809
 
   cry:
     git: https://github.com/luckyframework/cry.git
