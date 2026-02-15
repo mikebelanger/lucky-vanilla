@@ -32,6 +32,9 @@ if ! shards check ; then
   shards install
 fi
 
+# Exit out if unit tests don't pass
+crystal spec
+
 echo 'Waiting for postgres to be available...'
 
 ./docker/wait-for-it.sh $POD:$POSTGRES_PORT

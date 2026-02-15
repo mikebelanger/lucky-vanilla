@@ -25,7 +25,6 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     --replace \
     -p 443:443 \
     -p 80:80 \
-    -p 25:25 \
     --name $POD
 
     # make an empty data directory to volume-mount to the postgres container

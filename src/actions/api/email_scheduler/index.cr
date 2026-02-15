@@ -34,7 +34,7 @@ class Api::SendEmail < ApiAction
           second_user_amount: second_total.to_i32,
           total_amount: total.to_i32
         ) do |operation, split|
-          if split && (operation.created? || operation.updated?)
+          if split && (operation.created? || (operation.updated? && split.email_due?(Time.utc)))
             [first_user, second_user].each do |recipient|
               bill = BillEmail.new(
                 to: Carbon::Address.new(recipient.email),

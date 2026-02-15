@@ -21,4 +21,8 @@ struct Time
   def date_without_time
     "#{self.day_of_week}, #{Month.new(self.month).name} #{self.day}"
   end
+
+  def end_of_month?
+    (self + 1.day).month == self.month + 1
+  end
 end

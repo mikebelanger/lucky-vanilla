@@ -100,4 +100,16 @@ class Split < BaseModel
     end
     email_html
   end
+
+  def email_due?(current_time : Time)
+    now = Time.utc
+    email_is_due = false
+
+    if now.end_of_month?
+      duration_since_last_update = Time.utc - self.updated_at
+      min_time_before_sending_update_again = Time::Span.new(days: ENV["SPLIT_EMAIL_DELAY"].to_i || 1)
+      email_is_due = duration_since_last_update >= min_time_before_sending_update_again
+    end
+    email_is_due
+  end
 end
