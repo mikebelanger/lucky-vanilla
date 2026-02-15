@@ -85,7 +85,7 @@ class Split < BaseModel
           outcome = "both users spent the same amount"
         end
         email_html =
-        <<-HTML
+          <<-HTML
           <h1>Hello, #{to}</h1>
           <h6>This is who/what's owing for expenses in <strong>#{month_and_year}.<strong></h6>
           <p><strong>#{first_user.name}</strong> spent: <strong>$#{first_user_amount}</strong></p>
@@ -101,15 +101,8 @@ class Split < BaseModel
     email_html
   end
 
-  def email_due?(current_time : Time)
-    now = Time.utc
-    email_is_due = false
-
-    if now.end_of_month?
-      duration_since_last_update = Time.utc - self.updated_at
-      min_time_before_sending_update_again = Time::Span.new(days: ENV["SPLIT_EMAIL_DELAY"].to_i || 1)
-      email_is_due = duration_since_last_update >= min_time_before_sending_update_again
-    end
-    email_is_due
+  def ready_to_send?(now = Time.utc) : Bool
+    time_since_last_bill_sent = now - self.updated_at
+    now.end_of_month? && time_since_last_bill_sent.days > (ENV["MIN_TIME_BETWEEN_BILL_SENDS"].to_i || 5)
   end
 end

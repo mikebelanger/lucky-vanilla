@@ -25,8 +25,8 @@ class BillEmail < BaseEmail
 
   def variables
     {
-      "var": "Vanilla Split",
-      "outcome": @split.outcome
+      "var":     "Vanilla Split",
+      "outcome": @split.outcome,
     }
   end
 

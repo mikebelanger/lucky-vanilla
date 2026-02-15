@@ -25,25 +25,50 @@ class Api::SendEmail < ApiAction
         second_total = second_user_purchases.sum(&.dollars)
         total = first_total + second_total
 
-        SaveSplit.upsert(
-          monthly_split_schedule_id: split_schedule.id,
-          paid: false,
-          start_day: from,
-          end_day: to,
-          first_user_amount: first_total.to_i32,
-          second_user_amount: second_total.to_i32,
-          total_amount: total.to_i32
-        ) do |operation, split|
-          if split && (operation.created? || (operation.updated? && split.email_due?(Time.utc)))
-            [first_user, second_user].each do |recipient|
-              bill = BillEmail.new(
-                to: Carbon::Address.new(recipient.email),
-                split: split
-              )
-              bill.deliver
+        # Query SaveSplit for existing splits first
+        any_existing_splits = SplitQuery.new
+          .monthly_split_schedule_id(split_schedule.id)
+          .paid(false)
+          .start_day(from)
+          .end_day(to)
+          .first_user_amount(first_total.to_i32)
+          .second_user_amount(second_total.to_i32)
+          .total_amount(total.to_i32)
+
+        if any_existing_splits.empty?
+          SaveSplit.create(
+            monthly_split_schedule_id: split_schedule.id,
+            paid: false,
+            start_day: from,
+            end_day: to,
+            first_user_amount: first_total.to_i32,
+            second_user_amount: second_total.to_i32,
+            total_amount: total.to_i32,
+            bill_sent_amount: 0,
+          ) do |operation, split|
+            if split && operation.created?
+              [first_user, second_user].each do |recipient|
+                bill = BillEmail.new(
+                  to: Carbon::Address.new(recipient.email),
+                  split: split
+                )
+                bill.deliver
+              end
+            else
+              Log.info { "Failed to create split: #{operation.inspect} \n split: #{split.inspect}" }
             end
-          else
-            Log.info { "Failed to create split: #{operation.inspect} \n split: #{split.inspect}" }
+          end
+        else
+          any_existing_splits.each do |existing_split|
+            if existing_split.ready_to_send?
+              [first_user, second_user].each do |recipient|
+                bill = BillEmail.new(
+                  to: Carbon::Address.new(recipient.email),
+                  split: existing_split
+                )
+                bill.deliver
+              end
+            end
           end
         end
       end
