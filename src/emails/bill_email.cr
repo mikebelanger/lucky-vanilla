@@ -12,16 +12,11 @@ class BillEmail < BaseEmail
 
   to @to
   from "bill@vanillasplit.com" # or set a default in src/emails/base_email.cr
-  subject "your bill for #{@split.month_and_year}"
+  subject "Your share of food expenses for #{@split.month_and_year}"
   templates bill_email
 
   def html_body
-    <<-HTML
-      <h1>Hello, #{@to.carbon_address}</h1>
-      <p>This is your bill for #{@split.month_and_year}.</p>
-      <p>Outcome: #{@split.outcome}.</p>
-      <p>Total: #{@split.total_amount}.</p>
-    HTML
+    @split.html_email_body(to: @to)
   end
 
   def template_id

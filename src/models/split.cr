@@ -67,8 +67,9 @@ class Split < BaseModel
     end
   end
 
-  def outcome
+  def html_email_body(to : Carbon::Emailable) : String
     outcome = "Users not all found"
+    email_html = ""
     first_user_id, second_user_id = user_ids
     if first_user_id && second_user_id
       first_user = UserQuery.new.find(first_user_id)
@@ -83,10 +84,20 @@ class Split < BaseModel
         else
           outcome = "both users spent the same amount"
         end
+        email_html =
+        <<-HTML
+          <h1>Hello, #{to}</h1>
+          <h6>This is who/what's owing for expenses in <strong>#{month_and_year}.<strong></h6>
+          <p><strong>#{first_user.name}</strong> spent: <strong>$#{first_user_amount}</strong></p>
+          <p><strong>#{second_user.name}</strong> spent: <strong>$#{second_user_amount}</strong></p>
+          <p>Total: <strong>$#{total_amount}.</strong></p>
+          <br />
+          <p>#{outcome}.</p>
+        HTML
       else
         outcome = "users not found"
       end
     end
-    outcome
+    email_html
   end
 end
