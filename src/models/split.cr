@@ -101,8 +101,9 @@ class Split < BaseModel
     email_html
   end
 
-  def ready_to_send?(now = Time.utc) : Bool
+  def due_to_send_after?(only_send_every_n_hours : Int32) : Bool
+    now = Time.utc
     time_since_last_bill_sent = now - self.updated_at
-    now.end_of_month? && time_since_last_bill_sent.days > (ENV["MIN_TIME_BETWEEN_BILL_SENDS"].to_i || 5)
+    time_since_last_bill_sent.days > only_send_every_n_hours
   end
 end

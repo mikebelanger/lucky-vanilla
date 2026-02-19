@@ -11,6 +11,7 @@ POSTGRES_PORT=5432
 POSTGRES_USER="lucky"
 POSTGRES_PASSWORD="password"
 POSTGRES_DATA_DIR="./pg_data_${SUFFIX}"
+SEND_TOKEN=$(openssl rand -base64 32)
 
 # Create pod to group entire app
 podman pod create \
@@ -59,6 +60,7 @@ podman create \
 -e HOST=${POD} \
 -e POD=${POD} \
 -e POSTGRES_PORT=${POSTGRES_PORT} \
+-e SEND_TOKEN=${SEND_TOKEN} \
 --entrypoint=docker/dev_entrypoint.sh \
 --pod ${POD} \
 "vanilla_api_${SUFFIX}_base"
@@ -81,6 +83,7 @@ podman create \
 --pod ${POD} \
 --requires=${APP_NAME} \
 -e HOST_URL="${POD}:${PORT}" \
+-e SEND_TOKEN=${SEND_TOKEN} \
 "vanilla_scheduler_${SUFFIX}_base"
 
 podman pod start $POD

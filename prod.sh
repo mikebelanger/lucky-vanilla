@@ -13,6 +13,7 @@ POSTGRES_PASSWORD="password"
 POSTGRES_DATA_DIR="./pg_data_${SUFFIX}"
 TLD_DOMAIN="vanillasplit.com"
 CADDY_DATA_DIR="./caddy_data"
+SEND_TOKEN=$(openssl rand -base64 32)
 
 # Test if podman pod exists already
 podman pod exists "$POD" > /dev/null 2>&1
@@ -75,6 +76,7 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     -e HOST=${POD} \
     -e POD=${POD} \
     -e POSTGRES_PORT=${POSTGRES_PORT} \
+    -e SEND_TOKEN=${SEND_TOKEN} \
     --entrypoint=docker/prod_entrypoint.sh \
     --pod ${POD} \
     "vanilla_api_${SUFFIX}_base"
@@ -87,6 +89,7 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     --pod ${POD} \
     --requires=${APP_NAME} \
     -e HOST_URL="${POD}:${PORT}" \
+    -e SEND_TOKEN=${SEND_TOKEN} \
     "vanilla_scheduler_${SUFFIX}_base"
 
     # Reverse proxy
