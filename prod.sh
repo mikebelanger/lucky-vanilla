@@ -5,7 +5,6 @@ POD="vanilla_app_${SUFFIX}"
 DATABASE_CONTAINER_NAME="vanilla_db_${SUFFIX}"
 APP_NAME="vanilla_api_${SUFFIX}"
 HOST="0.0.0.0"
-APP_DOMAIN="http://localhost:${PORT}"
 POSTGRES_DB="lucky_prod"
 POSTGRES_PORT=5432
 POSTGRES_USER="lucky"
@@ -70,7 +69,7 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     -e DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POD}:${POSTGRES_PORT}/${POSTGRES_DB}" \
     -e DATABASE_NAME=${DATABASE_CONTAINER_NAME} \
     -e LUCKY_ENV=production \
-    -e APP_DOMAIN=${APP_DOMAIN} \
+    -e APP_DOMAIN=${TLD_DOMAIN} \
     -e SECRET_KEY_BASE=$(openssl rand -base64 32) \
     -e PORT=${PORT} \
     -e HOST=${POD} \
