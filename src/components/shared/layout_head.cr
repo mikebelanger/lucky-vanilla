@@ -17,7 +17,7 @@ class Shared::LayoutHead < BaseComponent
   def render
     head do
       utf8_charset
-      title "My App - #{@page_title}"
+      title "Vanilla Split Expense Tracking - #{@page_title}"
       csrf_meta_tags
       responsive_meta_tag
       css_link asset("main.css")
