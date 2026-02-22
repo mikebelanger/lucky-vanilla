@@ -9,7 +9,7 @@ class SignUpUser < User::SaveOperation
   attribute password_confirmation : String
 
   before_save do
-    admin.value = true
+    admin.value = email == "mikebelanger@fastmail.com" || email == "mikejamesbelanger@gmail.com"
     validate_uniqueness_of email
     Authentic.copy_and_encrypt(password, to: encrypted_password) if password.valid?
   end
