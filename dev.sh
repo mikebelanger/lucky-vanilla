@@ -11,7 +11,7 @@ POSTGRES_PORT=5432
 POSTGRES_USER="lucky"
 POSTGRES_PASSWORD="password"
 POSTGRES_DATA_DIR="./pg_data_${SUFFIX}"
-SEND_TOKEN=$(openssl rand -base64 32)
+SEND_TOKEN=$(openssl rand -hex 15)
 
 # Create pod to group entire app
 podman pod create \

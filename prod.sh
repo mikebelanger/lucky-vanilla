@@ -12,7 +12,7 @@ POSTGRES_PASSWORD="password"
 POSTGRES_DATA_DIR="./pg_data_${SUFFIX}"
 TLD_DOMAIN="vanillasplit.com"
 CADDY_DATA_DIR="./caddy_data"
-SEND_TOKEN=$(openssl rand -base64 32)
+SEND_TOKEN=$(openssl rand -hex 15)
 
 # Test if podman pod exists already
 podman pod exists "$POD" > /dev/null 2>&1
