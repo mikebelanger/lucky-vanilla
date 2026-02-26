@@ -92,7 +92,7 @@ class Split < BaseModel
           second_user.name
         end
 
-        HTML.build do
+        email_html = HTML.build do
           doctype
           html(lang: "en-US") do
             head do
