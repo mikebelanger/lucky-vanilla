@@ -1,7 +1,7 @@
 require "http/client"
 
 def email_query
-  response = HTTP::Client.get "http://#{ENV["HOST_URL"]}/api/send_email/#{ENV["SEND_TOKEN"]}"
+  response = HTTP::Client.get "http://#{ENV["HOST_URL"]}/api/email/send/#{ENV["SEND_TOKEN"]}"
   if response.status_code == 200
     puts "Response successful"
     puts response.body
