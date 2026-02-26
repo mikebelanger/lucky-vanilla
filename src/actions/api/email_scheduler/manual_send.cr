@@ -1,4 +1,4 @@
-class Api::SendEmail < ApiAction
+class Api::ManualSendEmail < ApiAction
   include Api::Auth::SkipRequireAuthToken
 
   get "/api/manual_split_send/:send_token" do
