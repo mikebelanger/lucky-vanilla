@@ -35,7 +35,7 @@ podman create \
 -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
 -e POSTGRES_DB=${POSTGRES_DB} \
 -e POSTGRES_PORT=${POSTGRES_PORT} \
--v "${POSTGRES_DATA_DIR}:/var/lib/postgresql/data" \
+-v "${POSTGRES_DATA_DIR}:/var/lib/postgresql/data:z" \
 --pod ${POD} \
 postgres:14-alpine
 
@@ -69,8 +69,8 @@ podman create \
 podman create \
 --replace \
 --name vanilla_frontend_dev \
--v ./src/ts:/app \
--v ./public:/public \
+-v ./src/ts:/app:z \
+-v ./public:/public:z \
 -w /app \
 --pod vanilla_app_dev \
 oven/bun:latest dev

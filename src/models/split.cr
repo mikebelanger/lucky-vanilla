@@ -1,3 +1,5 @@
+require "html_builder"
+
 class Split < BaseModel
   table do
     column start_day : Time
@@ -84,16 +86,57 @@ class Split < BaseModel
         else
           outcome = "both users spent the same amount"
         end
-        email_html =
-          <<-HTML
-          <h1>Hello, #{to}</h1>
-          <h6>This is who/what's owing for expenses in <strong>#{month_and_year}.<strong></h6>
-          <p><strong>#{first_user.name}</strong> spent: <strong>$#{first_user_amount}</strong></p>
-          <p><strong>#{second_user.name}</strong> spent: <strong>$#{second_user_amount}</strong></p>
-          <p>Total: <strong>$#{total_amount}.</strong></p>
-          <br />
-          <p>#{outcome}.</p>
-        HTML
+        to_name = if first_user.email == to
+          first_user.name
+        else
+          second_user.name
+        end
+
+        HTML.build do
+          doctype
+          html(lang: "en-US") do
+            head do
+              title { "Expense Split Notification" }
+            end
+            body do
+              h1 { "Hello, #{to_name}"}
+              h1 do
+                text "This is who/what's owing for expenses for "
+                strong do
+                  text month_and_year
+                end
+              end
+              p do
+                text first_user.name
+                strong do
+                  text "spent: #{first_user_amount}"
+                end
+              end
+              p do
+                text second_user.name
+                strong do
+                  text "spent: #{second_user_amount}"
+                end
+              end
+              p do
+                text "Remaining: "
+                strong do
+                  text outcome
+                end
+              end
+            end
+          end
+        end
+          #   <<-HTML
+          #   <h1>Hello, #{to}</h1>
+          #   <h6>This is who/what's owing for expenses in <strong>#{month_and_year}.<strong></h6>
+          #   <p><strong>#{first_user.name}</strong> spent: <strong>$#{first_user_amount}</strong></p>
+          #   <p><strong>#{second_user.name}</strong> spent: <strong>$#{second_user_amount}</strong></p>
+          #   <p>Total: <strong>$#{total_amount}.</strong></p>
+          #   <br />
+          #   <p>#{outcome}.</p>
+          # HTML
+
       else
         outcome = "users not found"
       end

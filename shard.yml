@@ -8,6 +8,8 @@ targets:
     main: docker/scheduler.cr
 crystal: ">= 1.16.3"
 dependencies:
+  html_builder:
+    github: crystal-lang/html_builder
   lucky:
     github: luckyframework/lucky
     version: ~> 1.4.0

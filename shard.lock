@@ -60,6 +60,10 @@ shards:
     git: https://github.com/naqvis/crystal-html5.git
     version: 0.5.1
 
+  html_builder:
+    git: https://github.com/crystal-lang/html_builder.git
+    version: 0.2.2
+
   jwt:
     git: https://github.com/crystal-community/jwt.git
     version: 1.6.1
