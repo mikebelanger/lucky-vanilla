@@ -86,7 +86,7 @@ class Split < BaseModel
         else
           outcome = "Both users spent the same amount"
         end
-        to_name = if first_user.email == to
+        to_name = if first_user.email.to_s == to.to_s
           first_user.name
         else
           second_user.name
@@ -118,6 +118,12 @@ class Split < BaseModel
                 text "#{second_user.name} spent: "
                 strong do
                   text "$#{second_user_amount}"
+                end
+              end
+              p do
+                text "Total: "
+                strong do
+                  text "$#{total_amount}"
                 end
               end
               p do
