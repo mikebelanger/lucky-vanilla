@@ -80,11 +80,11 @@ class Split < BaseModel
       if first_user && second_user
         average = total_amount / 2
         if first_user_amount > second_user_amount
-          outcome = "#{second_user.name} owes #{first_user.name} <strong>#{average - second_user_amount}</strong> dollars"
+          outcome = "#{second_user.name} owes #{first_user.name} #{average - second_user_amount} dollars"
         elsif first_user_amount < second_user_amount
-          outcome = "#{first_user.name} owes #{second_user.name}: <strong>#{average - first_user_amount}</strong> dollars"
+          outcome = "#{first_user.name} owes #{second_user.name}: #{average - first_user_amount} dollars"
         else
-          outcome = "both users spent the same amount"
+          outcome = "Both users spent the same amount"
         end
         to_name = if first_user.email == to
           first_user.name
@@ -99,27 +99,28 @@ class Split < BaseModel
               title { "Expense Split Notification" }
             end
             body do
-              h1 { "Hello, #{to_name}"}
               h1 do
-                text "This is who/what's owing for expenses for "
+                text "Hello, #{to_name}"
+              end
+              h3 do
+                text "This breaks down total food expenses for "
                 strong do
                   text month_and_year
                 end
               end
               p do
-                text first_user.name
+                text "#{first_user.name} spent: "
                 strong do
-                  text "spent: #{first_user_amount}"
+                  text "$#{first_user_amount}"
                 end
               end
               p do
-                text second_user.name
+                text "#{second_user.name} spent: "
                 strong do
-                  text "spent: #{second_user_amount}"
+                  text "$#{second_user_amount}"
                 end
               end
               p do
-                text "Remaining: "
                 strong do
                   text outcome
                 end
