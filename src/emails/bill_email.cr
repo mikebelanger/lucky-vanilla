@@ -7,7 +7,7 @@ class BillEmail < BaseEmail
   # to = UserQuery.first
   # BillEmail.new(to).deliver
   # ```
-  def initialize(@to : Carbon::Emailable, @split : Split)
+  def initialize(@to : Carbon::Emailable, @split : Split, @to_user : User)
   end
 
   to @to
@@ -16,7 +16,7 @@ class BillEmail < BaseEmail
   templates bill_email
 
   def html_body
-    @split.html_email_body(to: @to)
+    @split.html_email_body(to: @to_user)
   end
 
   def template_id

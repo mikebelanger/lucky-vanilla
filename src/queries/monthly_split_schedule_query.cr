@@ -54,7 +54,8 @@ class MonthlySplitScheduleQuery < MonthlySplitSchedule::BaseQuery
               [first_user, second_user].each do |recipient|
                 bill = BillEmail.new(
                   to: Carbon::Address.new(recipient.email),
-                  split: split
+                  split: split,
+                  to_user: recipient
                 )
                 bill.deliver
               end
@@ -68,7 +69,8 @@ class MonthlySplitScheduleQuery < MonthlySplitSchedule::BaseQuery
               [first_user, second_user].each do |recipient|
                 bill = BillEmail.new(
                   to: Carbon::Address.new(recipient.email),
-                  split: existing_split
+                  split: existing_split,
+                  to_user: recipient
                 )
                 bill.deliver
               end

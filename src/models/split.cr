@@ -69,7 +69,7 @@ class Split < BaseModel
     end
   end
 
-  def html_email_body(to : Carbon::Emailable) : String
+  def html_email_body(to : User) : String
     outcome = "Users not all found"
     email_html = ""
     first_user_id, second_user_id = user_ids
@@ -86,12 +86,6 @@ class Split < BaseModel
         else
           outcome = "Both users spent the same amount"
         end
-        to_name = if first_user.email.to_s == to.to_s
-          first_user.name
-        else
-          second_user.name
-        end
-
         email_html = HTML.build do
           doctype
           html(lang: "en-US") do
@@ -100,7 +94,7 @@ class Split < BaseModel
             end
             body do
               h1 do
-                text "Hello, #{to_name}"
+                text "Hello, #{to.name}"
               end
               h3 do
                 text "This breaks down total food expenses for "
