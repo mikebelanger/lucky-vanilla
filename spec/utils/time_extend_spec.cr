@@ -30,11 +30,4 @@ describe Time do
       (Time.utc(2025, 2, 25).end_of_month?).should be_false
     end
   end
-
-  describe "#ready_to_send" do
-    # it "returns false if its the end of the month, but it sent another bill 15 minutes ago" do
-    #   this_time = Time.utc(2022, 1, 31)
-    #   split.ready_to_send?(this_time).should be_false
-    # end
-  end
 end

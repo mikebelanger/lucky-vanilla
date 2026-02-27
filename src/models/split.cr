@@ -145,8 +145,12 @@ class Split < BaseModel
   end
 
   def due_to_send_after?(only_send_every_n_hours : Int32) : Bool
-    now = Time.utc
-    time_since_last_bill_sent = now - self.updated_at
-    time_since_last_bill_sent.days > only_send_every_n_hours
+    if only_send_every_n_hours > 0
+      now = Time.utc
+      time_since_last_bill_sent = now - self.updated_at
+      time_since_last_bill_sent.hours > only_send_every_n_hours
+    else
+      true
+    end
   end
 end
