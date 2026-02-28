@@ -71,6 +71,14 @@ class Splits::Row < BaseComponent
             text "Delete"
           end
         end
+        td do
+          a href: "/api/email/manual_send/#{split.id}",
+            is: "link-to",
+            data_method: "GET",
+            data_confirm_message: "Are you sure you would like to send another email?" do
+            text "Send email"
+          end
+        end
       end
     end
   end

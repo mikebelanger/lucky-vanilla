@@ -144,4 +144,27 @@ class Split < BaseModel
       true
     end
   end
+
+  def send_bill_splits(only_send_every_n_hours : Int32) : Bool
+    first_user_id, second_user_id = user_ids
+    if first_user_id && second_user_id
+      first_user = UserQuery.new.find(first_user_id)
+      second_user = UserQuery.new.find(second_user_id)
+
+      if first_user && second_user
+        if due_to_send_after?(only_send_every_n_hours)
+          [first_user, second_user].each do |recipient|
+            bill = BillEmail.new(
+              to: Carbon::Address.new(recipient.email),
+              split: self,
+              to_user: recipient
+            )
+            bill.deliver
+          end
+          true
+        end
+      end
+    end
+    false
+  end
 end

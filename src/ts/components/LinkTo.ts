@@ -54,11 +54,13 @@ class LinkTo extends HTMLAnchorElement {
         break;
       case 'GET':
         if (response.ok) {
-          const reloadElement = document.querySelector(`#${this.reloadId}`);
-          if (reloadElement) {
-            reloadElement.innerHTML = await response.text();
-            // window.location.hash = `#${this.resourceId}`;
-            // history.pushState({ id: this.resourceId }, "", `/purchases/${this.resourceId}`);
+          if (this.reloadId) {
+            const reloadElement = document.querySelector(`#${this.reloadId}`);
+            if (reloadElement) {
+              reloadElement.innerHTML = await response.text();
+              // window.location.hash = `#${this.resourceId}`;
+              // history.pushState({ id: this.resourceId }, "", `/purchases/${this.resourceId}`);
+            }
           }
         }
         break;

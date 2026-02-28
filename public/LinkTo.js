@@ -48,9 +48,11 @@ class LinkTo extends HTMLAnchorElement {
         break;
       case "GET":
         if (response.ok) {
-          const reloadElement = document.querySelector(`#${this.reloadId}`);
-          if (reloadElement) {
-            reloadElement.innerHTML = await response.text();
+          if (this.reloadId) {
+            const reloadElement = document.querySelector(`#${this.reloadId}`);
+            if (reloadElement) {
+              reloadElement.innerHTML = await response.text();
+            }
           }
         }
         break;
