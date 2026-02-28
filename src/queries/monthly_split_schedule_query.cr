@@ -35,9 +35,6 @@ class MonthlySplitScheduleQuery < MonthlySplitSchedule::BaseQuery
           .paid(false)
           .start_day(from)
           .end_day(to)
-          .first_user_amount(first_total.to_i32)
-          .second_user_amount(second_total.to_i32)
-          .total_amount(total.to_i32)
 
         if any_existing_splits.empty?
           SaveSplit.create(
@@ -65,11 +62,16 @@ class MonthlySplitScheduleQuery < MonthlySplitSchedule::BaseQuery
           end
         else
           any_existing_splits.each do |existing_split|
-            if existing_split.due_to_send_after?(only_send_every_n_hours)
+            # You have to get when it was updated last before we update it with latest total_amount
+            SaveSplit.update(existing_split,
+              first_user_amount: first_total.to_i32,
+              second_user_amount: second_total.to_i32,
+              total_amount: total.to_i32
+            ) do |operation, updated_split|
               [first_user, second_user].each do |recipient|
                 bill = BillEmail.new(
                   to: Carbon::Address.new(recipient.email),
-                  split: existing_split,
+                  split: updated_split,
                   to_user: recipient
                 )
                 bill.deliver
