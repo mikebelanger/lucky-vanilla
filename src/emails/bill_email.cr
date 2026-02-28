@@ -39,6 +39,6 @@ class BillEmail < BaseEmail
   end
 
   after_send do |email|
-    SaveSplit.update!(@split, bill_sent_amount: @split.bill_sent_amount + 1)
+    SaveSplit.update!(@split, bill_sent_amount: @split.bill_sent_amount + 1, bill_last_sent: Time.utc)
   end
 end

@@ -10,6 +10,7 @@ class Split < BaseModel
     column first_user_amount : Int32
     column second_user_amount : Int32
     column bill_sent_amount : Int16 = 0
+    column bill_last_sent : Time?
     belongs_to monthly_split_schedule : MonthlySplitSchedule?
   end
 
@@ -138,8 +139,8 @@ class Split < BaseModel
   def due_to_send_after?(only_send_every_n_hours : Int32) : Bool
     if only_send_every_n_hours > 0
       now = Time.utc
-      time_since_last_bill_sent = now - self.updated_at
-      time_since_last_bill_sent.hours > only_send_every_n_hours
+      hours_since_last_bill_sent = (now - (self.bill_last_sent || Time.utc)).hours
+      hours_since_last_bill_sent > only_send_every_n_hours
     else
       true
     end
