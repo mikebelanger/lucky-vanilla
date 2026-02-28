@@ -84,11 +84,14 @@ li.new-purchase > a {
     background-color: var(--pico-color-jade-600);
 }
 
-.error,
-.flash,
-.failure {
-    color: var(--error-color);
+.flash {
+    text-align: center;
     padding: 0.25rem;
+}
+
+.failure,
+.error {
+    color: var(--error-color);
 }
 
 input:has(+ .error) {

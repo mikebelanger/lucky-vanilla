@@ -128,16 +128,6 @@ class Split < BaseModel
             end
           end
         end
-          #   <<-HTML
-          #   <h1>Hello, #{to}</h1>
-          #   <h6>This is who/what's owing for expenses in <strong>#{month_and_year}.<strong></h6>
-          #   <p><strong>#{first_user.name}</strong> spent: <strong>$#{first_user_amount}</strong></p>
-          #   <p><strong>#{second_user.name}</strong> spent: <strong>$#{second_user_amount}</strong></p>
-          #   <p>Total: <strong>$#{total_amount}.</strong></p>
-          #   <br />
-          #   <p>#{outcome}.</p>
-          # HTML
-
       else
         outcome = "users not found"
       end
