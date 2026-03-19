@@ -47,7 +47,7 @@ class MonthlySplitScheduleQuery < MonthlySplitSchedule::BaseQuery
             total_amount: total.to_i32,
             bill_sent_amount: 0,
           ) do |operation, split|
-            if split && operation.created?
+            if split && operation.created? && now.end_of_month?
               split.send_bill_splits(only_send_every_n_hours)
             else
               Log.info { "Failed to create split: #{operation.inspect} \n split: #{split.inspect}" }
@@ -60,10 +60,13 @@ class MonthlySplitScheduleQuery < MonthlySplitSchedule::BaseQuery
               second_user_amount: second_total.to_i32,
               total_amount: total.to_i32
             ) do |_operation, updated_split|
-              updated_split.send_bill_splits(only_send_every_n_hours)
+              if now.end_of_month?
+                updated_split.send_bill_splits(only_send_every_n_hours)
+              end
             end
           end
         end
       end
   end
 end
+`0`
