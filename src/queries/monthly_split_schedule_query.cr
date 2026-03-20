@@ -69,4 +69,3 @@ class MonthlySplitScheduleQuery < MonthlySplitSchedule::BaseQuery
       end
   end
 end
-`0`
