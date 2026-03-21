@@ -21,9 +21,11 @@ class Splits::IndexPage < MainLayout
         end
       end
       tbody id: splits_table_body_id do
-        splits.each do |split|
-          mount Splits::Row, editing: false, split: split, current_user: current_user
-        end
+        splits
+          .sort { |a, b| (b.start_day - a.start_day).days.to_i32 }
+          .each do |split|
+            mount Splits::Row, editing: false, split: split, current_user: current_user
+          end
       end
     end
     # if current_user.admin?
