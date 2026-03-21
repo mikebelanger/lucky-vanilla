@@ -3,7 +3,8 @@ class LinkTo extends HTMLAnchorElement {
   static observedAttributes = ["href", "data-method", "data-confirm-message"];
   href = "";
   dataMethod = "";
-  reloadId = "";
+  reloadId = null;
+  appendId = null;
   resourceId = "";
   confirm = "";
   dataConfirmMessage = "";
@@ -53,6 +54,15 @@ class LinkTo extends HTMLAnchorElement {
             if (reloadElement) {
               reloadElement.innerHTML = await response.text();
             }
+          } else if (this.appendId) {
+            const TEMP_ID = "replace-me";
+            const appendChildTarget = document.getElementById(this.appendId);
+            const newChildHtml = await response.text();
+            const newChild = document.createElement("tr");
+            newChild.setAttribute("id", TEMP_ID);
+            appendChildTarget?.appendChild(newChild);
+            const elem = document.getElementById(TEMP_ID);
+            elem?.setHTMLUnsafe(newChildHtml);
           }
         }
         break;
@@ -69,6 +79,7 @@ class LinkTo extends HTMLAnchorElement {
       this.reloadId = this.getAttribute("reload-id") || "";
       this.href = this.getAttribute("href") || "";
       this.resourceId = this.getAttribute("resource-id") || "";
+      this.appendId = this.getAttribute("append-id") || null;
       this.dataConfirmMessage = this.getAttribute("data-confirm-message") || "";
       event.preventDefault();
       if (this.dataConfirmMessage.length > 0) {

@@ -6,6 +6,12 @@ class MonthlySplitScheduleQuery < MonthlySplitSchedule::BaseQuery
     [] of Split
   end
 
+  def get_most_recent_monthly_split_schedule(user : User) : MonthlySplitSchedule?
+    self
+      .to_a
+      .find { |split_schedule| split_schedule.first_user_id == user.id || split_schedule.second_user_id == user.id }
+  end
+
   def send_bill_splits(only_send_every_n_hours : Int32 = 24)
     now = Time.utc
     from = Time.utc(now.year, now.month, 1)

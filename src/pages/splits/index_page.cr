@@ -2,6 +2,8 @@ class Splits::IndexPage < MainLayout
   needs splits : Array(Split)
 
   def content
+    splits_table_body_id = "splits_table_body"
+
     h1 "Splits for #{current_user.email}"
     table do
       thead do
@@ -18,10 +20,15 @@ class Splits::IndexPage < MainLayout
           end
         end
       end
-      tbody do
+      tbody id: splits_table_body_id do
         splits.each do |split|
           mount Splits::Row, editing: false, split: split, current_user: current_user
         end
+      end
+    end
+    if current_user.admin?
+      div class: "add-split" do
+        a href: "/splits/new", is: "link-to", append_id: splits_table_body_id, data_method: "GET", title: "Add new split"
       end
     end
   end

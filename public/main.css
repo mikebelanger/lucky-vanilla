@@ -100,3 +100,38 @@ input:has(+ .error) {
     border-style: solid;
     border-width: 0.25rem;
 }
+
+.add-split {
+    display: flex;
+    justify-content: center;
+}
+
+.add-split > a {
+    display: flex; /* Use flexbox for centering */
+    width: 2.5rem; /* Width of the circle */
+    height: 2.5rem; /* Height of the circle */
+    border-radius: 50%; /* Make it circular */
+    background-color: var(--pico-color-jade-600); /* Background color */
+    text-decoration: none;
+    background-position: 50% 50%;
+    background-size: 50%;
+    background-blend-mode: luminosity;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAi0lEQVRIS+2W0QmAMAxE7zZwFEfQkZzEkXSEjuIGEaEfbT80lmIs5H0Xjl5yRwgjaKTbmbCIDADG6FYgebx1rspqEZkAbFFsJrm78BNutQpfrn7jVDTSHVdrrfHBAiAoliNruCxOxdK0JhvJb4TT8v/Oai2e435zrMVn7DPWUHv62Jy3Laj6cQvMhE9nFXwfnzrtiAAAAABJRU5ErkJggg==");
+}
+
+.add-split > a:hover {
+    background-color: var(--pico-color-jade-200);
+}
+
+td {
+    vertical-align: center;
+}
+
+td > p {
+    margin: 0;
+}
+
+tr > * > select {
+    padding: 0.5em;
+    margin: 0;
+}
