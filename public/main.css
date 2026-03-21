@@ -80,6 +80,10 @@ li.new-purchase > a {
     margin-right: 1em;
 }
 
+.paid-bg {
+    text-decoration-line: line-through;
+}
+
 .paid-bg > td {
     background-color: var(--pico-color-jade-600);
 }
