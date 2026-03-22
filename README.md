@@ -9,8 +9,8 @@ Vanilla Splits is a web-based expense tracker which is designed for two people t
 There's two main motivations for this application:
 
 -  Split expenses between myself and a roommate. I've used Google Sheets to track expenses before this. While Google Sheets is easier to get started, I've found it more awkward to automate, and more error-prone.
-- An excuse to test out some cool technologies. Namely, the [Lucky web framework](https://luckyframework.org), [Podman](https://podman.io), [Pico.css](https://picocss.com/), [Bun](https://bun.dev), [Custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements) and good 'ol vanilla javascript. 
-- Eventually incorporate [view transitions.](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API)
+- An excuse to test out some cool technologies. Namely, the [Lucky web framework](https://luckyframework.org), [Caddy](https://caddyserver.com/), [Podman](https://podman.io), [Pico.css](https://picocss.com/), [Bun](https://bun.dev), [Custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements) and good 'ol vanilla javascript. 
+- Eventually, incorporate [View Transitions.](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API) on the frontend, and something called [Quadlets](https://www.redhat.com/en/blog/quadlet-podman) on the backend.
 
 ## Limitations
 
