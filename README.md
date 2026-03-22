@@ -15,7 +15,8 @@ There's two main motivations for this application:
 ## Limitations
 
 - Cannot support splitting expenses between more than **two** people.
-- Current mail adapter is a version of [Mailersend](https://mailersend.com) [that I forked](https://github.com/mikebelanger/carbon_mailersend_adapter). I don't actively maintain this fork, at least fully. 
+- Will not fully run on [Safari](https://www.apple.com/safari/) or any WebKit-based browser as they [do not support extended elements.](https://github.com/WebKit/standards-positions/issues/97)
+- Current mail adapter is a version of [Mailersend](https://mailersend.com) [that I forked](https://github.com/mikebelanger/carbon_mailersend_adapter). I don't actively maintain this fork, at least fully.
 
 ## Setting up the project yourself
 
