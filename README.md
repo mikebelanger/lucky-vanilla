@@ -12,6 +12,12 @@ There's two main motivations for this application:
 - An excuse to test out some cool technologies. Namely, the [Lucky web framework](https://luckyframework.org), [Caddy](https://caddyserver.com/), [Podman](https://podman.io), [Pico.css](https://picocss.com/), [Bun](https://bun.dev), [Custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements) and good 'ol vanilla javascript. 
 - Eventually, incorporate [View Transitions.](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API) on the frontend, and something called [Quadlets](https://www.redhat.com/en/blog/quadlet-podman) on the backend.
 
+## Guiding Tech Principles
+
+- Use static-typing and nil-safe langauges (Crystal in backend, Typescript in frontend).
+- Fat, opinionated backend (Lucky) and slim, "vanilla" frontend (typescript and some web components).
+- Everything is containerized in Podman.
+
 ## Limitations
 
 - Cannot support splitting expenses between more than **two** people.
