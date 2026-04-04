@@ -1,7 +1,6 @@
 class Purchases::EditPage < MainLayout
   needs operation : SavePurchase
   needs purchase : Purchase
-  quick_def page_title, "Edit Purchase with id: #{purchase.id}"
 
   def content
     link "Back to all Purchases", to: Purchases::Index

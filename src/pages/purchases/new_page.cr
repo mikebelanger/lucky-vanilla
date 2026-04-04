@@ -4,7 +4,6 @@ class Purchases::NewPage < MainLayout
 
   def content
     fieldset(class: "container") do
-      legend "New Purchase"
       render_purchase_form(operation)
     end
   end

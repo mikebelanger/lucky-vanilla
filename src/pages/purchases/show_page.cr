@@ -35,7 +35,6 @@ class Purchases::ShowPage < MainLayout
 
   def content
     link "Back to all Purchases", to: Purchases::Index
-    h1 "Purchase with id: #{purchase.id}"
     render_actions
     render_purchase_fields
   end

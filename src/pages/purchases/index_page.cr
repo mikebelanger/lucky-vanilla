@@ -3,12 +3,11 @@ class Purchases::IndexPage < MainLayout
   quick_def page_title, "My Purchases"
 
   def content
-    h2 "My Recent Purchases"
     render_purchases
   end
 
   def render_purchases
-    ul do
+    ul(class: "container") do
       purchases
         .group_by { |purchase| {year: purchase.date.year, month: purchase.date.month} }
         .each do |date, purchases|
@@ -33,6 +32,9 @@ class Purchases::IndexPage < MainLayout
             end
           end
         end
+    end
+    div class: "add-split" do
+      link to: Purchases::New, title: "Add new purchase"
     end
   end
 end

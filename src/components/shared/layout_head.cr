@@ -14,6 +14,18 @@ class Shared::LayoutHead < BaseComponent
     end
   end
 
+  def bright_when_active_link(link_text : String, rest_action : Class)
+    if current_page?(rest_action)
+      link to: rest_action, class: "active" do
+        strong do
+          text link_text
+        end
+      end
+    else
+      link link_text, to: rest_action
+    end
+  end
+
   def render
     head do
       utf8_charset
@@ -32,18 +44,9 @@ class Shared::LayoutHead < BaseComponent
       ul do
         li(class: "new-purchase") do
           if current_user
-            if current_page?(Purchases::Index)
-              link "Add Purchase Entry", to: Purchases::New
-            else
-              link "My purchases", to: Purchases::Index
-            end
-            if current_page?(Splits::Index)
-              link to: Splits::Index, class: "active" do
-                text "My splits"
-              end
-            else
-              link "My splits", to: Splits::Index
-            end
+            bright_when_active_link("My purchases", Purchases::Index)
+            bright_when_active_link("New purchase", Purchases::New)
+            bright_when_active_link("My splits", Splits::Index)
           end
         end
       end

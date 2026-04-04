@@ -1,6 +1,24 @@
-/*Main variable declaration page*/
-:root {
-    --error-color: #972411;
+@media (min-width: 700px) {
+    :root {
+        --error-color: #972411;
+        --navbar-height: 5em;
+    }
+}
+
+@media (max-width: 699px) {
+    :root {
+        --error-color: #972411;
+        --navbar-height: 10em;
+    }
+    li.new-purchase {
+        flex-direction: column;
+    }
+
+    nav,
+    li {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
 }
 
 body {
@@ -9,9 +27,9 @@ body {
 
 main {
     overflow: auto;
-    height: calc(100vh - 9em);
+    height: calc(100vh - calc(1 * var(--navbar-height)));
     width: calc(100vw);
-    padding-block: unset;
+    padding-block: unset !important;
     /*padding-left: var(--pico-block-spacing-horizontal);
     padding-right: var(--pico-block-spacing-horizontal);*/
 }
@@ -41,6 +59,7 @@ ul > hr {
     padding-left: var(--pico-nav-element-spacing-vertical);
     padding-right: var(--pico-nav-element-spacing-vertical);
     width: 100%;
+    height: var(--navbar-height);
 }
 
 .top-navbar h1 {
@@ -58,6 +77,7 @@ li#sign_out_section {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    text-align: right;
 }
 
 li#sign_out_section::before {
@@ -167,6 +187,11 @@ th {
     background: #eee;
 }
 
+thead {
+    height: var(--navbar-height);
+}
+
 .active {
-    color: var(--pico-color-amber-200);
+    color: var(--pico-color-yellow-50);
+    filter: brightness(0.05em);
 }
