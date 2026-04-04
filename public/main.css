@@ -3,9 +3,23 @@
     --error-color: #972411;
 }
 
+body {
+    width: fit-content !important; /* Ensure child navbar spans entire width */
+}
+
 main {
-    padding-left: var(--pico-block-spacing-horizontal);
-    padding-right: var(--pico-block-spacing-horizontal);
+    overflow: auto;
+    height: calc(100vh - 9em);
+    width: calc(100vw);
+    padding-block: unset;
+    /*padding-left: var(--pico-block-spacing-horizontal);
+    padding-right: var(--pico-block-spacing-horizontal);*/
+}
+
+main thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 main > h2 {
@@ -26,6 +40,7 @@ ul > hr {
     background-color: var(--pico-color-azure-750);
     padding-left: var(--pico-nav-element-spacing-vertical);
     padding-right: var(--pico-nav-element-spacing-vertical);
+    width: 100%;
 }
 
 .top-navbar h1 {
@@ -138,4 +153,20 @@ td > p {
 tr > * > select {
     padding: 0.5em;
     margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th,
+td {
+    padding: 8px 16px;
+}
+th {
+    background: #eee;
+}
+
+.active {
+    color: var(--pico-color-amber-200);
 }

@@ -37,7 +37,13 @@ class Shared::LayoutHead < BaseComponent
             else
               link "My purchases", to: Purchases::Index
             end
-            link "My splits", to: Splits::Index
+            if current_page?(Splits::Index)
+              link to: Splits::Index, class: "active" do
+                text "My splits"
+              end
+            else
+              link "My splits", to: Splits::Index
+            end
           end
         end
       end

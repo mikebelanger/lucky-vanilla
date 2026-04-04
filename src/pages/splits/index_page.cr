@@ -4,7 +4,6 @@ class Splits::IndexPage < MainLayout
   def content
     splits_table_body_id = "splits_table_body"
 
-    h1 "Splits for #{current_user.email}"
     table do
       thead do
         tr do
