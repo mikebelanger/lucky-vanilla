@@ -25,13 +25,15 @@ body {
     width: fit-content !important; /* Ensure child navbar spans entire width */
 }
 
+.sign_in {
+    width: 100% !important;
+}
+
 main {
     overflow: auto;
     height: calc(100vh - calc(1 * var(--navbar-height)));
     width: calc(100vw);
     padding-block: unset !important;
-    /*padding-left: var(--pico-block-spacing-horizontal);
-    padding-right: var(--pico-block-spacing-horizontal);*/
 }
 
 main thead th {
