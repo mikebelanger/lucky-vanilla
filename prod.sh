@@ -65,7 +65,6 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     --name ${APP_NAME} \
     --requires=${DATABASE_CONTAINER_NAME} \
     -v .:/app:Z \
-    -e SEND_GRID_KEY=unused \
     -e DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POD}:${POSTGRES_PORT}/${POSTGRES_DB}" \
     -e DATABASE_NAME=${DATABASE_CONTAINER_NAME} \
     -e LUCKY_ENV=production \
@@ -101,5 +100,5 @@ if [ "$POD_EXISTS" -eq 1 ]; then
     caddy caddy reverse-proxy --from "${TLD_DOMAIN}" --to "${POD}:${PORT}"
 fi
 
-podman pod start ${POD}
-podman pod logs --color -n -f ${POD}
+podman pod start "${POD}"
+podman pod logs --color --names -f "${POD}"

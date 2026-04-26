@@ -1,3 +1,4 @@
+require "uuid"
 # Here is where you configure the Lucky server
 #
 # Look at config/route_helper.cr if you want to change the domain used when
@@ -14,7 +15,7 @@ Lucky::Server.configure do |settings|
     # To add additional extensions do something like this:
     # settings.gzip_content_types << "content/type"
   else
-    settings.secret_key_base = "m/09rjLPFEjNG8FuUrsLhsDIuMxwXi6zpUUV5eCTyZA="
+    settings.secret_key_base = UUID.random.to_s
     # Change host/port in config/watch.yml
     # Alternatively, you can set the DEV_PORT env to set the port for local development
     settings.host = ENV["HOST"]
@@ -36,14 +37,8 @@ Lucky::Server.configure do |settings|
 end
 
 Lucky::ForceSSLHandler.configure do |settings|
-  # To force SSL in production, uncomment the lines below.
-  # This will cause http requests to be redirected to https:
-  #
-  #    settings.enabled = LuckyEnv.production?
-  #    settings.strict_transport_security = {max_age: 1.year, include_subdomains: true}
-  #
-  # Or, leave it disabled:
-  settings.enabled = false
+  settings.enabled = LuckyEnv.production?
+  settings.strict_transport_security = {max_age: 1.year, include_subdomains: true}
 end
 
 # Set a unique ID for each HTTP request.
