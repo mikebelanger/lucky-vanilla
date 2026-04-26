@@ -14,8 +14,8 @@ There's two main motivations for this application:
 
 ## Guiding Tech Principles
 
-- Use static-typing and nil-safe langauges ([Crystal](https://crystal-lang.org/) in backend, [Typescript](https://www.typescriptlang.org/) in frontend).
-- Fat, opinionated backend ([Lucky](https://luckyframework.org)) and [slim, "vanilla" frontend](https://plainvanillaweb.com/) (typescript and some web components).
+- Use statically-typed, nil-safe langauges ([Crystal](https://crystal-lang.org/) in backend, [Typescript](https://www.typescriptlang.org/) in frontend).
+- Have a "fat", opinionated backend ([Lucky](https://luckyframework.org)) and ["slim", un-opinionated frontend](https://plainvanillaweb.com/) (typescript and some web components).
 - Everything is containerized in [Podman](https://podman.io).
 
 ## Limitations
