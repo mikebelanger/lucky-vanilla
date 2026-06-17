@@ -1,7 +1,6 @@
 class Purchases::ShowPage < MainLayout
   needs purchase : Purchase
 
-  # quick_def page_title, "Purchase with id: #{purchase.id}"
   def render_actions
     section do
       link "Edit", to: Purchases::Edit.with(purchase.id)

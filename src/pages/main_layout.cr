@@ -28,7 +28,6 @@ abstract class MainLayout
     html_doctype
     html lang: "en" do
       mount Shared::LayoutHead, page_title: page_title, current_user: current_user
-
       body do
         # mount Shared::FlashMessages, context.flash
         main do

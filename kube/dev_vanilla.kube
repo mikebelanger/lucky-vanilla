@@ -1,0 +1,9 @@
+[Kube]
+Yaml=./vanilla_app_dev.yml
+PublishPort=8888:8888
+
+[Install]
+WantedBy=default.target
+
+[Unit]
+After=remote-fs.target
