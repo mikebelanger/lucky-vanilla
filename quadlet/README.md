@@ -1,14 +1,14 @@
 # Kube-based Podman Quadlet Deployment
 
-## How the Pod YAML was generated
+## How the Pods YAML was generated
 
 The pod was created with `podman play kube` during development. To (re-)generate the YAML from a running pod:
 
 ```bash
-podman kube generate vanilla_app_dev -f vanilla_app_dev.yml
+podman kube generate vanilla_app_dev -f output_name.yml
 ```
 
-The file `vanilla_app_dev.yml` is a Kubernetes-style Pod spec that declares 4 containers (api, db, frontend, scheduler) and their hostPath volumes.
+The file `output_name.yml` is a Kubernetes-style Pod spec that declares 4 containers (api, db, frontend, scheduler) and their hostPath volumes.
 
 ## How Quadlet installs it
 
@@ -30,10 +30,8 @@ To install:
 
 ```bash
 # Copy the files to the Quadlet directory
-cp dev_vanilla.kube vanilla_app_dev.yml ~/.config/containers/systemd/
-
-# Install the systemd unit
-podman quadlet install
+cd kube
+podman quadlet install dev_vanilla.kube vanilla_app_dev.yml
 
 # Start the pod
 systemctl --user start dev_vanilla

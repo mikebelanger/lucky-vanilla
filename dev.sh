@@ -44,7 +44,7 @@ podman build \
 --build-arg SECRET_KEY_BASE=$(lucky gen.secret_key) \
 -f docker/development.dockerfile --no-cache -t "vanilla_api_${SUFFIX}_base" .
 
-# Create the API image
+# Create the API container
 podman create \
 --replace \
 --name ${APP_NAME} \
