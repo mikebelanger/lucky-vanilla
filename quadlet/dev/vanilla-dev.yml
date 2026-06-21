@@ -80,18 +80,18 @@ spec:
       name: scheduler
   volumes:
     - hostPath:
-        path: ../pg_data_dev
+        path: ./pg_data_dev
         type: DirectoryOrCreate
       name: pg-data
     - hostPath:
-        path: ../
+        path: ./
         type: Directory
       name: app-root
     - hostPath:
-        path: ../src/ts
+        path: ./src/ts
         type: Directory
       name: src-ts
     - hostPath:
-        path: ../public
+        path: ./public
         type: Directory
       name: public

@@ -29,7 +29,7 @@ There's two main motivations for this application:
 Ensure you have a recent version of [Podman](https://podman.io). Once you do, assuming you're on Linux/OS X:
 1. Clone this repo
 2. cd into it
-3. For development, do `sh dev.sh`.
+3. For development, do `sh dev.sh` **or** the new, shiny way: `podman kube play --build quadlet/dev/vanilla-dev.yml`
 4. For production, do `sh prod.sh`.
 5. Ctrl+C to exit out of the logs.
 
