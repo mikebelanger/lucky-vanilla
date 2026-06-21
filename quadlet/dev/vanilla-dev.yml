@@ -32,7 +32,7 @@ spec:
           hostPort: 8888
       volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: home-mike-dev-crystal-lucky-project-lucky-vanilla-vanilla-app-pg-data-dev-host-0
+          name: pg-data
     - command:
         - docker/dev_entrypoint.sh
       env:
@@ -60,16 +60,16 @@ spec:
       name: api
       volumeMounts:
         - mountPath: /app
-          name: home-mike-dev-crystal-lucky-project-lucky-vanilla-vanilla-app-host-0
+          name: app-root
     - args:
         - dev
       image: docker.io/oven/bun:latest
       name: frontend
       volumeMounts:
         - mountPath: /app
-          name: home-mike-dev-crystal-lucky-project-lucky-vanilla-vanilla-app-src-ts-host-0
+          name: src-ts
         - mountPath: /public
-          name: home-mike-dev-crystal-lucky-project-lucky-vanilla-vanilla-app-public-host-1
+          name: public
       workingDir: /app
     - env:
         - name: HOST_URL
@@ -80,18 +80,18 @@ spec:
       name: scheduler
   volumes:
     - hostPath:
-        path: /home/mike/Dev/Crystal/lucky-project/lucky-vanilla/vanilla-app/pg_data_dev
-        type: Directory
-      name: home-mike-dev-crystal-lucky-project-lucky-vanilla-vanilla-app-pg-data-dev-host-0
+        path: ../pg_data_dev
+        type: DirectoryOrCreate
+      name: pg-data
     - hostPath:
-        path: /home/mike/Dev/Crystal/lucky-project/lucky-vanilla/vanilla-app
+        path: ../
         type: Directory
-      name: home-mike-dev-crystal-lucky-project-lucky-vanilla-vanilla-app-host-0
+      name: app-root
     - hostPath:
-        path: /home/mike/Dev/Crystal/lucky-project/lucky-vanilla/vanilla-app/src/ts
+        path: ../src/ts
         type: Directory
-      name: home-mike-dev-crystal-lucky-project-lucky-vanilla-vanilla-app-src-ts-host-0
+      name: src-ts
     - hostPath:
-        path: /home/mike/Dev/Crystal/lucky-project/lucky-vanilla/vanilla-app/public
+        path: ../public
         type: Directory
-      name: home-mike-dev-crystal-lucky-project-lucky-vanilla-vanilla-app-public-host-1
+      name: public

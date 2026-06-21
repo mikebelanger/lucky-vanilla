@@ -1,5 +1,6 @@
 [Kube]
 Yaml=./vanilla-dev.yml
+SetWorkingDirectory=yaml
 PublishPort=8888:8888
 
 [Install]
