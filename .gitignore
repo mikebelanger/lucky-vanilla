@@ -12,3 +12,4 @@ start_server
 /node_modules
 yarn-error.log
 ./src/ts/node_modules
+/quadlet/dev/secrets.yml

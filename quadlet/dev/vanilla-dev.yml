@@ -19,50 +19,32 @@ spec:
       image: docker.io/library/postgres:14-alpine
       args:
         - postgres
-      env:
-        - name: POSTGRES_USER
-          value: lucky
-        - name: POSTGRES_PASSWORD
-          value: password
-        - name: POSTGRES_DB
-          value: lucky_dev
-        - name: POSTGRES_PORT
-          value: "5432"
+      envFrom:
+        - configMapRef:
+            name: vanilla-dev-config
+        - configMapRef:
+            name: vanilla-dev-secrets
       ports:
         - containerPort: 8888
           hostPort: 8888
       volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: pg-data
+
     # API
     - name: api
       image: localhost/vanilla_api_dev_base:latest
       command:
         - docker/dev_entrypoint.sh
-      env:
-        - name: LUCKY_ENV
-          value: development
-        - name: SECRET_KEY_BASE
-          value: D5yxSw48nq1LpJkOU/wuz6R5OMwvmyAxmyAXETE4k44=
-        - name: POSTGRES_PORT
-          value: "5432"
-        - name: SEND_TOKEN
-          value: be91b4e0c8a3ac7e4035841ff147e8
-        - name: POD
-          value: vanilla-dev
-        - name: DATABASE_URL
-          value: postgres://lucky:password@vanilla-dev:5432/lucky_dev
-        - name: APP_DOMAIN
-          value: http://localhost:8888
-        - name: HOST
-          value: vanilla-dev
-        - name: DATABASE_NAME
-          value: vanilla_db_dev
-        - name: PORT
-          value: "8888"
+      envFrom:
+        - configMapRef:
+            name: vanilla-dev-config
+        - configMapRef:
+            name: vanilla-dev-secrets
       volumeMounts:
         - mountPath: /app
           name: app-root
+
     # Frontend (Development Mode)
     - name: frontend
       image: docker.io/oven/bun:latest
@@ -74,14 +56,15 @@ spec:
           name: src-ts
         - mountPath: /public
           name: public
+
     # Periodic email scheduler
     - name: scheduler
       image: localhost/vanilla_scheduler_dev_base:latest
-      env:
-        - name: HOST_URL
-          value: vanilla-dev:8888
-        - name: SEND_TOKEN
-          value: be91b4e0c8a3ac7e4035841ff147e8
+      envFrom:
+        - configMapRef:
+            name: vanilla-dev-config
+        - configMapRef:
+            name: vanilla-dev-secrets
 
   volumes:
     # Postgres data persisted across restarts
