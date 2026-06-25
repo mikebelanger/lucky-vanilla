@@ -5,7 +5,7 @@
 To begin development, start with building the local containers using `build.sh`:
 
 ```sh
-./quadlet/dev/build.sh
+./containers/dev/scripts/build.sh
 ```
 
 That should automatically launch the pod too. Visit `localhost:8888` on a browser.
