@@ -1,9 +1,0 @@
-[Kube]
-Yaml=./vanilla_dev_pod.yml
-PublishPort=8888:8888
-
-[Install]
-WantedBy=default.target
-
-[Unit]
-After=remote-fs.target

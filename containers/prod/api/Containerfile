@@ -1,34 +1,32 @@
-FROM crystallang/crystal:1.19 AS api-build
-
-# Build all the binaries first
-WORKDIR /app
-
-COPY . .
+FROM crystallang/crystal:latest as lucky-build
 
 # Install lucky cli
 WORKDIR /lucky/cli
-ENV LUCKY_ENV=production
 RUN git clone https://github.com/luckyframework/lucky_cli . && \
-    git checkout v1.4.1 && \
-    shards build --without-development && \
-    cp bin/lucky /usr/bin
+    git checkout v1.5.0 && \
+    apt update && \
+    shards build --without-development
+
+COPY containers/prod/api/entrypoint.sh .
+
+RUN chmod +x entrypoint.sh
+
+# Now build the app
+COPY . /app
 
 WORKDIR /app
-RUN ls
+
 RUN shards install
 
-RUN crystal spec && \
-    crystal build --release src/start_server.cr && \
-    crystal build --release tasks.cr -o bin/cli && \
-    SECRET_KEY_BASE=$(openssl rand -base64 32) shards build vanilla_app
-
-# Now move these binaries over to a thinner image, and ensure it has the postgres-client
+# Copy things over to a slimer distro
 FROM alpine:latest
 
-RUN apt-get update && \
-    apt-get install -y postgresql-client && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache postgresql-client
 
-COPY --from=api-build bin .
+# copy over the lucky stuff
+COPY --from=lucky-build --chown=root:root /lucky/cli/bin/lucky /usr/bin/.
+COPY --from=lucky-build --chown=root:root /bin/shards /usr/bin/.
 
-RUN chmod ug+x ./bin/start_server
+COPY --from=lucky-build --chown=root:root /app /app
+
+WORKDIR /app

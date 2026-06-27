@@ -1,16 +1,17 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vanilla-prod-config
+  name: vanilla_prod-config
 data:
-  APP_DOMAIN: http://localhost:8888
-  DATABASE_NAME: lucky_db
-  DATABASE_URL: postgres://lucky:password@vanilla_db_prod:5432/lucky_prod
-  HOST: "0.0.0.0"
-  HOST_URL: vanillasplit.com
+  APP_DOMAIN: http://localhost:9000
+  DATABASE_NAME: vanilla_db_prod
+  DATABASE_URL: postgres://lucky:password@vanilla_prod:5432/lucky_prod
+  HOST: vanilla-prod
+  HOST_URL: vanilla-prod:9000
   LUCKY_ENV: production
+  POD: vanilla-prod
   PORT: 9000
-  POSTGRES_DB: lucky_db
+  POSTGRES_DB: lucky_prod
   POSTGRES_PASSWORD: password
   POSTGRES_PORT: 5432
   POSTGRES_USER: lucky

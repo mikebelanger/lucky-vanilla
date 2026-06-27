@@ -8,7 +8,7 @@ if [ ! -f containers/prod/secrets.yml ]; then
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vanilla-prod-secrets
+  name: vanilla_prod-secrets
 data:
   SECRET_KEY_BASE: $(openssl rand -base64 32)
   SEND_TOKEN: $(openssl rand -hex 15)
@@ -18,21 +18,37 @@ fi
 
 # Unfortunately, kube play does not support implicit building in nested subdirectories:
 # https://github.com/podman-container-tools/podman/issues/28418
-
+# which means commands like COPY ../ don't pick up on relative paths correctly
+#
+# So we explicitely build them first
 podman build \
   -f containers/prod/api/Containerfile \
   -t localhost/vanilla_prod_api:latest \
-  containers/prod/api
+  .
 
 podman build \
   -f containers/prod/scheduler/Containerfile \
   -t localhost/vanilla_prod_scheduler:latest \
   containers/prod/scheduler
 
+# Podman Kube play doesn't always apply SELinux labels correctly, so we have to explictly add them here
+# Pre-label volumes for SELinux
+podman run --rm -v .:/z:z crystallang/crystal:latest true
+podman run --rm -v ./src/ts:/z:z crystallang/crystal:latest true
+podman run --rm -v ./public:/z:z crystallang/crystal:latest true
+
+# Now spin it up
+#
+# subsequent runs can be done with:
+#
+# podman pod start vanilla_prod
+#
+# and stopped with
+#
+# podman pod stop vanilla_prod
 exec podman kube play \
   --configmap containers/prod/config.yml \
   --configmap containers/prod/secrets.yml \
-  --publish 80:80 \
-  --publish 443:443 \
+  --publish 9000:9000 \
   --replace \
   containers/prod/pod.yml
