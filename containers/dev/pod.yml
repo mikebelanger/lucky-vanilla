@@ -24,9 +24,6 @@ spec:
             name: vanilla-dev-config
         - configMapRef:
             name: vanilla-dev-secrets
-      ports:
-        - containerPort: 8888
-          hostPort: 8888
       volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: pg-data

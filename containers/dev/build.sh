@@ -32,5 +32,6 @@ podman build \
 exec podman kube play \
   --configmap containers/dev/config.yml \
   --configmap containers/dev/secrets.yml \
+  --publish 8888:8888 \
   --replace \
   containers/dev/pod.yml

@@ -21,12 +21,9 @@ spec:
         - postgres
       envFrom:
         - configMapRef:
-            name: vanilla-dev-config
+            name: vanilla-prod-config
         - configMapRef:
-            name: vanilla-dev-secrets
-      ports:
-        - containerPort: 8888
-          hostPort: 8888
+            name: vanilla-prod-secrets
       volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: pg-data
@@ -35,12 +32,12 @@ spec:
     - name: api
       image: localhost/vanilla_api_dev_base:latest
       command:
-        - containers/prod/api-prod/prod_entrypoint.sh
+        - containers/prod/api/entrypoint.sh
       envFrom:
         - configMapRef:
-            name: vanilla-dev-config
+            name: vanilla-prod-config
         - configMapRef:
-            name: vanilla-dev-secrets
+            name: vanilla-prod-secrets
       volumeMounts:
         - mountPath: /app
           name: app-root
@@ -61,9 +58,28 @@ spec:
       image: localhost/vanilla_scheduler_dev_base:latest
       envFrom:
         - configMapRef:
-            name: vanilla-dev-config
+            name: vanilla-prod-config
         - configMapRef:
-            name: vanilla-dev-secrets
+            name: vanilla-prod-secrets
+
+    # Caddy reverse proxy
+    - name: reverse-proxy
+      image: docker.io/library/caddy:latest
+      envFrom:
+        - configMapRef:
+            name: vanilla-prod-config
+        - configMapRef:
+            name: vanilla-prod-secrets
+      args:
+        - reverse-proxy
+        - --from
+        - vanillasplit.com
+        - --to
+        - vanilla-prod:9000
+      securityContext:
+        capabilities:
+          add:
+            - NET_ADMIN
 
   volumes:
     # Postgres data persisted across restarts
