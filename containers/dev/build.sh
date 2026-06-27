@@ -18,7 +18,9 @@ fi
 
 # Unfortunately, kube play does not support implicit building in nested subdirectories:
 # https://github.com/podman-container-tools/podman/issues/28418
-
+# which means commands like COPY ../ don't pick up on relative paths correctly
+#
+# So we explicitely build them first
 podman build \
   -f containers/dev/api/Containerfile \
   -t localhost/vanilla_dev_api:latest \
@@ -29,6 +31,21 @@ podman build \
   -t localhost/vanilla_dev_scheduler:latest \
   containers/dev/scheduler
 
+# Podman Kube play doesn't always apply SELinux labels correctly, so we have to explictly add them here
+# Pre-label volumes for SELinux
+podman run --rm -v .:/z:z crystallang/crystal:latest true
+podman run --rm -v ./src/ts:/z:z crystallang/crystal:latest true
+podman run --rm -v ./public:/z:z crystallang/crystal:latest true
+
+# Now spin it up
+#
+# subsequent runs can be done with:
+#
+# podman pod start vanilla-dev
+#
+# and stopped with
+#
+# podman pod stop vanilla-dev
 exec podman kube play \
   --configmap containers/dev/config.yml \
   --configmap containers/dev/secrets.yml \

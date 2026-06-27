@@ -32,7 +32,7 @@ spec:
     - name: api
       image: localhost/vanilla_api_dev_base:latest
       command:
-        - containers/prod/api/entrypoint.sh
+        - ./entrypoint.sh
       envFrom:
         - configMapRef:
             name: vanilla-prod-config

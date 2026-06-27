@@ -32,7 +32,7 @@ spec:
     - name: api
       image: localhost/vanilla_dev_api:latest
       command:
-        - containers/dev/api/entrypoint.sh
+        - ./entrypoint.sh
       envFrom:
         - configMapRef:
             name: vanilla-dev-config
@@ -73,7 +73,7 @@ spec:
     # Project root mounted at /app for the Lucky API
     - name: app-root
       hostPath:
-        path: ./
+        path: .
         type: Directory
 
     # TypeScript source mounted at /app for bun to watch & rebuild
