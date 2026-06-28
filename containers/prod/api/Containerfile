@@ -1,15 +1,14 @@
-FROM crystallang/crystal:latest as lucky-build
+FROM crystallang/crystal:1.19
 
 # Install lucky cli
 WORKDIR /lucky/cli
 RUN git clone https://github.com/luckyframework/lucky_cli . && \
     git checkout v1.5.0 && \
     apt update && \
-    shards build --without-development
-
-COPY containers/prod/api/entrypoint.sh .
-
-RUN chmod +x entrypoint.sh
+    apt install -y postgresql-client && \
+    shards build --without-development && \
+    cp bin/lucky /usr/local/bin/lucky && \
+    chmod +x /usr/local/bin/lucky
 
 # Now build the app
 COPY . /app
@@ -18,15 +17,34 @@ WORKDIR /app
 
 RUN shards install
 
-# Copy things over to a slimer distro
-FROM alpine:latest
+RUN mkdir bin
 
-RUN apk add --no-cache postgresql-client
+# RUN crystal build --static --release src/start_server.cr -o bin/start_server
+RUN crystal build --error-trace --release --static src/start_server.cr -o bin/start_server
+
+# TODO - figure out how to get the above build files to run in a cleaner alpine distro
+
+# Copy things over to a slimer distro
+# FROM alpine:latest
+
+# RUN apk add --no-cache postgresql-client
 
 # copy over the lucky stuff
-COPY --from=lucky-build --chown=root:root /lucky/cli/bin/lucky /usr/bin/.
-COPY --from=lucky-build --chown=root:root /bin/shards /usr/bin/.
+# COPY --from=lucky-build --chown=root:root /lucky/cli/bin/lucky /usr/local/bin/lucky
+# COPY --from=lucky-build --chown=root:root /usr/bin/shards /usr/local/bin/shards
+# COPY --from=lucky-build --chown=root:root /usr/bin/crystal /usr/local/bin/crystal
 
-COPY --from=lucky-build --chown=root:root /app /app
+# COPY --from=lucky-build --chown=root:root /app/bin /app/bin
+# COPY --from=lucky-build --chown=root:root /app/public /app/public
 
-WORKDIR /app
+RUN chmod +x ./bin/start_server
+
+# Now copy our entrypoint stuff over
+WORKDIR /
+
+COPY containers/prod/api/entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
+# RUN ls -lah
+
+# RUN ./bin/start_server

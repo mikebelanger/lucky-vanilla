@@ -13,3 +13,4 @@ start_server
 yarn-error.log
 ./src/ts/node_modules
 /containers/dev/secrets.yml
+/containers/prod/secrets.yml

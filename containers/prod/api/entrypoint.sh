@@ -7,8 +7,8 @@ until pg_isready -h "$POD" -p "$POSTGRES_PORT" -U "$POSTGRES_USER"; do
 done
 
 cd app/
-
 lucky db.create
 lucky db.migrate
 
 echo 'Starting vanilla...'
+./bin/start_server

@@ -11,7 +11,7 @@ kind: Pod
 metadata:
   labels:
     app: vanilla-expense-tracker
-  name: vanilla_prod
+  name: vanilla-prod
 spec:
   containers:
     # Database
@@ -26,7 +26,9 @@ spec:
             name: vanilla-prod-secrets
       volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: pg-data
+          name: pg-data # volumeMounts:
+          #   - mountPath: /app
+          #     name: app-root
 
     # API
     - name: api
@@ -35,12 +37,9 @@ spec:
         - ./entrypoint.sh
       envFrom:
         - configMapRef:
-            name: vanilla_prod-config
+            name: vanilla-prod-config
         - configMapRef:
-            name: vanilla_prod-secrets
-      volumeMounts:
-        - mountPath: /app
-          name: app-root
+            name: vanilla-prod-secrets
 
     # Frontend (prodelopment Mode)
     - name: frontend
@@ -59,9 +58,9 @@ spec:
       image: localhost/vanilla_prod_scheduler:latest
       envFrom:
         - configMapRef:
-            name: vanilla_prod-config
+            name: vanilla-prod-config
         - configMapRef:
-            name: vanilla_prod-secrets
+            name: vanilla-prod-secrets
 
     # Caddy reverse proxy
     - name: reverse-proxy
@@ -72,6 +71,7 @@ spec:
         - configMapRef:
             name: vanilla-prod-secrets
       args:
+        - caddy
         - reverse-proxy
         - --from
         - vanillasplit.com
@@ -88,12 +88,6 @@ spec:
       hostPath:
         path: ./pg_data_prod
         type: DirectoryOrCreate
-
-    # Project root mounted at /app for the Lucky API
-    - name: app-root
-      hostPath:
-        path: .
-        type: Directory
 
     # TypeScript source mounted at /app for bun to watch & rebuild
     - name: src-ts

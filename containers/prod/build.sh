@@ -8,7 +8,7 @@ if [ ! -f containers/prod/secrets.yml ]; then
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vanilla_prod-secrets
+  name: vanilla-prod-secrets
 data:
   SECRET_KEY_BASE: $(openssl rand -base64 32)
   SEND_TOKEN: $(openssl rand -hex 15)
@@ -24,6 +24,7 @@ fi
 podman build \
   -f containers/prod/api/Containerfile \
   -t localhost/vanilla_prod_api:latest \
+  --no-cache \
   .
 
 podman build \
@@ -33,9 +34,9 @@ podman build \
 
 # Podman Kube play doesn't always apply SELinux labels correctly, so we have to explictly add them here
 # Pre-label volumes for SELinux
-podman run --rm -v .:/z:z crystallang/crystal:latest true
-podman run --rm -v ./src/ts:/z:z crystallang/crystal:latest true
-podman run --rm -v ./public:/z:z crystallang/crystal:latest true
+podman run --rm -v .:/z:z crystal:latest true
+podman run --rm -v ./src/ts:/z:z crystal:latest true
+podman run --rm -v ./public:/z:z crystal:latest true
 
 # Now spin it up
 #
