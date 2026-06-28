@@ -74,9 +74,9 @@ spec:
         - caddy
         - reverse-proxy
         - --from
-        - vanillasplit.com
+        - http://localhost:8080
         - --to
-        - vanilla-prod:9000
+        - localhost:9000
       securityContext:
         capabilities:
           add:

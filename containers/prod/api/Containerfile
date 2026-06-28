@@ -17,10 +17,10 @@ WORKDIR /app
 
 RUN shards install
 
-RUN mkdir bin
+# ENV ENABLE_KTLS=false
 
 # RUN crystal build --static --release src/start_server.cr -o bin/start_server
-RUN crystal build --error-trace --release --static src/start_server.cr -o bin/start_server
+RUN crystal build --release src/start_server.cr
 
 # TODO - figure out how to get the above build files to run in a cleaner alpine distro
 
@@ -37,7 +37,7 @@ RUN crystal build --error-trace --release --static src/start_server.cr -o bin/st
 # COPY --from=lucky-build --chown=root:root /app/bin /app/bin
 # COPY --from=lucky-build --chown=root:root /app/public /app/public
 
-RUN chmod +x ./bin/start_server
+RUN chmod ug+x start_server
 
 # Now copy our entrypoint stuff over
 WORKDIR /

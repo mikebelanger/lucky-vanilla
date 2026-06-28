@@ -37,8 +37,9 @@ Lucky::Server.configure do |settings|
 end
 
 Lucky::ForceSSLHandler.configure do |settings|
-  settings.enabled = LuckyEnv.production?
-  settings.strict_transport_security = {max_age: 1.year, include_subdomains: true}
+  # I already use caddy so this does not need two layers of TLS
+  settings.enabled = ENV["BEHIND_PROXY"]? != "true"
+  # settings.strict_transport_security = {max_age: 1.year, include_subdomains: true}
 end
 
 # Set a unique ID for each HTTP request.

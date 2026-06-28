@@ -11,4 +11,5 @@ lucky db.create
 lucky db.migrate
 
 echo 'Starting vanilla...'
-./bin/start_server
+
+./start_server

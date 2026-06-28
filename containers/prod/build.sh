@@ -51,5 +51,6 @@ exec podman kube play \
   --configmap containers/prod/config.yml \
   --configmap containers/prod/secrets.yml \
   --publish 9000:9000 \
+  --publish 8080:8080 \
   --replace \
   containers/prod/pod.yml
