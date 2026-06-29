@@ -1,12 +1,16 @@
 #!/bin/sh
 
-echo 'Waiting for postgres to be available...'
-
 until pg_isready -h "$POD" -p "$POSTGRES_PORT" -U "$POSTGRES_USER"; do
-    sleep 2
-done
+     echo 'Waiting for postgres to be available...'
+     sleep 2
+ done
 
 cd app/
+
+if ! [ -d bin ] ; then
+  echo 'Creating bin directory'
+  mkdir bin
+fi
 
 lucky db.create
 lucky db.migrate

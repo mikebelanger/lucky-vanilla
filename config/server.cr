@@ -38,7 +38,7 @@ end
 
 Lucky::ForceSSLHandler.configure do |settings|
   # I already use caddy so this does not need two layers of TLS
-  settings.enabled = ENV["BEHIND_PROXY"]? != "true"
+  settings.enabled = false
   # settings.strict_transport_security = {max_age: 1.year, include_subdomains: true}
 end
 
