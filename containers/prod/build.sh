@@ -24,7 +24,6 @@ fi
 podman build \
   -f containers/prod/api/Containerfile \
   -t localhost/vanilla_prod_api:latest \
-  --no-cache \
   .
 
 podman build \

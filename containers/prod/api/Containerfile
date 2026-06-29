@@ -5,10 +5,11 @@ WORKDIR /lucky/cli
 RUN git clone https://github.com/luckyframework/lucky_cli . && \
     git checkout v1.5.0 && \
     apt update && \
-    apt install -y postgresql-client && \
+    apt install -y postgresql-client curl unzip && \
     shards build --without-development && \
     cp bin/lucky /usr/local/bin/lucky && \
-    chmod +x /usr/local/bin/lucky
+    chmod +x /usr/local/bin/lucky && \
+    curl -fsSL https://bun.sh/install | bash
 
 # Now build the app
 COPY . /app
@@ -45,6 +46,17 @@ WORKDIR /
 COPY containers/prod/api/entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
+# Now build frontend assets
+#
+# First, blast away what's in the public folder
+RUN rm -rf public/ && \
+    mkdir public
+
+WORKDIR /app/src/ts
+
+RUN ~/.bun/bin/bun prod
+
+WORKDIR /
 # RUN ls -lah
 
 # RUN ./bin/start_server
