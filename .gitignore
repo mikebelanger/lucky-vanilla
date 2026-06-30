@@ -14,3 +14,10 @@ yarn-error.log
 ./src/ts/node_modules
 /containers/dev/secrets.yml
 /containers/prod/secrets.yml
+.ameba.yml
+.env.spec
+.lattice-cache/*
+.lattice.*
+app
+vanilla_app
+*.js
