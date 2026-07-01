@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         crystal_version:
-          - 1.16.3
+          - 1.19.0
         experimental:
           - false
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
-       # Set health checks to wait until postgres has started
+        # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -54,32 +54,13 @@ jobs:
           --health-retries 5
 
     steps:
+      # Backend
       - uses: actions/checkout@v4
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal_version }}
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Set up Yarn cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Set up Node cache
-        uses: actions/cache@v4
-        id: node-cache # use this to check for `cache-hit` (`steps.node-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
       - name: Set up Crystal cache
         uses: actions/cache@v4
         id: crystal-cache
@@ -95,11 +76,6 @@ jobs:
         if: steps.crystal-cache.outputs.cache-hit != 'true'
         run: shards check || shards install
 
-      - name: Install yarn packages
-        if: steps.node-cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile --no-progress
-      - name: Compiling assets
-        run: yarn prod
       - name: Build lucky_tasks
         run: crystal build tasks.cr -o ./lucky_tasks
 
@@ -110,4 +86,18 @@ jobs:
           ./lucky_tasks db.seed.required_data
 
       - name: Run tests
-        run: crystal spec 
+        run: crystal spec
+
+      # Frontend
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install JS dependencies
+        working-directory: src/ts
+        run: bun install
+
+      - name: Compile assets
+        working-directory: src/ts
+        run: bun prod
