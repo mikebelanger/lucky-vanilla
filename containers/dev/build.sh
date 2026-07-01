@@ -12,6 +12,13 @@ metadata:
 data:
   SECRET_KEY_BASE: $(openssl rand -base64 32)
   SEND_TOKEN: $(openssl rand -hex 15)
+  POSTGRES_DB: lucky_dev
+  POSTGRES_PASSWORD: password
+  POSTGRES_PORT: "5432"
+  POSTGRES_USER: lucky
+  APP_DOMAIN: http://localhost:8888
+  DATABASE_NAME: vanilla_db_dev
+  DATABASE_URL: postgres://lucky:password@vanilla-dev:5432/lucky_dev
 SECRETS_YAML
   echo "Generated containers/dev/secrets.yml"
 fi
