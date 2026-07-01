@@ -1,20 +1,22 @@
-class LinkTo extends HTMLAnchorElement {
-  static observedAttributes = ['href', 'data-method', 'data-confirm-message'];
-  href: string = '';
-  dataMethod: string = '';
+export class LinkTo extends HTMLAnchorElement {
+  static observedAttributes = ["href", "data-method", "data-confirm-message"];
+  href: string = "";
+  dataMethod: string = "";
   reloadId: string | null = null;
   appendId: string | null = null;
-  resourceId: string = '';
-  confirm: string = '';
-  dataConfirmMessage: string = '';
+  resourceId: string = "";
+  confirm: string = "";
+  dataConfirmMessage: string = "";
   constructor() {
     super();
   }
 
   async makeRequest() {
-    const csrfToken = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content;
+    const csrfToken = (
+      document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
+    )?.content;
     const headers: HeadersInit = {
-      'X-CSRF-Token': csrfToken || '',
+      "X-CSRF-Token": csrfToken || "",
     };
 
     const response = await fetch(this.href, {
@@ -23,12 +25,12 @@ class LinkTo extends HTMLAnchorElement {
     });
 
     switch (this.dataMethod) {
-      case 'POST':
+      case "POST":
         if (response.ok) {
           window.location.href = response.url;
         }
         break;
-      case 'PUT':
+      case "PUT":
         if (response.ok) {
           window.location.href = response.url;
 
@@ -40,7 +42,7 @@ class LinkTo extends HTMLAnchorElement {
           }
         }
         break;
-      case 'DELETE':
+      case "DELETE":
         // Manually follow the redirect if the server indicated one.
         if (response.redirected) {
           window.location.href = response.url;
@@ -48,12 +50,12 @@ class LinkTo extends HTMLAnchorElement {
           if (this.reloadId) {
             const toRemove = document.getElementById(this.reloadId);
             if (toRemove) {
-              toRemove.innerHTML = '';
+              toRemove.innerHTML = "";
             }
           }
         }
         break;
-      case 'GET':
+      case "GET":
         if (response.ok) {
           if (this.reloadId) {
             const reloadElement = document.querySelector(`#${this.reloadId}`);
@@ -61,11 +63,11 @@ class LinkTo extends HTMLAnchorElement {
               reloadElement.innerHTML = await response.text();
             }
           } else if (this.appendId) {
-            const TEMP_ID = 'replace-me';
+            const TEMP_ID = "replace-me";
             const appendChildTarget = document.getElementById(this.appendId);
             const newChildHtml = await response.text();
             const newChild = document.createElement("tr");
-            newChild.setAttribute('id', TEMP_ID);
+            newChild.setAttribute("id", TEMP_ID);
             appendChildTarget?.appendChild(newChild);
             const elem = document.getElementById(TEMP_ID);
             elem?.setHTMLUnsafe(newChildHtml);
@@ -81,13 +83,13 @@ class LinkTo extends HTMLAnchorElement {
   }
 
   connectedCallback() {
-    this.addEventListener('click', async (event) => {
-      this.dataMethod = this.getAttribute('data-method') || '';
-      this.reloadId = this.getAttribute('reload-id') || '';
-      this.href = this.getAttribute('href') || '';
-      this.resourceId = this.getAttribute('resource-id') || '';
-      this.appendId = this.getAttribute('append-id') || null;
-      this.dataConfirmMessage = this.getAttribute('data-confirm-message') || '';
+    this.addEventListener("click", async (event) => {
+      this.dataMethod = this.getAttribute("data-method") || "";
+      this.reloadId = this.getAttribute("reload-id") || "";
+      this.href = this.getAttribute("href") || "";
+      this.resourceId = this.getAttribute("resource-id") || "";
+      this.appendId = this.getAttribute("append-id") || null;
+      this.dataConfirmMessage = this.getAttribute("data-confirm-message") || "";
 
       event.preventDefault();
       if (this.dataConfirmMessage.length > 0) {
@@ -102,4 +104,4 @@ class LinkTo extends HTMLAnchorElement {
   }
 }
 
-customElements.define("link-to", LinkTo, { extends: 'a' });
+customElements.define("link-to", LinkTo, { extends: "a" });

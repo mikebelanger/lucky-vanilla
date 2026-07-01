@@ -16,3 +16,6 @@ class SSRPortal extends HTMLElement {
   }
 }
 customElements.define("ssr-portal", SSRPortal);
+export {
+  SSRPortal
+};

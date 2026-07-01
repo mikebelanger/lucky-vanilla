@@ -1,12 +1,12 @@
-class SSRPortal extends HTMLElement {
-  static observedAttributes = ['href'];
+export class SSRPortal extends HTMLElement {
+  static observedAttributes = ["href"];
   href: string;
   constructor(newUrl: string) {
     super();
     this.href = newUrl;
   }
   async connectedCallback() {
-    this.href = this.getAttribute('href') || "";
+    this.href = this.getAttribute("href") || "";
     const form = await fetch(this.href);
     if (form.ok) {
       const html = await form.text();
@@ -15,4 +15,4 @@ class SSRPortal extends HTMLElement {
   }
 }
 
-customElements.define('ssr-portal', SSRPortal);
+customElements.define("ssr-portal", SSRPortal);

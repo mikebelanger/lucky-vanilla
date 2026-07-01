@@ -44,3 +44,6 @@ class SplitRowForm extends HTMLFormElement {
   }
 }
 customElements.define("split-row-form", SplitRowForm, { extends: "form" });
+export {
+  SplitRowForm
+};
