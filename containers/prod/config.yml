@@ -3,17 +3,10 @@ kind: ConfigMap
 metadata:
   name: vanilla-prod-config
 data:
-  APP_DOMAIN: http://localhost
-  DATABASE_NAME: vanilla_db_prod
-  DATABASE_URL: postgres://lucky:password@localhost:5432/lucky_prod
   HOST: 0.0.0.0
   HOST_URL: localhost:9000
   LUCKY_ENV: production
   POD: vanilla-prod
   PORT: 9000
-  POSTGRES_DB: lucky_prod
-  POSTGRES_PASSWORD: password
-  POSTGRES_PORT: 5432
-  POSTGRES_USER: lucky
   SEND_GRID_KEY: unused
   BEHIND_PROXY: true
