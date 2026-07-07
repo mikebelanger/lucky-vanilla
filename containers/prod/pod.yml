@@ -26,13 +26,11 @@ spec:
             name: vanilla-prod-secrets
       volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: pg-data # volumeMounts:
-          #   - mountPath: /app
-          #     name: app-root
+          name: pg-data
 
     # API
     - name: api
-      image: localhost/vanilla_prod_api:latest
+      image: ghcr.io/mikebelanger/vanilla_prod_api:latest
       command:
         - ./entrypoint.sh
       envFrom:
@@ -55,7 +53,7 @@ spec:
 
     # Periodic email scheduler
     - name: scheduler
-      image: localhost/vanilla_prod_scheduler:latest
+      image: ghcr.io/mikebelanger/vanilla_prod_scheduler:latest
       envFrom:
         - configMapRef:
             name: vanilla-prod-config

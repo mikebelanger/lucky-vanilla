@@ -16,7 +16,6 @@ jobs:
         experimental:
           - false
     runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.experimental }}
     steps:
       - uses: actions/checkout@v4
       - name: Install Crystal
@@ -39,20 +38,22 @@ jobs:
       LUCKY_ENV: test
       DB_HOST: localhost
     continue-on-error: ${{ matrix.experimental }}
-    services:
-      postgres:
-        image: postgres:14-alpine
-        env:
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
+    # TODO - Add proper specs that require our DB
+    #
+    # services:
+    # postgres:
+    #   image: postgres:14-alpine
+    #   env:
+    #     POSTGRES_PASSWORD: postgres
+    #   ports:
+    #     - 5432:5432
+    #   # Set health checks to wait until postgres has started
+    #   options: >-
+    #     --health-cmd pg_isready
+    #     --health-interval 10s
+    #     --health-timeout 5s
+    #     --health-retries 5
     steps:
       # Backend
       - uses: actions/checkout@v4
@@ -79,11 +80,11 @@ jobs:
       - name: Build lucky_tasks
         run: crystal build tasks.cr -o ./lucky_tasks
 
-      - name: Prepare database
-        run: |
-          ./lucky_tasks db.create
-          ./lucky_tasks db.migrate
-          ./lucky_tasks db.seed.required_data
+      # - name: Prepare database
+      #   run: |
+      #     ./lucky_tasks db.create
+      #     ./lucky_tasks db.migrate
+      #     ./lucky_tasks db.seed.required_data
 
       - name: Run tests
         run: crystal spec
@@ -101,3 +102,34 @@ jobs:
       - name: Compile assets
         working-directory: src/ts
         run: bun prod
+
+  build-and-push:
+    needs: [check-format, specs]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log into the GH Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build API image
+        run: |
+          docker build \
+            -f containers/prod/api/Containerfile \
+            -t ghcr.io/${{ github.repository }}/vanilla_prod_api:latest \
+            -t ghcr.io/${{ github.repository }}/vanilla_prod_api:${{ github.sha }} \
+            .
+
+      - name: Build scheduler image
+        run: |
+          docker build \
+            -f containers/prod/scheduler/Containerfile \
+            -t ghcr.io/${{ github.repository }}/vanilla_prod_scheduler:latest \
+            -t ghcr.io/${{ github.repository }}/vanilla_prod_scheduler:${{ github.sha }} \
+            containers/prod/scheduler
