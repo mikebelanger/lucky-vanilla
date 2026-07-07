@@ -94,3 +94,6 @@ class LinkTo extends HTMLAnchorElement {
   }
 }
 customElements.define("link-to", LinkTo, { extends: "a" });
+export {
+  LinkTo
+};

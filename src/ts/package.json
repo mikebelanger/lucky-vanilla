@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "bun build --watch ./components/*.ts --outdir ../../public",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prod": "bun build ./main.ts --outfile ../../public/main.js"
   },
   "author": "",
   "license": "ISC",

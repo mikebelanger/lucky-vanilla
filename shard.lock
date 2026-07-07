@@ -6,7 +6,7 @@ shards:
 
   avram:
     git: https://github.com/luckyframework/avram.git
-    version: 1.4.2
+    version: 1.5.0
 
   backtracer:
     git: https://github.com/sija/backtracer.cr.git
@@ -48,10 +48,6 @@ shards:
     git: https://github.com/crystal-loot/exception_page.git
     version: 0.5.0
 
-  fnv:
-    git: https://github.com/naqvis/crystal-fnv.git
-    version: 0.1.3
-
   habitat:
     git: https://github.com/luckyframework/habitat.git
     version: 0.4.9
@@ -70,11 +66,11 @@ shards:
 
   lucky:
     git: https://github.com/luckyframework/lucky.git
-    version: 1.4.0
+    version: 1.5.0
 
   lucky_cache:
     git: https://github.com/luckyframework/lucky_cache.git
-    version: 0.1.1
+    version: 0.2.0
 
   lucky_env:
     git: https://github.com/luckyframework/lucky_env.git
@@ -82,7 +78,7 @@ shards:
 
   lucky_flow:
     git: https://github.com/luckyframework/lucky_flow.git
-    version: 0.10.1
+    version: 0.10.2
 
   lucky_router:
     git: https://github.com/luckyframework/lucky_router.git
@@ -98,7 +94,7 @@ shards:
 
   openssl_ext:
     git: https://github.com/spider-gazelle/openssl_ext.git
-    version: 2.8.4
+    version: 2.8.5
 
   pg:
     git: https://github.com/will/crystal-pg.git
@@ -118,11 +114,11 @@ shards:
 
   splay_tree_map:
     git: https://github.com/wyhaines/splay_tree_map.cr.git
-    version: 0.3.0
+    version: 0.4.0
 
   webdrivers:
     git: https://github.com/crystal-loot/webdrivers.cr.git
-    version: 0.4.4
+    version: 0.4.5
 
   webless:
     git: https://github.com/crystal-loot/webless.git
@@ -134,5 +130,5 @@ shards:
 
   xpath2:
     git: https://github.com/naqvis/crystal-xpath2.git
-    version: 0.1.3
+    version: 0.2.0
 

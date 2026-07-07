@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vanilla-dev-config
+data:
+  HOST: vanilla-dev
+  HOST_URL: vanilla-dev:8888
+  LUCKY_ENV: development
+  POD: vanilla-dev
+  PORT: "8888"
+  BEHIND_PROXY: false

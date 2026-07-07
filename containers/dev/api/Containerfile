@@ -1,0 +1,17 @@
+FROM crystallang/crystal:latest
+
+# Install lucky cli
+WORKDIR /lucky/cli
+RUN git clone https://github.com/luckyframework/lucky_cli . && \
+    git checkout v1.5.0 && \
+    apt update && \
+    apt install -y postgresql-client && \
+    shards install && \
+    shards build && \
+    cp bin/lucky /usr/bin
+
+WORKDIR /
+
+COPY entrypoint.sh .
+
+RUN chmod +x entrypoint.sh

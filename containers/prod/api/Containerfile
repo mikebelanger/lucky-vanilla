@@ -1,0 +1,62 @@
+FROM crystallang/crystal:1.19
+
+# Install lucky cli
+WORKDIR /lucky/cli
+RUN git clone https://github.com/luckyframework/lucky_cli . && \
+    git checkout v1.5.0 && \
+    apt update && \
+    apt install -y postgresql-client curl unzip && \
+    shards build --without-development && \
+    cp bin/lucky /usr/local/bin/lucky && \
+    chmod +x /usr/local/bin/lucky && \
+    curl -fsSL https://bun.sh/install | bash
+
+# Now build the app
+COPY . /app
+
+WORKDIR /app
+
+RUN shards install
+
+# ENV ENABLE_KTLS=false
+
+# RUN crystal build --static --release src/start_server.cr -o bin/start_server
+RUN crystal build --release src/start_server.cr
+
+# TODO - figure out how to get the above build files to run in a cleaner alpine distro
+
+# Copy things over to a slimer distro
+# FROM alpine:latest
+
+# RUN apk add --no-cache postgresql-client
+
+# copy over the lucky stuff
+# COPY --from=lucky-build --chown=root:root /lucky/cli/bin/lucky /usr/local/bin/lucky
+# COPY --from=lucky-build --chown=root:root /usr/bin/shards /usr/local/bin/shards
+# COPY --from=lucky-build --chown=root:root /usr/bin/crystal /usr/local/bin/crystal
+
+# COPY --from=lucky-build --chown=root:root /app/bin /app/bin
+# COPY --from=lucky-build --chown=root:root /app/public /app/public
+
+RUN chmod ug+x start_server
+
+# Now copy our entrypoint stuff over
+WORKDIR /
+
+COPY containers/prod/api/entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
+# Now build frontend assets
+#
+# First, blast away what's in the public folder
+RUN rm -rf public/ && \
+    mkdir public
+
+WORKDIR /app/src/ts
+
+RUN ~/.bun/bin/bun prod
+
+WORKDIR /
+# RUN ls -lah
+
+# RUN ./bin/start_server

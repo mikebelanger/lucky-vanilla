@@ -4,5 +4,6 @@
   "pico.colors.min.css": "/pico.colors.min.css",
   "LinkTo.js": "/LinkTo.js",
   "SSRPortal.js": "/SSRPortal.js",
-  "SplitRowForm.js": "/SplitRowForm.js"
+  "SplitRowForm.js": "/SplitRowForm.js",
+  "main.js": "/main.js"
 }
