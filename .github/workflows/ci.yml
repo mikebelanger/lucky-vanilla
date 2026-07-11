@@ -105,6 +105,9 @@ jobs:
 
   build-and-push:
     needs: [check-format, specs]
+    permissions:
+      contents: read
+      packages: write
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
