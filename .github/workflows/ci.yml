@@ -133,3 +133,8 @@ jobs:
             -t ghcr.io/${{ github.repository }}/vanilla_prod_scheduler:latest \
             -t ghcr.io/${{ github.repository }}/vanilla_prod_scheduler:${{ github.sha }} \
             containers/prod/scheduler
+
+      - name: Push the images
+        run: |
+            docker push ghcr.io/${{ github.repository }}/vanilla_prod_api:latest
+            docker push ghcr.io/${{ github.repository }}/vanilla_prod_scheduler:latest
