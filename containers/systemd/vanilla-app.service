@@ -1,0 +1,13 @@
+[Unit]
+Description=Deploy vanilla app pod
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/podman pull ghcr.io/mikebelanger/lucky-vanilla/vanilla_prod_api:latest
+ExecStartPre=/usr/bin/podman pull ghcr.io/mikebelanger/lucky-vanilla/vanilla_prod_scheduler:latest
+ExecStart=/usr/bin/podman kube play --replace \
+  --configmap ./prod/config.yml \
+  --configmap ./prod/secrets.yml \
+  ./prod/pod.yml
