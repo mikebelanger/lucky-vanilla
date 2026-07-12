@@ -83,9 +83,8 @@ spec:
   volumes:
     # Postgres data persisted across restarts
     - name: pg-data
-      hostPath:
-        path: ./pg_data_prod
-        type: DirectoryOrCreate
+      persistentVolumeClaim:
+        claimName: vanilla_prod_pg_data
 
     # TypeScript source mounted at /app for bun to watch & rebuild
     - name: src-ts
