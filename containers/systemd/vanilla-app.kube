@@ -1,0 +1,10 @@
+[Unit]
+Description=Vanilla prod pod
+
+[Kube]
+Yaml=pod.yml
+ConfigMap=config.yml
+ConfigMap=secrets.yml
+SetWorkingDirectory=yaml
+PublishPort=9000:9000
+PublishPort=8080:8080
