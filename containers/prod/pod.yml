@@ -30,7 +30,7 @@ spec:
 
     # API
     - name: api
-      image: ghcr.io/mikebelanger/vanilla_prod_api:latest
+      image: ghcr.io/mikebelanger/lucky-vanilla/vanilla_prod_api:latest
       command:
         - ./entrypoint.sh
       envFrom:
@@ -53,7 +53,7 @@ spec:
 
     # Periodic email scheduler
     - name: scheduler
-      image: ghcr.io/mikebelanger/vanilla_prod_scheduler:latest
+      image: ghcr.io/mikebelanger/lucky-vanilla/vanilla_prod_scheduler:latest
       envFrom:
         - configMapRef:
             name: vanilla-prod-config
