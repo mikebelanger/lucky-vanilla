@@ -49,9 +49,6 @@ RUN chmod +x entrypoint.sh
 # Now build frontend assets
 #
 # First, blast away what's in the public folder
-RUN rm -rf public/ && \
-    mkdir public
-
 WORKDIR /app/src/ts
 
 RUN ~/.bun/bin/bun prod

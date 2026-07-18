@@ -39,18 +39,6 @@ spec:
         - configMapRef:
             name: vanilla-prod-secrets
 
-    # Frontend (prodelopment Mode)
-    - name: frontend
-      image: docker.io/oven/bun:latest
-      args:
-        - prod
-      workingDir: /app
-      volumeMounts:
-        - mountPath: /app
-          name: src-ts
-        - mountPath: /public
-          name: public
-
     # Periodic email scheduler
     - name: scheduler
       image: ghcr.io/mikebelanger/lucky-vanilla/vanilla_prod_scheduler:latest
@@ -85,15 +73,3 @@ spec:
     - name: pg-data
       persistentVolumeClaim:
         claimName: vanilla_prod_pg_data
-
-    # TypeScript source mounted at /app for bun to watch & rebuild
-    - name: src-ts
-      hostPath:
-        path: ./src/ts
-        type: Directory
-
-    # Static assets mounted at /public
-    - name: public
-      hostPath:
-        path: ./public
-        type: Directory
