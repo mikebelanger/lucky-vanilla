@@ -60,16 +60,23 @@ spec:
         - caddy
         - reverse-proxy
         - --from
-        - http://localhost:8080
+        - add-domain-here.com
         - --to
         - localhost:9000
       securityContext:
         capabilities:
           add:
             - NET_ADMIN
+      volumeMounts:
+        - mountPath: /data
+          name: caddy-data
 
   volumes:
     # Postgres data persisted across restarts
     - name: pg-data
       persistentVolumeClaim:
         claimName: vanilla_prod_pg_data
+
+    - name: caddy-data
+      persistentVolumeClaim:
+        claimName: vanilla_prod_caddy_data

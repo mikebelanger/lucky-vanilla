@@ -2,9 +2,11 @@
 Description=Vanilla prod pod
 
 [Kube]
-Yaml=pod.yml
-ConfigMap=config.yml
-ConfigMap=secrets.yml
+Yaml=../add-subdir/pod.yml
+ConfigMap=../add-subdir/config.yml
+ConfigMap=../add-subdir/secrets.yml
 SetWorkingDirectory=yaml
 PublishPort=9000:9000
 PublishPort=8080:8080
+PublishPort=80:80
+PublishPort=443:443
