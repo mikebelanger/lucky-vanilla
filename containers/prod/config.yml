@@ -4,7 +4,7 @@ metadata:
   name: vanilla-prod-config
 data:
   HOST: 0.0.0.0
-  HOST_URL: 0.0.0.0:9000
+  HOST_URL: localhost:9000
   LUCKY_ENV: production
   POD: vanilla-prod
   PORT: 9000
