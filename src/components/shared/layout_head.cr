@@ -37,10 +37,10 @@ class Shared::LayoutHead < BaseComponent
       css_link asset("pico.colors.min.css")
       if LuckyEnv.development?
         live_reload_connect_tag
-        js_link asset("LinkTo.js")
-        js_link asset("SplitRowForm.js")
+        js_link(asset("LinkTo.js"), type: "module")
+        js_link(asset("SplitRowForm.js"), type: "module")
       else
-        js_link asset("main.js")
+        js_link(asset("main.js"), type: "module")
       end
     end
     nav class: "top-navbar" do
