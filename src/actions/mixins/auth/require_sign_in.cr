@@ -3,8 +3,6 @@ module Auth::RequireSignIn
     before require_sign_in
   end
 
-  ergergre
-
   private def require_sign_in
     if current_user?
       continue
