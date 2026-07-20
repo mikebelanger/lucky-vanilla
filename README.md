@@ -46,6 +46,14 @@ The frontend uses bun in watch mode — any changes to `src/ts/` recompile autom
 podman pod logs -f --color --names vanilla-dev
 ```
 
+Or use [LazyJournal](https://github.com/Lifailon/lazyjournal) — a TUI log viewer
+that auto-detects Podman containers and supports fuzzy search, regex filtering,
+and syntax highlighting:
+
+```sh
+lazyjournal
+```
+
 ### Stop / Start
 
 ```sh
@@ -73,7 +81,11 @@ Pushing to `main` triggers a [GitHub Actions](.github/workflows/ci.yml) workflow
 The production stack runs on a VPS with **rootless Podman** and **Quadlets**. Reference files are in `containers/systemd/`:
 
 - `vanilla-app.kube` — Pod spec pointing at `containers/prod/pod.yml` and the ConfigMaps
-- `vanilla-app.timer` — Daily restart at 2 AM EST pulling fresh images
+- `vanilla-app.timer` — (optional, superseded by `podman-auto-update.timer`)
+
+The `containers/prod/pod.yml` containers carry the `io.containers.autoupdate=registry`
+label so that **Podman's built-in auto-update** mechanism handles pulling fresh images
+from GHCR and restarting the pod automatically.
 
 #### One-time VPS setup
 
@@ -98,9 +110,8 @@ podman login ghcr.io
 podman volume create vanilla_prod_pg_data
 podman volume create vanilla_prod_caddy_data
 
-# Install Quadlet files (copies to ~/.config/containers/systemd/)
+# Install the Quadlet file (copies to ~/.config/containers/systemd/)
 podman quadlet install --replace containers/systemd/vanilla-app.kube
-podman quadlet install --replace containers/systemd/vanilla-app.timer
 
 # The .kube file uses ../add-subdir/ as a deliberate placeholder.
 # Edit it to absolute paths matching your server layout, e.g.:
@@ -109,10 +120,21 @@ podman quadlet install --replace containers/systemd/vanilla-app.timer
 #   ConfigMap=/path/to/containers/prod/secrets.yml
 nano ~/.config/containers/systemd/vanilla-app.kube
 
-# Reload systemd and enable the timer
+# Start the pod
 systemctl --user daemon-reload
-systemctl --user enable --now vanilla-app.timer
 systemctl --user start vanilla-app.service
+
+# Enable Podman's built-in auto-update timer (runs daily, checks for newer
+# images and restarts the pod if any were pulled):
+systemctl --user enable --now podman-auto-update.timer
+
+# To customize the schedule (e.g. 2am EST), create an override:
+# mkdir -p ~/.config/systemd/user/podman-auto-update.timer.d
+# cat > ~/.config/systemd/user/podman-auto-update.timer.d/override.conf << 'EOF'
+# [Timer]
+# OnCalendar=*-*-* 02:00:00 America/New_York
+# EOF
+# systemctl --user daemon-reload
 
 # Open firewall ports
 sudo firewall-cmd --permanent --add-port=80/tcp --add-port=443/tcp
