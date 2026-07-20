@@ -27,6 +27,8 @@ spec:
       volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: pg-data
+      labels:
+        io.containers.autoupdate: registry
 
     # API
     - name: api
@@ -38,6 +40,8 @@ spec:
             name: vanilla-prod-config
         - configMapRef:
             name: vanilla-prod-secrets
+      labels:
+        io.containers.autoupdate: registry
 
     # Periodic email scheduler
     - name: scheduler
@@ -47,6 +51,8 @@ spec:
             name: vanilla-prod-config
         - configMapRef:
             name: vanilla-prod-secrets
+      labels:
+        io.containers.autoupdate: registry
 
     # Caddy reverse proxy
     - name: reverse-proxy
@@ -70,6 +76,8 @@ spec:
       volumeMounts:
         - mountPath: /data
           name: caddy-data
+      labels:
+        io.containers.autoupdate: registry
 
   volumes:
     # Postgres data persisted across restarts
