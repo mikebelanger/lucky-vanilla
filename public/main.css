@@ -194,6 +194,7 @@ thead {
 }
 
 .active {
-    color: var(--pico-color-yellow-50);
+    color: white;
     filter: brightness(0.05em);
+    text-shadow: 0 0 1px #0ff, 0 0 1px #0ff, 0 0 1px #0ff, 0 0 1px #0ff;
 }
