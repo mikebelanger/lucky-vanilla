@@ -57,7 +57,7 @@ ul > hr {
 }
 
 .top-navbar {
-    background-color: var(--pico-color-azure-750);
+    background: linear-gradient(100deg, var(--pico-color-azure-800), var(--pico-color-azure-600));
     padding-left: var(--pico-nav-element-spacing-vertical);
     padding-right: var(--pico-nav-element-spacing-vertical);
     width: 100%;
