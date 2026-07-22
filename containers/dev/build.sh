@@ -10,6 +10,7 @@ kind: ConfigMap
 metadata:
   name: vanilla-dev-secrets
 data:
+  ADMIN_EMAIL: your@email.here
   SECRET_KEY_BASE: $(openssl rand -base64 32)
   SEND_TOKEN: $(openssl rand -hex 15)
   POSTGRES_DB: lucky_dev
@@ -58,5 +59,6 @@ exec podman kube play \
   --configmap containers/dev/config.yml \
   --configmap containers/dev/secrets.yml \
   --publish 8888:8888 \
+  --publish 8080:8080 \ # for crystal play
   --replace \
   containers/dev/pod.yml
