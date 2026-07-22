@@ -38,12 +38,6 @@ podman build \
   -t localhost/vanilla_prod_scheduler:latest \
   containers/prod/scheduler
 
-# Podman Kube play doesn't always apply SELinux labels correctly, so we have to explictly add them here
-# Pre-label volumes for SELinux
-podman run --rm -v .:/z:z crystal:latest true
-podman run --rm -v ./src/ts:/z:z crystal:latest true
-podman run --rm -v ./public:/z:z crystal:latest true
-
 # Now spin it up
 #
 # subsequent runs can be done with:

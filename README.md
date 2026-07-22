@@ -1,3 +1,5 @@
+![alt text](./screenshot.png)
+
 # Vanilla Expense Tracker
 
 ## What
@@ -152,4 +154,3 @@ sysctl net.ipv4.ip_unprivileged_port_start    # default is 1024
 echo 'net.ipv4.ip_unprivileged_port_start = 80' | sudo tee /etc/sysctl.d/99-rootless-podman.conf
 sudo sysctl --system
 ```
-
