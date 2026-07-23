@@ -10,6 +10,7 @@ kind: ConfigMap
 metadata:
   name: vanilla-prod-secrets
 data:
+  ADMIN_EMAIL: insert@email.here
   SECRET_KEY_BASE: $(openssl rand -base64 32)
   SEND_TOKEN: $(openssl rand -hex 15)
   POSTGRES_DB: lucky_prod
