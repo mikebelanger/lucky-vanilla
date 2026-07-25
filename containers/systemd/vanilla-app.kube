@@ -10,3 +10,9 @@ PublishPort=9000:9000
 PublishPort=8080:8080
 PublishPort=80:80
 PublishPort=443:443
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
