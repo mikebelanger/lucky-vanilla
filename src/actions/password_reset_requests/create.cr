@@ -19,10 +19,9 @@ class PasswordResetRequests::Create < BrowserAction
           flash.success = "You should receive an email on how to reset your password shortly"
           redirect SignIns::New
 
-        # Limit it to 6 emails
+          # Limit it to 6 emails
         else
           if user && time_since_last_reset < 12.hours
-
             if user.password_reset_count < 6
               PasswordResetRequestEmail.new(user).deliver
 
@@ -34,7 +33,7 @@ class PasswordResetRequests::Create < BrowserAction
               flash.success = "You should receive an email on how to reset your password shortly"
               redirect SignIns::New
             else
-              flash.success = "You have exceeded the number of password attempts within this 12 hour period. Try again after 12 hours."
+              flash.failure = "You have exceeded the number of password attempts within this 12 hour period. Try again after 12 hours."
               redirect SignIns::New
             end
           else
