@@ -127,12 +127,21 @@ li.new-purchase > a {
 
 .flash {
     text-align: center;
-    padding: 0.25rem;
+    padding: 0.5rem;
+    border-style: solid;
+    border-width: 0.15em;
+    border-radius: 0.5em;
+    width: 100%;
+    color: white;
+}
+
+.success {
+    background-color: var(--pico-color-green-200);
 }
 
 .failure,
 .error {
-    color: var(--error-color);
+    background-color: var(--pico-color-red-550);
 }
 
 input:has(+ .error) {
