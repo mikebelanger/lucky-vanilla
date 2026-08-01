@@ -7,6 +7,14 @@ class PasswordResets::New < BrowserAction
     redirect_to_edit_form_without_token_param
   end
 
+  def self.proper_url(id : Int64, token : String)
+    if LuckyEnv.production?
+      "https://#{ENV["HOST"]}/password_resets/#{id}?#{token}"
+    else
+      "http://#{ENV["HOST"]}/password_resets/#{id}?#{token}"
+    end
+  end
+
   # This is to prevent password reset tokens from being scraped in the HTTP Referer header
   # See more info here: https://github.com/thoughtbot/clearance/pull/707
   private def redirect_to_edit_form_without_token_param
