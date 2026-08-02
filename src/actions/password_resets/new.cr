@@ -9,9 +9,9 @@ class PasswordResets::New < BrowserAction
 
   def self.proper_url(id : Int64, token : String)
     if LuckyEnv.production?
-      "https://#{ENV["APP_DOMAIN"]}/password_resets/#{id}?#{token}"
+      "https://#{ENV["APP_DOMAIN"]}/password_resets/#{id}?token=#{token}"
     else
-      "http://#{ENV["HOST"]}/password_resets/#{id}?#{token}"
+      "http://#{ENV["HOST"]}/password_resets/#{id}?token=#{token}"
     end
   end
 
