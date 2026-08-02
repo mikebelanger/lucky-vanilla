@@ -59,6 +59,7 @@ exec podman kube play \
   --configmap containers/dev/config.yml \
   --configmap containers/dev/secrets.yml \
   --publish 8888:8888 \
-  --publish 8080:8080 \ # for crystal play
+  --publish 8080:8080 \
+  --publish 5432:5432 \
   --replace \
   containers/dev/pod.yml
