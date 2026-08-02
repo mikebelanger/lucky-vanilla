@@ -11,7 +11,7 @@ class PasswordResets::New < BrowserAction
     if LuckyEnv.production?
       "https://#{ENV["HOST"]}/password_resets/#{id}?#{token}"
     else
-      "http://#{ENV["HOST"]}/password_resets/#{id}?#{token}"
+      "http://#{ENV["APP_DOMAIN"]}/password_resets/#{id}?#{token}"
     end
   end
 
